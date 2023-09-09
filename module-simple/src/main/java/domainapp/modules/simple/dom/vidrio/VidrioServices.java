@@ -1,4 +1,4 @@
-package domainapp.modules.simple.dom.so;
+package domainapp.modules.simple.dom.vidrio;
 
 import java.util.List;
 
@@ -22,55 +22,55 @@ import domainapp.modules.simple.types.Name;
 
 @DomainService(
         nature = NatureOfService.VIEW,
-        logicalTypeName = "simple.SimpleObjects"
+        logicalTypeName = "simple.VidrioServices"
 )
 @javax.annotation.Priority(PriorityPrecedence.EARLY)
 @lombok.RequiredArgsConstructor(onConstructor_ = {@Inject} )
-public class SimpleObjects {
+public class VidrioServices {
 
     final RepositoryService repositoryService;
     final JpaSupportService jpaSupportService;
-    final SimpleObjectRepository simpleObjectRepository;
+    final VidrioRepository vidrioRepository;
 
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
     @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR)
-    public SimpleObject create(
-            @Name final String name) {
-        return repositoryService.persist(SimpleObject.withName(name));
+    public Vidrio create(
+            @Name final String name, final int codigo, final double precio) {
+        return repositoryService.persist(Vidrio.withName(name, codigo, precio));
     }
 
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
     @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR)
-    public List<SimpleObject> findByNameLike(
+    public List<Vidrio> findByNameLike(
             @Name final String name) {
         return repositoryService.allMatches(
-                Query.named(SimpleObject.class, SimpleObject.NAMED_QUERY__FIND_BY_NAME_LIKE)
+                Query.named(Vidrio.class, Vidrio.NAMED_QUERY__FIND_BY_NAME_LIKE)
                      .withParameter("name", "%" + name + "%"));
     }
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, promptStyle = PromptStyle.DIALOG_SIDEBAR)
-    public List<SimpleObject> findByName(
+    public List<Vidrio> findByName(
             @Name final String name
             ) {
-        return simpleObjectRepository.findByNameContaining(name);
+        return vidrioRepository.findByNameContaining(name);
     }
 
 
     @Programmatic
-    public SimpleObject findByNameExact(final String name) {
-        return simpleObjectRepository.findByName(name);
+    public Vidrio findByNameExact(final String name) {
+        return vidrioRepository.findByName(name);
     }
 
 
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<SimpleObject> listAll() {
-        return simpleObjectRepository.findAll();
+    public List<Vidrio> listAll() {
+        return vidrioRepository.findAll();
     }
 
 
@@ -78,11 +78,11 @@ public class SimpleObjects {
 
     @Programmatic
     public void ping() {
-        jpaSupportService.getEntityManager(SimpleObject.class)
+        jpaSupportService.getEntityManager(Vidrio.class)
             .ifSuccess(entityManager -> {
-                final TypedQuery<SimpleObject> q = entityManager.createQuery(
+                final TypedQuery<Vidrio> q = entityManager.createQuery(
                         "SELECT p FROM SimpleObject p ORDER BY p.name",
-                        SimpleObject.class)
+                        Vidrio.class)
                     .setMaxResults(1);
                 q.getResultList();
             });

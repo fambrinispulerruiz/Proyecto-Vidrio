@@ -1,9 +1,10 @@
-package domainapp.modules.simple.dom.so;
+package domainapp.modules.simple.dom.vidrio;
 
 import java.util.Comparator;
 
 import javax.inject.Inject;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -38,26 +39,26 @@ import domainapp.modules.simple.types.Notes;
 @javax.persistence.Table(
     schema="simple",
     uniqueConstraints = {
-        @javax.persistence.UniqueConstraint(name = "SimpleObject__name__UNQ", columnNames = {"NAME"})
+        @javax.persistence.UniqueConstraint(name = "Vidrio__name__UNQ", columnNames = {"NAME"})
     }
 )
 @javax.persistence.NamedQueries({
         @javax.persistence.NamedQuery(
-                name = SimpleObject.NAMED_QUERY__FIND_BY_NAME_LIKE,
+                name = Vidrio.NAMED_QUERY__FIND_BY_NAME_LIKE,
                 query = "SELECT so " +
-                        "FROM SimpleObject so " +
+                        "FROM Vidrio so " +
                         "WHERE so.name LIKE :name"
         )
 })
 @javax.persistence.EntityListeners(IsisEntityListener.class)
-@DomainObject(logicalTypeName = "simple.SimpleObject", entityChangePublishing = Publishing.ENABLED)
+@DomainObject(logicalTypeName = "simple.Vidrio", entityChangePublishing = Publishing.ENABLED)
 @DomainObjectLayout()
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 @ToString(onlyExplicitlyIncluded = true)
-public class SimpleObject implements Comparable<SimpleObject> {
+public class Vidrio implements Comparable<Vidrio> {
 
-    static final String NAMED_QUERY__FIND_BY_NAME_LIKE = "SimpleObject.findByNameLike";
+    static final String NAMED_QUERY__FIND_BY_NAME_LIKE = "Vidrio.findByNameLike";
 
     @javax.persistence.Id
     @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
@@ -70,10 +71,12 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Getter @Setter
     private long version;
 
-    public static SimpleObject withName(String name) {
-        val simpleObject = new SimpleObject();
-        simpleObject.setName(name);
-        return simpleObject;
+    public static Vidrio withName(final String name, final int codigo, final double precio) {
+        val vidrio = new Vidrio();
+        vidrio.setName(name);
+        vidrio.setCodigo(codigo);
+        vidrio.setPrecio(precio);
+        return vidrio;
     }
 
     @Inject @javax.persistence.Transient RepositoryService repositoryService;
@@ -88,18 +91,27 @@ public class SimpleObject implements Comparable<SimpleObject> {
     @Getter @Setter @ToString.Include
     @PropertyLayout(fieldSetId = "name", sequence = "1")
     private String name;
+    
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "name", sequence = "2")
+    private int codigo;
+    
+
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "name", sequence = "3")
+    private double precio;
 
     @Notes
     @javax.persistence.Column(length = Notes.MAX_LEN, nullable = true)
     @Getter @Setter
     @Property(commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @PropertyLayout(fieldSetId = "name", sequence = "2")
+    @PropertyLayout(fieldSetId = "name", sequence = "4")
     private String notes;
 
 
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
     @ActionLayout(associateWith = "name", promptStyle = PromptStyle.INLINE)
-    public SimpleObject updateName(
+    public Vidrio updateName(
             @Name final String name) {
         setName(name);
         return this;
@@ -129,11 +141,11 @@ public class SimpleObject implements Comparable<SimpleObject> {
 
 
 
-    private final static Comparator<SimpleObject> comparator =
-            Comparator.comparing(SimpleObject::getName);
+    private final static Comparator<Vidrio> comparator =
+            Comparator.comparing(Vidrio::getName);
 
     @Override
-    public int compareTo(final SimpleObject other) {
+    public int compareTo(final Vidrio other) {
         return comparator.compare(this, other);
     }
 

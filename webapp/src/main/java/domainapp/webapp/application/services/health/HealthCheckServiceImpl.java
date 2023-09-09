@@ -5,19 +5,19 @@ import javax.inject.Named;
 
 import org.springframework.stereotype.Service;
 
+import domainapp.modules.simple.dom.vidrio.VidrioServices;
+
 import org.apache.isis.applib.services.health.Health;
 import org.apache.isis.applib.services.health.HealthCheckService;
-
-import domainapp.modules.simple.dom.so.SimpleObjects;
 
 @Service
 @Named("domainapp.HealthCheckServiceImpl")
 public class HealthCheckServiceImpl implements HealthCheckService {
 
-    private final SimpleObjects simpleObjects;
+    private final VidrioServices simpleObjects;
 
     @Inject
-    public HealthCheckServiceImpl(SimpleObjects simpleObjects) {
+    public HealthCheckServiceImpl(VidrioServices simpleObjects) {
         this.simpleObjects = simpleObjects;
     }
 

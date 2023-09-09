@@ -9,8 +9,8 @@ import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.HomePage;
 import org.apache.isis.applib.annotation.Nature;
 
-import domainapp.modules.simple.dom.so.SimpleObject;
-import domainapp.modules.simple.dom.so.SimpleObjects;
+import domainapp.modules.simple.dom.vidrio.Vidrio;
+import domainapp.modules.simple.dom.vidrio.VidrioServices;
 
 @DomainObject(
         nature = Nature.VIEW_MODEL,
@@ -24,9 +24,9 @@ public class HomePageViewModel {
         return getObjects().size() + " objects";
     }
 
-    public List<SimpleObject> getObjects() {
+    public List<Vidrio> getObjects() {
         return simpleObjects.listAll();
     }
 
-    @Inject SimpleObjects simpleObjects;
+    @Inject VidrioServices simpleObjects;
 }

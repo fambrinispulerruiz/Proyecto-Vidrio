@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import domainapp.modules.simple.dom.vidrio.Vidrio;
+import domainapp.modules.simple.dom.vidrio.VidrioServices;
+
 import org.apache.isis.applib.services.iactnlayer.InteractionContext;
 import org.apache.isis.applib.services.iactnlayer.InteractionService;
 import org.apache.isis.applib.services.user.UserMemento;
@@ -17,21 +20,18 @@ import org.apache.isis.applib.services.xactn.TransactionalProcessor;
 
 import lombok.RequiredArgsConstructor;
 
-import domainapp.modules.simple.dom.so.SimpleObject;
-import domainapp.modules.simple.dom.so.SimpleObjects;
-
 @RestController
 @RequiredArgsConstructor(onConstructor_ = {@Inject})
 class CustomController {
 
     private final InteractionService interactionService;
     private final TransactionalProcessor transactionalProcessor;
-    private final SimpleObjects simpleObjects;
+    private final VidrioServices simpleObjects;
 
     @GetMapping("/custom/simpleObjects")
-    List<SimpleObject> all() {
+    List<Vidrio> all() {
         return call("sven", simpleObjects::listAll)
-                .orElse(Collections.<SimpleObject>emptyList());
+                .orElse(Collections.<Vidrio>emptyList());
     }
 
     private <T> Optional<T> call(
