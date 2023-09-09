@@ -24,17 +24,17 @@ implements PersonaWithBuilderScript<SimpleObjectBuilder>, PersonaWithFinder<Vidr
     BANG("Bang"),
     BOO("Boo");
 
-    private final String name;
+    private final String nombre;
 
     @Override
     public SimpleObjectBuilder builder() {
-        return new SimpleObjectBuilder().setName(name);
+        return new SimpleObjectBuilder().setNombre(nombre);
     }
 
     @Override
     public Vidrio findUsing(final ServiceRegistry serviceRegistry) {
         VidrioServices simpleObjects = serviceRegistry.lookupService(VidrioServices.class).orElse(null);
-        return simpleObjects.findByNameExact(name);
+        return simpleObjects.findByNameExact(nombre);
     }
 
     public static class PersistAll

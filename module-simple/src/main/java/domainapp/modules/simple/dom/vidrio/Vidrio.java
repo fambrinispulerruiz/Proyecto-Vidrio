@@ -31,15 +31,15 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.val;
 
-import domainapp.modules.simple.types.Name;
-import domainapp.modules.simple.types.Notes;
+import domainapp.modules.simple.types.Nombre;
+import domainapp.modules.simple.types.Notas;
 
 
 @javax.persistence.Entity
 @javax.persistence.Table(
     schema="simple",
     uniqueConstraints = {
-        @javax.persistence.UniqueConstraint(name = "Vidrio__name__UNQ", columnNames = {"NAME"})
+        @javax.persistence.UniqueConstraint(name = "Vidrio__nombre__UNQ", columnNames = {"Nombre"})
     }
 )
 @javax.persistence.NamedQueries({
@@ -47,7 +47,7 @@ import domainapp.modules.simple.types.Notes;
                 name = Vidrio.NAMED_QUERY__FIND_BY_NAME_LIKE,
                 query = "SELECT so " +
                         "FROM Vidrio so " +
-                        "WHERE so.name LIKE :name"
+                        "WHERE so.nombre LIKE :nombre"
         )
 })
 @javax.persistence.EntityListeners(IsisEntityListener.class)
@@ -65,17 +65,13 @@ public class Vidrio implements Comparable<Vidrio> {
     @javax.persistence.Column(name = "id", nullable = false)
     private Long id;
 
-    @javax.persistence.Version
-    @javax.persistence.Column(name = "version", nullable = false)
-    @PropertyLayout(fieldSetId = "metadata", sequence = "999")
-    @Getter @Setter
-    private long version;
 
-    public static Vidrio withName(final String name, final int codigo, final double precio) {
+    public static Vidrio withName(final String nombre, final int codigo, final double precio, final TipoVidrio tipoVidrio) {
         val vidrio = new Vidrio();
-        vidrio.setName(name);
+        vidrio.setNombre(nombre);
         vidrio.setCodigo(codigo);
         vidrio.setPrecio(precio);
+        vidrio.setTipoVidrio(tipoVidrio);
         return vidrio;
     }
 
@@ -86,11 +82,11 @@ public class Vidrio implements Comparable<Vidrio> {
 
 
     @Title
-    @Name
-    @javax.persistence.Column(length = Name.MAX_LEN, nullable = false)
+    @Nombre
+    @javax.persistence.Column(length = Nombre.MAX_LEN, nullable = false)
     @Getter @Setter @ToString.Include
     @PropertyLayout(fieldSetId = "name", sequence = "1")
-    private String name;
+    private String nombre;
     
     @Getter @Setter
     @PropertyLayout(fieldSetId = "name", sequence = "2")
@@ -100,29 +96,33 @@ public class Vidrio implements Comparable<Vidrio> {
     @Getter @Setter
     @PropertyLayout(fieldSetId = "name", sequence = "3")
     private double precio;
+    
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "name", sequence = "4")
+    private TipoVidrio tipoVidrio;
 
-    @Notes
-    @javax.persistence.Column(length = Notes.MAX_LEN, nullable = true)
+    @Notas
+    @javax.persistence.Column(length = Notas.MAX_LEN, nullable = true)
     @Getter @Setter
     @Property(commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @PropertyLayout(fieldSetId = "name", sequence = "4")
+    @PropertyLayout(fieldSetId = "name", sequence = "5")
     private String notes;
 
 
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @ActionLayout(associateWith = "name", promptStyle = PromptStyle.INLINE)
-    public Vidrio updateName(
-            @Name final String name) {
-        setName(name);
+    @ActionLayout(associateWith = "update", promptStyle = PromptStyle.INLINE)
+    public Vidrio actualizarNombre(
+            @Nombre final String name) {
+        setNombre(name);
         return this;
     }
-    public String default0UpdateName() {
-        return getName();
+    public String nombrePorDefault() {
+        return getNombre();
     }
-    public String validate0UpdateName(String newName) {
+    public String validarActualizarNombre(String newName) {
         for (char prohibitedCharacter : "&%$!".toCharArray()) {
             if( newName.contains(""+prohibitedCharacter)) {
-                return "Character '" + prohibitedCharacter + "' is not allowed.";
+                return "El carácter '" + prohibitedCharacter + "' no está permitido.";
             }
         }
         return null;
@@ -131,18 +131,17 @@ public class Vidrio implements Comparable<Vidrio> {
 
     @Action(semantics = NON_IDEMPOTENT_ARE_YOU_SURE)
     @ActionLayout(
-            associateWith = "name", position = ActionLayout.Position.PANEL,
-            describedAs = "Deletes this object from the persistent datastore")
-    public void delete() {
+            associateWith = "delete", position = ActionLayout.Position.PANEL,
+            describedAs = "Elimina este objeto de la base de datos")
+    public void borrar() {
         final String title = titleService.titleOf(this);
         messageService.informUser(String.format("'%s' deleted", title));
         repositoryService.removeAndFlush(this);
     }
-
-
+    
 
     private final static Comparator<Vidrio> comparator =
-            Comparator.comparing(Vidrio::getName);
+            Comparator.comparing(Vidrio::getNombre);
 
     @Override
     public int compareTo(final Vidrio other) {

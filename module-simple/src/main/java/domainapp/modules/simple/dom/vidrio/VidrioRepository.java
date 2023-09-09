@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VidrioRepository extends JpaRepository<Vidrio, Long> {
 
-    List<Vidrio> findByNameContaining(final String name);
+    List<Vidrio> findByNombreContaining(final String nombre);
 
-    Vidrio findByName(final String name);
+    Vidrio findByNombre(final String nombre);
 
 }

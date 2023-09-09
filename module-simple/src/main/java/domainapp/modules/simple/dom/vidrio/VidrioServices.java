@@ -18,7 +18,7 @@ import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.persistence.jpa.applib.services.JpaSupportService;
 
-import domainapp.modules.simple.types.Name;
+import domainapp.modules.simple.types.Nombre;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -34,42 +34,42 @@ public class VidrioServices {
 
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR)
-    public Vidrio create(
-            @Name final String name, final int codigo, final double precio) {
-        return repositoryService.persist(Vidrio.withName(name, codigo, precio));
+    @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR, cssClassFa = "fa-plus")
+    public Vidrio crearVidrio(
+            @Nombre final String nombre, final int codigo, final double precio, final TipoVidrio tipoVidrio) {
+        return repositoryService.persist(Vidrio.withName(nombre, codigo, precio, tipoVidrio));
     }
 
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR)
-    public List<Vidrio> findByNameLike(
-            @Name final String name) {
+    @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR, cssClassFa = "fa-search")
+    public List<Vidrio> buscarVidrio(
+            @Nombre final String nombre) {
         return repositoryService.allMatches(
                 Query.named(Vidrio.class, Vidrio.NAMED_QUERY__FIND_BY_NAME_LIKE)
-                     .withParameter("name", "%" + name + "%"));
+                     .withParameter("nombre", "%" + nombre + "%"));
     }
 
 
-    @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, promptStyle = PromptStyle.DIALOG_SIDEBAR)
-    public List<Vidrio> findByName(
-            @Name final String name
-            ) {
-        return vidrioRepository.findByNameContaining(name);
-    }
-
-
+//    @Action(semantics = SemanticsOf.SAFE)
+//    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, promptStyle = PromptStyle.DIALOG_SIDEBAR)
+//    public List<Vidrio> findByNombre(
+//            @Nombre final String nombre
+//            ) {
+//        return vidrioRepository.findByNombreContaining(nombre);
+//    }
+//
+//
     @Programmatic
-    public Vidrio findByNameExact(final String name) {
-        return vidrioRepository.findByName(name);
+    public Vidrio findByNameExact(final String nombre) {
+        return vidrioRepository.findByNombre(nombre);
     }
 
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Vidrio> listAll() {
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-list")
+    public List<Vidrio> verVidrios() {
         return vidrioRepository.findAll();
     }
 

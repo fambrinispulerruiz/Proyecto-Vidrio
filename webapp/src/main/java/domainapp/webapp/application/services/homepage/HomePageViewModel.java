@@ -25,7 +25,7 @@ public class HomePageViewModel {
     }
 
     public List<Vidrio> getObjects() {
-        return simpleObjects.listAll();
+        return simpleObjects.verVidrios();
     }
 
     @Inject VidrioServices simpleObjects;

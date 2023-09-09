@@ -39,7 +39,7 @@ public class SampleJob implements Job {
     }
 
     List<Vidrio> all() {
-        return call("sven", simpleObjects::listAll)
+        return call("sven", simpleObjects::verVidrios)
                 .orElse(Collections.<Vidrio>emptyList());
     }
 
