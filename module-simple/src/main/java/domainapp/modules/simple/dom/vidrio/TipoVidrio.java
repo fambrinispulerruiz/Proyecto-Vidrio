@@ -4,13 +4,13 @@ public enum TipoVidrio {
 
 	Parabrisa,
 	Luneta,
-	Puerta Delantera D,
-	Puerta Delantera I,
-	Puerta Trasera D,
-	Puerta Trasera I,
-	Espejo Retrovisor,
-	Espejo Lateral D,
-	Espejo Lateral I
+	Puerta_Delantera_D,
+	Puerta_Delantera_I,
+	Puerta_Trasera_D,
+	Puerta_Trasera_I,
+	Espejo_Retrovisor,
+	Espejo_Lateral_D,
+	Espejo_Lateral_I
 	;
 	
 }
