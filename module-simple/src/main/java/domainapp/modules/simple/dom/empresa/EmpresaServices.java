@@ -59,13 +59,13 @@ public class EmpresaServices {
     public List<Empresa> findByLastName(
             @Nombre final String nombre
             ) {
-        return empresaRepository.findByNombreContaining(nombre);
+        return empresaRepository.buscarPorNombreLista(nombre);
     }
 
 
     @Programmatic
     public Empresa findByLastNameExact(final String nombre) {
-        return empresaRepository.findByNombre(nombre);
+        return empresaRepository.buscarPorNombre(nombre);
     }
 
 

@@ -42,7 +42,7 @@ public class Empresa_agregarVidrio {
         return empresa;
     }
     public String validate0Act(final String nombre) {
-        return vidrioRepository.findByEmpresaAndNombre(empresa, nombre).isPresent()
+        return vidrioRepository.buscarPorEmpresaYNombre(empresa, nombre).isPresent()
                 ? String.format("El Vidrio con el nombre '%s' ya existe para esta empresa.", nombre)
                 : null;
     }
