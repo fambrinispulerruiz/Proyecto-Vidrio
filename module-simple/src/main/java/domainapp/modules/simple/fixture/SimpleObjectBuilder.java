@@ -4,9 +4,9 @@ import javax.inject.Inject;
 
 import org.apache.isis.testing.fixtures.applib.personas.BuilderScriptWithResult;
 
-import domainapp.modules.simple.dom.vidrio.TipoVidrio;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 import domainapp.modules.simple.dom.vidrio.VidrioServices;
+import domainapp.modules.simple.dom.vidrio.enumeradores.TipoVidrio;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

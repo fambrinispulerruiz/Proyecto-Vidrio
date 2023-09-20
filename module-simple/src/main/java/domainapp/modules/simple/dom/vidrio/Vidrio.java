@@ -2,146 +2,137 @@ package domainapp.modules.simple.dom.vidrio;
 
 import java.util.Comparator;
 
-import javax.inject.Inject;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
-import org.apache.isis.applib.annotation.PromptStyle;
-import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Publishing;
-import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.jaxb.PersistentEntityAdapter;
-import org.apache.isis.applib.services.message.MessageService;
-import org.apache.isis.applib.services.repository.RepositoryService;
-import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.persistence.jpa.applib.integration.IsisEntityListener;
-
-import static org.apache.isis.applib.annotation.SemanticsOf.IDEMPOTENT;
-import static org.apache.isis.applib.annotation.SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.val;
-
+import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.vidrio.enumeradores.Antena;
+import domainapp.modules.simple.dom.vidrio.enumeradores.SensorLluvia;
+import domainapp.modules.simple.dom.vidrio.enumeradores.TipoVidrio;
 import domainapp.modules.simple.types.Nombre;
-import domainapp.modules.simple.types.Notas;
+import jdk.jfr.Label;
 
 
-@javax.persistence.Entity
-@javax.persistence.Table(
-    schema="simple",
+@Entity
+@Table(
+    schema="vidrios",
+    name = "Vidrio",
     uniqueConstraints = {
-        @javax.persistence.UniqueConstraint(name = "Vidrio__nombre__UNQ", columnNames = {"Nombre"})
+        @UniqueConstraint(name = "Empresa_nombre__UNQ", columnNames = {"empresa_id", "nombre"})
     }
 )
-@javax.persistence.NamedQueries({
-        @javax.persistence.NamedQuery(
-                name = Vidrio.NAMED_QUERY__FIND_BY_NAME_LIKE,
-                query = "SELECT so " +
-                        "FROM Vidrio so " +
-                        "WHERE so.nombre LIKE :nombre"
-        )
-})
-@javax.persistence.EntityListeners(IsisEntityListener.class)
-@DomainObject(logicalTypeName = "simple.Vidrio", entityChangePublishing = Publishing.ENABLED)
+@EntityListeners(IsisEntityListener.class)
+@DomainObject(logicalTypeName = "vidrios.Vidrio", entityChangePublishing = Publishing.ENABLED)
 @DomainObjectLayout()
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 @ToString(onlyExplicitlyIncluded = true)
 public class Vidrio implements Comparable<Vidrio> {
 
-    static final String NAMED_QUERY__FIND_BY_NAME_LIKE = "Vidrio.findByNameLike";
-
-    @javax.persistence.Id
-    @javax.persistence.GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-    @javax.persistence.Column(name = "id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "metadata", sequence = "1")
     private Long id;
 
+    @Version
+    @Column(name = "version", nullable = false)
+    @PropertyLayout(fieldSetId = "metadata", sequence = "999")
+    @Getter @Setter
+    private long version;
 
-    public static Vidrio withName(final String nombre, final int codigo, final double precio, final TipoVidrio tipoVidrio) {
-        val vidrio = new Vidrio();
-        vidrio.setNombre(nombre);
-        vidrio.setCodigo(codigo);
-        vidrio.setPrecio(precio);
-        vidrio.setTipoVidrio(tipoVidrio);
-        return vidrio;
+
+    Vidrio(String nombre, String codigo, Empresa empresa, String modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.empresa = empresa;
+        this.modelo = modelo;
+        this.precio = precio;
+        this.tipoVidrio = tipoVidrio;
+        this.antena = antena;
+        this.sensor = sensor;
     }
 
-    @Inject @javax.persistence.Transient RepositoryService repositoryService;
-    @Inject @javax.persistence.Transient TitleService titleService;
-    @Inject @javax.persistence.Transient MessageService messageService;
 
+    public String title() {
+        return getNombre() + " (" + getEmpresa().getNombre() + ", " + getModelo();
+    }
 
-
-    @Title
-    @Nombre
-    @javax.persistence.Column(length = Nombre.MAX_LEN, nullable = false)
-    @Getter @Setter @ToString.Include
-    @PropertyLayout(fieldSetId = "name", sequence = "1")
+    @Column(name = "nombre", length = Nombre.MAX_LEN, nullable = false)
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "nombre", sequence = "1")
     private String nombre;
     
+    @Column(name = "nombre", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "name", sequence = "2")
-    private int codigo;
-    
+    @PropertyLayout(fieldSetId = "codigo", sequence = "1")
+    private String codigo;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "empresa_id")
+    @PropertyLayout(fieldSetId = "empresa", sequence = "2")
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "name", sequence = "3")
+    private Empresa empresa;
+    
+    @Column(name = "nombre", nullable = false)
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "modelo", sequence = "1")
+    private String modelo;
+    
+    @Column(name = "details", nullable = false)
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "precio", sequence = "2")
     private double precio;
+
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "details", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "name", sequence = "4")
+    @PropertyLayout(fieldSetId = "tipoVidrio", sequence = "1")
     private TipoVidrio tipoVidrio;
-
-    @Notas
-    @javax.persistence.Column(length = Notas.MAX_LEN, nullable = true)
-    @Getter @Setter
-    @Property(commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @PropertyLayout(fieldSetId = "name", sequence = "5")
-    private String notes;
-
-
-    @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @ActionLayout(associateWith = "update", promptStyle = PromptStyle.INLINE)
-    public Vidrio actualizarNombre(
-            @Nombre final String name) {
-        setNombre(name);
-        return this;
-    }
-    public String nombrePorDefault() {
-        return getNombre();
-    }
-    public String validarActualizarNombre(String newName) {
-        for (char prohibitedCharacter : "&%$!".toCharArray()) {
-            if( newName.contains(""+prohibitedCharacter)) {
-                return "El carácter '" + prohibitedCharacter + "' no está permitido.";
-            }
-        }
-        return null;
-    }
-
-
-    @Action(semantics = NON_IDEMPOTENT_ARE_YOU_SURE)
-    @ActionLayout(
-            associateWith = "delete", position = ActionLayout.Position.PANEL,
-            describedAs = "Elimina este objeto de la base de datos")
-    public void borrar() {
-        final String title = titleService.titleOf(this);
-        messageService.informUser(String.format("'%s' deleted", title));
-        repositoryService.removeAndFlush(this);
-    }
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "details", nullable = false)
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "antena", sequence = "3")
+    @Label("¿Posee Antena?")
+    private Antena antena;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "details", nullable = false)
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "sensor", sequence = "4")
+    @Label("¿Posee Sensor de Lluvia?")
+    private SensorLluvia sensor;
+
 
     private final static Comparator<Vidrio> comparator =
-            Comparator.comparing(Vidrio::getNombre);
+            Comparator.comparing(Vidrio::getEmpresa).thenComparing(Vidrio::getNombre);
 
     @Override
     public int compareTo(final Vidrio other) {
