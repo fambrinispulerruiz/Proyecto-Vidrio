@@ -67,7 +67,7 @@ public class Vidrio implements Comparable<Vidrio> {
     private long version;
 
 
-    Vidrio(String nombre, String codigo, Empresa empresa, String modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
+    public Vidrio(String nombre, String codigo, Empresa empresa, String modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.empresa = empresa;
