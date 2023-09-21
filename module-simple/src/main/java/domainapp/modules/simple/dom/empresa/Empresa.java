@@ -137,7 +137,7 @@ public class Empresa implements Comparable<Empresa> {
     @Enumerated(EnumType.STRING)
     @Column(name = "tipoEmpresa", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "details", sequence = "1")
+    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
     private TipoEmpresa tipoEmpresa;
 
 

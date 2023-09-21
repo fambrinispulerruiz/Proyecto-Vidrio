@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import domainapp.modules.simple.dom.empresa.Empresa;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 
 import org.apache.isis.testing.fixtures.applib.fixturescripts.FixtureScript;
@@ -13,8 +14,8 @@ import org.apache.isis.testing.fixtures.applib.modules.ModuleWithFixtures;
 @Configuration
 @ComponentScan
 @EnableJpaRepositories
-@EntityScan(basePackageClasses = {SimpleModule.class})
-public class SimpleModule implements ModuleWithFixtures {
+@EntityScan(basePackageClasses = {VidriosModule.class})
+public class VidriosModule implements ModuleWithFixtures {
 
     @Override
     public FixtureScript getTeardownFixture() {
@@ -22,6 +23,7 @@ public class SimpleModule implements ModuleWithFixtures {
             @Override
             protected void execute(ExecutionContext executionContext) {
                 repositoryService.removeAll(Vidrio.class);
+                repositoryService.removeAll(Empresa.class);
             }
         };
     }
