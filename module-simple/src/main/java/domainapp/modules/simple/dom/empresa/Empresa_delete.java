@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
         executionPublishing = Publishing.ENABLED
 )
 @ActionLayout(
-        associateWith = "nombre", position = ActionLayout.Position.PANEL,
-        describedAs = "Elimina este objeto de la base de datos.")
+        associateWith = "name", position = ActionLayout.Position.PANEL,
+        describedAs = "Eliminaras esta Empresa de la base de datos, y todo lo que esta contenga.")
 @RequiredArgsConstructor
 public class Empresa_delete {
 	 public static class ActionEvent extends ActionDomainEvent<Empresa_delete>{}

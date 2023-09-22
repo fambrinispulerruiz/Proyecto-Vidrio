@@ -142,7 +142,7 @@ public class Empresa implements Comparable<Empresa> {
 
 
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @ActionLayout(associateWith = "nombre")
+    @ActionLayout(associateWith = "name")
     public Empresa updateName(
             @Nombre final String nombre,
             		final String domicilio,
