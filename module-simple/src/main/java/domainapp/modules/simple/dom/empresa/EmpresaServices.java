@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @DomainService(
         nature = NatureOfService.VIEW,
-        logicalTypeName = "vidrios.Empresas"
+        logicalTypeName = "simple.Empresas"
 )
 @Priority(PriorityPrecedence.EARLY)
 @RequiredArgsConstructor(onConstructor_ = {@Inject} )
@@ -46,7 +46,7 @@ public class EmpresaServices {
 
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public List<Empresa> findByLastNameLike(
+    public List<Empresa> findByNombreLike(
             @Nombre final String nombre) {
         return repositoryService.allMatches(
                 Query.named(Empresa.class, Empresa.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
@@ -56,16 +56,16 @@ public class EmpresaServices {
 
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Empresa> findByLastName(
+    public List<Empresa> findByNombre(
             @Nombre final String nombre
             ) {
-        return empresaRepository.buscarPorNombreLista(nombre);
+        return empresaRepository.findByNombreContaining(nombre);
     }
 
 
     @Programmatic
-    public Empresa findByLastNameExact(final String nombre) {
-        return empresaRepository.buscarPorNombre(nombre);
+    public Empresa findByNombreExact(final String nombre) {
+        return empresaRepository.findByNombre(nombre);
     }
 
 

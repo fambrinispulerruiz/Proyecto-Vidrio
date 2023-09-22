@@ -50,7 +50,7 @@ implements PersonaWithBuilderScript<VidrioBuilder>, PersonaWithFinder<Vidrio> {
     public Vidrio findUsing(final ServiceRegistry serviceRegistry) {
         Empresa empresa = empresa_persona.findUsing(serviceRegistry);
         VidrioRepository vidrioRepository = serviceRegistry.lookupService(VidrioRepository.class).orElseThrow();
-        return vidrioRepository.buscarPorEmpresaYNombre(empresa, nombre).orElse(null);
+        return vidrioRepository.findByEmpresaAndNombre(empresa, nombre).orElse(null);
     }
 
     public static class PersistAll

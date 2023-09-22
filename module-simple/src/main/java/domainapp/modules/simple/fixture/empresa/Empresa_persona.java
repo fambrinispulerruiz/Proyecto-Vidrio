@@ -53,7 +53,7 @@ public enum Empresa_persona implements PersonaWithBuilderScript<EmpresaBuilder>,
 	@Override
 	public Empresa findUsing(final ServiceRegistry serviceRegistry) {
 		EmpresaServices empresas = serviceRegistry.lookupService(EmpresaServices.class).orElse(null);
-		return empresas.findByLastNameExact(nombre);
+		return empresas.findByNombreExact(nombre);
 	}
 
 	public static class PersistAll extends PersonaEnumPersistAll<Empresa_persona, Empresa> {

@@ -23,7 +23,7 @@ public class Listener_eliminarVidrios {
         switch(ev.getEventPhase()) {
             case EXECUTING:
                 Empresa empresa = ev.getSubject();
-                List<Vidrio> vidrios = vidrioRepository.buscarPorEmpresa(empresa);
+                List<Vidrio> vidrios = vidrioRepository.findByEmpresa(empresa);
                 vidrios.forEach(repositoryService::remove);
                 break;
 		default:

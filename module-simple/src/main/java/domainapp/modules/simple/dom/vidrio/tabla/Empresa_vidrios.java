@@ -21,7 +21,7 @@ public class Empresa_vidrios {
 	 private final Empresa empresa;
 
 	    public List<Vidrio> coll() {
-	        return vidrioRepository.buscarPorEmpresa(empresa);
+	        return vidrioRepository.findByEmpresa(empresa);
 	    }
 
 	    @Inject VidrioRepository vidrioRepository;

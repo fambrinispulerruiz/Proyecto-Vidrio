@@ -42,11 +42,11 @@ public class VidrioBuilder extends BuilderScriptWithResult<Vidrio> {
 
         Empresa empresa = ec.executeChildT(this, empresa_persona.builder()).getObject();
 
-        Vidrio vidrio = vidrioRepository.buscarPorEmpresaYNombre(empresa, nombre).orElse(null);
+        Vidrio vidrio = vidrioRepository.findByEmpresaAndNombre(empresa, nombre).orElse(null);
         
         if(vidrio == null) {
-            wrapMixin(Empresa_agregarVidrio.class, empresa).act(nombre, codigo, empresa, modelo, precio, tipoVidrio, antena, sensor);
-            vidrio = vidrioRepository.buscarPorEmpresaYNombre(empresa, nombre).orElseThrow();
+            wrapMixin(Empresa_agregarVidrio.class, empresa).act(nombre, codigo, modelo, precio, tipoVidrio, antena, sensor);
+            vidrio = vidrioRepository.findByEmpresaAndNombre(empresa, nombre).orElseThrow();
         }
 
         return this.object = vidrio;

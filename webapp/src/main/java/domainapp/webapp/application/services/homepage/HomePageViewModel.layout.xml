@@ -19,8 +19,11 @@
         </bs3:col>
         <bs3:col span="6" unreferencedCollections="true">
             <bs3:row>
-                <bs3:col span="12">
-                    <collection id="objects" defaultView="table"/>
+                <bs3:col span="6">
+                    <collection id="empresas" defaultView="table"/>
+                </bs3:col>
+                 <bs3:col span="6">
+                    <collection id="vidrios" defaultView="table"/>
                 </bs3:col>
             </bs3:row>
         </bs3:col>

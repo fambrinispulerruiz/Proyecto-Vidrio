@@ -28,15 +28,15 @@ public class Empresa_eliminarVidrio {
     private final Empresa empresa;
 
     public Empresa act(final String nombre) {
-        vidrioRepository.buscarPorEmpresaYNombre(empresa, nombre)
+        vidrioRepository.findByEmpresaAndNombre(empresa, nombre)
                 .ifPresent(vidrio -> repositoryService.remove(vidrio));
         return empresa;
     }
     public String disableAct() {
-        return vidrioRepository.buscarPorEmpresa(empresa).isEmpty() ? "No hay vidrios." : null;
+        return vidrioRepository.findByEmpresa(empresa).isEmpty() ? "No hay vidrios." : null;
     }
     public List<String> choices0Act() {
-        return vidrioRepository.buscarPorEmpresa(empresa)
+        return vidrioRepository.findByEmpresa(empresa)
                 .stream()
                 .map(Vidrio::getNombre)
                 .collect(Collectors.toList());

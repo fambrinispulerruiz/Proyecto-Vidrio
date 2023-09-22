@@ -10,6 +10,6 @@ import domainapp.modules.simple.dom.empresa.Empresa;
 
 public interface VidrioRepository extends JpaRepository<Vidrio, Long> {
 
-    List<Vidrio> buscarPorEmpresa(Empresa empresa);
-    Optional<Vidrio> buscarPorEmpresaYNombre(Empresa empresa, String nombre);
+    List<Vidrio> findByEmpresa(Empresa empresa);
+    Optional<Vidrio> findByEmpresaAndNombre(Empresa empresa, String nombre);
 }

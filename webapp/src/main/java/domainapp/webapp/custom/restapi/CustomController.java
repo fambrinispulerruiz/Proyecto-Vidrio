@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import domainapp.modules.simple.dom.vidrio.Vidrio;
-import domainapp.modules.simple.dom.vidrio.VidrioServices;
+import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.empresa.EmpresaServices;
 
 import org.apache.isis.applib.services.iactnlayer.InteractionContext;
 import org.apache.isis.applib.services.iactnlayer.InteractionService;
@@ -26,12 +26,12 @@ class CustomController {
 
     private final InteractionService interactionService;
     private final TransactionalProcessor transactionalProcessor;
-    private final VidrioServices simpleObjects;
+    private final EmpresaServices empresas;
 
-    @GetMapping("/custom/simpleObjects")
-    List<Vidrio> all() {
-        return call("sven", simpleObjects::verVidrios)
-                .orElse(Collections.<Vidrio>emptyList());
+    @GetMapping("/custom/empresas")
+    List<Empresa> all() {
+        return call("sven", empresas::listAll)
+                .orElse(Collections.<Empresa>emptyList());
     }
 
     private <T> Optional<T> call(

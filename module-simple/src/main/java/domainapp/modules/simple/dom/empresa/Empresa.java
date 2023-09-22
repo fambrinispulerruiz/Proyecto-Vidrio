@@ -47,7 +47,7 @@ import domainapp.modules.simple.types.Nombre;
 
 @Entity
 @Table(
-    schema="vidrios",
+    schema="simple",
     name = "Empresa",
     uniqueConstraints = {
         @UniqueConstraint(name = "Empresa__nombre__UNQ", columnNames = {"nombre"})

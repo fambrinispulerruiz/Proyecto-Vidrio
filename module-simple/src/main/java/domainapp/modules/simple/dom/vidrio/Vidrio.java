@@ -39,7 +39,7 @@ import jdk.jfr.Label;
 
 @Entity
 @Table(
-    schema="vidrios",
+    schema="simple",
     name = "Vidrio",
     uniqueConstraints = {
         @UniqueConstraint(name = "Empresa_nombre__UNQ", columnNames = {"empresa_id", "nombre"})
@@ -88,45 +88,45 @@ public class Vidrio implements Comparable<Vidrio> {
     @PropertyLayout(fieldSetId = "nombre", sequence = "1")
     private String nombre;
     
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "codigo", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "codigo", sequence = "1")
+    @PropertyLayout(fieldSetId = "nombre", sequence = "1")
     private String codigo;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "empresa_id")
-    @PropertyLayout(fieldSetId = "empresa", sequence = "2")
+    @PropertyLayout(fieldSetId = "nombre", sequence = "2")
     @Getter @Setter
     private Empresa empresa;
     
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "modelo", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "modelo", sequence = "1")
+    @PropertyLayout(fieldSetId = "details", sequence = "1")
     private String modelo;
     
-    @Column(name = "details", nullable = false)
+    @Column(name = "precio", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "precio", sequence = "2")
+    @PropertyLayout(fieldSetId = "details", sequence = "2")
     private double precio;
 
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "details", nullable = false)
+    @Column(name = "tipoVidrio", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "tipoVidrio", sequence = "1")
+    @PropertyLayout(fieldSetId = "details", sequence = "1")
     private TipoVidrio tipoVidrio;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "details", nullable = false)
+    @Column(name = "antena", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "antena", sequence = "3")
+    @PropertyLayout(fieldSetId = "details", sequence = "3")
     @Label("¿Posee Antena?")
     private Antena antena;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "details", nullable = false)
+    @Column(name = "sensor", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "sensor", sequence = "4")
+    @PropertyLayout(fieldSetId = "details", sequence = "4")
     @Label("¿Posee Sensor de Lluvia?")
     private SensorLluvia sensor;
 

@@ -42,7 +42,7 @@ public class EmpresaBuilder extends BuilderScriptWithResult<Empresa> {
         
         checkParam("tipoEmpresa", ec, TipoEmpresa.class);
 
-        Empresa empresa = empresas.findByLastNameExact(nombre);
+        Empresa empresa = empresas.findByNombreExact(nombre);
         if(empresa == null) {
             empresa = wrap(empresas).create(nombre, domicilio, telefono, correo, tipoEmpresa);
         }

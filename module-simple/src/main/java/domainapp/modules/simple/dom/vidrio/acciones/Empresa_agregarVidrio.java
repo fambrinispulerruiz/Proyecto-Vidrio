@@ -30,7 +30,6 @@ public class Empresa_agregarVidrio {
     public Empresa act(
             final String nombre,
             final String codigo,
-            final Empresa empresa,
             final String modelo,
             final double precio,
             final TipoVidrio tipoVidrio,
@@ -42,7 +41,7 @@ public class Empresa_agregarVidrio {
         return empresa;
     }
     public String validate0Act(final String nombre) {
-        return vidrioRepository.buscarPorEmpresaYNombre(empresa, nombre).isPresent()
+        return vidrioRepository.findByEmpresaAndNombre(empresa, nombre).isPresent()
                 ? String.format("El Vidrio con el nombre '%s' ya existe para esta empresa.", nombre)
                 : null;
     }

@@ -12,8 +12,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
 
-import domainapp.modules.simple.dom.vidrio.Vidrio;
-import domainapp.modules.simple.dom.vidrio.VidrioServices;
+import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.empresa.EmpresaServices;
 
 import org.apache.isis.applib.services.iactnlayer.InteractionContext;
 import org.apache.isis.applib.services.iactnlayer.InteractionService;
@@ -30,17 +30,17 @@ public class SampleJob implements Job {
 
     private final InteractionService interactionService;
     private final TransactionalProcessor transactionalProcessor;
-    private final VidrioServices simpleObjects;
+    private final EmpresaServices empresas;
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        final List<Vidrio> all = all();
-        log.info("{} objects in the database", all.size());
+        final List<Empresa> all = all();
+        log.info("{} empresas en la base de datos.", all.size());
     }
 
-    List<Vidrio> all() {
-        return call("sven", simpleObjects::verVidrios)
-                .orElse(Collections.<Vidrio>emptyList());
+    List<Empresa> all() {
+        return call("sven", empresas::listAll)
+                .orElse(Collections.<Empresa>emptyList());
     }
 
     private <T> Optional<T> call(
