@@ -7,7 +7,7 @@ import org.apache.isis.testing.fixtures.applib.setup.PersonaEnumPersistAll;
 
 import domainapp.modules.simple.dom.empresa.Empresa;
 import domainapp.modules.simple.dom.empresa.EmpresaServices;
-import domainapp.modules.simple.dom.empresa.TipoEmpresa;
+import domainapp.modules.simple.dom.empresa.enumeradores.TipoEmpresa;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

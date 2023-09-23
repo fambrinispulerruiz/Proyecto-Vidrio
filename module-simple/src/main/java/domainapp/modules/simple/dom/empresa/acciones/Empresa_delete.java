@@ -1,4 +1,4 @@
-package domainapp.modules.simple.dom.empresa;
+package domainapp.modules.simple.dom.empresa.acciones;
 
 import javax.inject.Inject;
 
@@ -9,6 +9,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.events.domain.ActionDomainEvent;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.modules.simple.dom.empresa.Empresa;
 import lombok.RequiredArgsConstructor;
 
 

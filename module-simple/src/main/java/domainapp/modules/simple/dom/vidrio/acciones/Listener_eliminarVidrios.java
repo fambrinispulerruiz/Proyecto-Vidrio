@@ -9,7 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import domainapp.modules.simple.dom.empresa.Empresa;
-import domainapp.modules.simple.dom.empresa.Empresa_delete;
+import domainapp.modules.simple.dom.empresa.acciones.Empresa_delete;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 import domainapp.modules.simple.dom.vidrio.VidrioRepository;
 

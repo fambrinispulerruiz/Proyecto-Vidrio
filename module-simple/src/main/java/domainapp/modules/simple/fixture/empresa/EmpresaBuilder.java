@@ -6,7 +6,7 @@ import org.apache.isis.testing.fixtures.applib.personas.BuilderScriptWithResult;
 
 import domainapp.modules.simple.dom.empresa.Empresa;
 import domainapp.modules.simple.dom.empresa.EmpresaServices;
-import domainapp.modules.simple.dom.empresa.TipoEmpresa;
+import domainapp.modules.simple.dom.empresa.enumeradores.TipoEmpresa;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

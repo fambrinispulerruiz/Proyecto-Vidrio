@@ -18,6 +18,7 @@ import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.persistence.jpa.applib.services.JpaSupportService;
 
+import domainapp.modules.simple.dom.empresa.enumeradores.TipoEmpresa;
 import domainapp.modules.simple.types.Nombre;
 import lombok.RequiredArgsConstructor;
 

@@ -42,6 +42,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.val;
+import domainapp.modules.simple.dom.empresa.enumeradores.TipoEmpresa;
 import domainapp.modules.simple.types.Nombre;
 
 
