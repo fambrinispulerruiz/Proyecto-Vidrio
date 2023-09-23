@@ -1,5 +1,7 @@
 package domainapp.modules.simple.dom.vidrio;
 
+import static org.apache.isis.applib.annotation.SemanticsOf.IDEMPOTENT;
+
 import java.util.Comparator;
 
 import javax.persistence.Column;
@@ -17,6 +19,8 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.PropertyLayout;
@@ -80,7 +84,7 @@ public class Vidrio implements Comparable<Vidrio> {
 
 
     public String title() {
-        return getNombre() + " (" + getEmpresa().getNombre() + ", " + getModelo();
+        return getNombre() + " <span style='font-size: smaller;'>(" + getEmpresa().getNombre() + ", " + getModelo() + ")</span>";
     }
 
     @Column(name = "nombre", length = Nombre.MAX_LEN, nullable = false)
@@ -129,7 +133,49 @@ public class Vidrio implements Comparable<Vidrio> {
     @PropertyLayout(fieldSetId = "details", sequence = "4")
     @Label("¿Posee Sensor de Lluvia?")
     private SensorLluvia sensor;
-
+    
+    @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+    @ActionLayout(associateWith = "nombre")
+    public Vidrio updateName(
+            		final String nombre,
+            		final String codigo,
+            		final String modelo,
+            		final double precio,
+            		final TipoVidrio tipoVidrio,
+            		final Antena antena,
+            		final SensorLluvia sensor) {
+        setNombre(nombre);
+        setCodigo(codigo);
+        setModelo(modelo);
+        setPrecio(precio);
+        setTipoVidrio(tipoVidrio);
+        setAntena(antena);
+        setSensor(sensor);
+       
+        return this;
+    }
+    
+    public String default0UpdateName() {
+        return getNombre();
+    }
+    public String default1UpdateName() {
+        return getCodigo();
+    }
+    public String default2UpdateName() {
+        return getModelo();
+    }
+    public double default3UpdateName() {
+        return getPrecio();
+    }
+    public TipoVidrio default4UpdateName() {
+        return getTipoVidrio();
+    }
+    public Antena default5UpdateName() {
+        return getAntena();
+    }
+    public SensorLluvia default6UpdateName() {
+        return getSensor();
+    }
 
     private final static Comparator<Vidrio> comparator =
             Comparator.comparing(Vidrio::getEmpresa).thenComparing(Vidrio::getNombre);

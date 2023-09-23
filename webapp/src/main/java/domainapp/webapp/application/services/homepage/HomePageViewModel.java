@@ -23,7 +23,7 @@ import domainapp.modules.simple.dom.vidrio.VidrioRepository;
 public class HomePageViewModel {
 
     public String title() {
-        return getEmpresas().size() + " objects";
+        return getEmpresas().size() + " Empresas";
     }
 
     public List<Empresa> getEmpresas() {
