@@ -84,7 +84,7 @@ public class Vidrio implements Comparable<Vidrio> {
 
 
     public String title() {
-        return getNombre() + " <span style='font-size: smaller;'>(" + getEmpresa().getNombre() + ", " + getModelo() + ")</span>";
+        return getNombre() + " (" + getEmpresa().getNombre() + ", " + getModelo() + ")";
     }
 
     @Column(name = "nombre", length = Nombre.MAX_LEN, nullable = false)

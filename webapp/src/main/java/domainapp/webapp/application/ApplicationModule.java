@@ -4,10 +4,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import domainapp.modules.simple.VidriosModule;
+import domainapp.modules.simple.OrdenesModule;
 
 @Configuration
-@Import(VidriosModule.class)
+@Import(OrdenesModule.class)
 @ComponentScan
 public class ApplicationModule {
 

@@ -15,7 +15,7 @@
 			</mb3:section>
 		</mb3:menu>
 		<mb3:menu unreferencedActions="true">
-			<mb3:named>Buscar</mb3:named>
+			<mb3:named>Buscar Empresas</mb3:named>
 			<mb3:section>
 				<mb3:serviceAction objectType="simple.Empresas"
 					id="findByName" />
