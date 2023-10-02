@@ -47,7 +47,7 @@ import lombok.ToString;
     schema="simple",
     name = "OrdenDeTrabajo",
     uniqueConstraints = {
-        @UniqueConstraint(name = "OrdenDeTrabajo__vidrio_fecha__UNQ", columnNames = {"empresa_id", "nombre"})
+        @UniqueConstraint(name = "OrdenDeTrabajo__vidrio_fecha__UNQ", columnNames = {"modelo_id", "nombre"})
     }
 )
 @EntityListeners(IsisEntityListener.class)

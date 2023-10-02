@@ -33,7 +33,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.vidrio.enumeradores.Antena;
 import domainapp.modules.simple.dom.vidrio.enumeradores.SensorLluvia;
 import domainapp.modules.simple.dom.vidrio.enumeradores.TipoVidrio;
@@ -46,7 +46,7 @@ import jdk.jfr.Label;
     schema="simple",
     name = "Vidrio",
     uniqueConstraints = {
-        @UniqueConstraint(name = "Empresa_nombre__UNQ", columnNames = {"empresa_id", "nombre"})
+        @UniqueConstraint(name = "Modelo_nombre__UNQ", columnNames = {"modelo_id", "nombre"})
     }
 )
 @EntityListeners(IsisEntityListener.class)
@@ -71,10 +71,9 @@ public class Vidrio implements Comparable<Vidrio> {
     private long version;
 
 
-    public Vidrio(String nombre, String codigo, Empresa empresa, String modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
+    public Vidrio(String nombre, String codigo, Modelo modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
         this.nombre = nombre;
         this.codigo = codigo;
-        this.empresa = empresa;
         this.modelo = modelo;
         this.precio = precio;
         this.tipoVidrio = tipoVidrio;
@@ -84,7 +83,7 @@ public class Vidrio implements Comparable<Vidrio> {
 
 
     public String title() {
-        return getNombre() + " (" + getEmpresa().getNombre() + ", " + getModelo() + ")";
+        return getNombre() + " (" + getModelo().getNombre() + ")";
     }
 
     @Column(name = "nombre", length = Nombre.MAX_LEN, nullable = false)
@@ -98,16 +97,12 @@ public class Vidrio implements Comparable<Vidrio> {
     private String codigo;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "empresa_id")
+    @JoinColumn(name = "modelo_id")
     @PropertyLayout(fieldSetId = "nombre", sequence = "2")
     @Getter @Setter
-    private Empresa empresa;
+    private Modelo modelo;
     
-    @Column(name = "modelo", nullable = false)
-    @Getter @Setter
-    @PropertyLayout(fieldSetId = "details", sequence = "1")
-    private String modelo;
-    
+   
     @Column(name = "precio", nullable = false)
     @Getter @Setter
     @PropertyLayout(fieldSetId = "details", sequence = "2")
@@ -139,14 +134,12 @@ public class Vidrio implements Comparable<Vidrio> {
     public Vidrio updateName(
             		final String nombre,
             		final String codigo,
-            		final String modelo,
             		final double precio,
             		final TipoVidrio tipoVidrio,
             		final Antena antena,
             		final SensorLluvia sensor) {
         setNombre(nombre);
         setCodigo(codigo);
-        setModelo(modelo);
         setPrecio(precio);
         setTipoVidrio(tipoVidrio);
         setAntena(antena);
@@ -161,24 +154,22 @@ public class Vidrio implements Comparable<Vidrio> {
     public String default1UpdateName() {
         return getCodigo();
     }
-    public String default2UpdateName() {
-        return getModelo();
-    }
-    public double default3UpdateName() {
+
+    public double default2UpdateName() {
         return getPrecio();
     }
-    public TipoVidrio default4UpdateName() {
+    public TipoVidrio default3UpdateName() {
         return getTipoVidrio();
     }
-    public Antena default5UpdateName() {
+    public Antena default4UpdateName() {
         return getAntena();
     }
-    public SensorLluvia default6UpdateName() {
+    public SensorLluvia default5UpdateName() {
         return getSensor();
     }
 
     private final static Comparator<Vidrio> comparator =
-            Comparator.comparing(Vidrio::getEmpresa).thenComparing(Vidrio::getNombre);
+            Comparator.comparing(Vidrio::getModelo).thenComparing(Vidrio::getNombre);
 
     @Override
     public int compareTo(final Vidrio other) {

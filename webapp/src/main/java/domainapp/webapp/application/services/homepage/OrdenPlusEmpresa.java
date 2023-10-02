@@ -14,8 +14,8 @@ import org.apache.isis.applib.annotation.Projecting;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
 
-
 import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajo;
 import domainapp.modules.simple.dom.ordenes_trabajo.enumeradores.Aseguradora;
 import domainapp.modules.simple.dom.ordenes_trabajo.enumeradores.Estado;
@@ -53,8 +53,12 @@ public class OrdenPlusEmpresa {
     public Propio getPropio() {return ordenT.getPropio();}
     public String getObservaciones() {return ordenT.getObservaciones();}
     public Estado getEstado() {return ordenT.getEstado();}
-
+    
+    public Modelo getModelo() {
+        return getVidrio().getModelo();
+    }
+    
     public Empresa getEmpresa() {
-        return getVidrio().getEmpresa();
+        return getModelo().getEmpresa();
     }
 }

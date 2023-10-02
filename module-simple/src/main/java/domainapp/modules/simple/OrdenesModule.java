@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajo;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 
@@ -24,6 +25,7 @@ public class OrdenesModule implements ModuleWithFixtures {
             @Override
             protected void execute(ExecutionContext executionContext) {
                 repositoryService.removeAll(Vidrio.class);
+                repositoryService.removeAll(Modelo.class);
                 repositoryService.removeAll(Empresa.class);
                 repositoryService.removeAll(OrdenDeTrabajo.class);
             }

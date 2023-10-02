@@ -14,16 +14,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Empresa_persona implements PersonaWithBuilderScript<EmpresaBuilder>, PersonaWithFinder<Empresa> {
 
-	JONES("Jones Motors", "123 Main St", "555-1234", "jones@example.com", TipoEmpresa.Cliente),
-	FARRELL("Farrell Auto", "456 Elm St", "555-5678", "farrell@example.com", TipoEmpresa.Proveedor),
-	UNDERHILL("Underhill Cars", "789 Oak St", "555-9876", "underhill@example.com", TipoEmpresa.Cliente),
+	TOYOTA("Toyota Motor Corporation", "1 Toyota Ave", "800-TOYOTA", "toyota@example.com", TipoEmpresa.Proveedor),
+	VOLKSWAGEN("Volkswagen Group", "123 Volkswagen St", "800-VW-CARS", "vw@example.com", TipoEmpresa.Proveedor),
 	FORD("Ford Motor Company", "1 Ford Dr", "800-FORD-CAR", "ford@example.com", TipoEmpresa.Proveedor),
-	YOUNGS("Youngs Automotive", "234 Birch St", "555-4321", "youngs@example.com", TipoEmpresa.Cliente),
-	MAY("May Motors", "567 Pine St", "555-8765", "may@example.com", TipoEmpresa.Proveedor),
-	GENGE("Genge Vehicles", "890 Cedar St", "555-2345", "genge@example.com", TipoEmpresa.Cliente),
-	EWELS("Ewels Autos", "123 Spruce St", "555-6543", "ewels@example.com", TipoEmpresa.Proveedor),
-	VUNIPOLA("Vunipola Cars", "456 Maple St", "555-7654", "vunipola@example.com", TipoEmpresa.Proveedor),
-	ITOJE("Itoje Automotive", "789 Walnut St", "555-8765", "itoje@example.com", TipoEmpresa.Cliente);
+	HONDA("Honda Motor Co., Ltd.", "456 Honda St", "800-HONDA", "honda@example.com", TipoEmpresa.Proveedor),
+	NISSAN("Nissan Motor Co., Ltd.", "789 Nissan St", "800-NISSAN", "nissan@example.com", TipoEmpresa.Proveedor),
+	BMW("Bayerische Motoren Werke AG", "123 BMW Strasse", "800-BMW-CARS", "bmw@example.com", TipoEmpresa.Proveedor),
+	HYUNDAI("Hyundai Motor Company", "456 Hyundai St", "800-HYUNDAI", "hyundai@example.com", TipoEmpresa.Proveedor),
+	MERCEDES("Mercedes-Benz AG", "789 Mercedes Strasse", "800-MERCEDES", "mercedes@example.com", TipoEmpresa.Proveedor),
+	AUDI("Audi AG", "123 Audi Strasse", "800-AUDI-CAR", "audi@example.com", TipoEmpresa.Proveedor),
+	CHEVROLET("Chevrolet", "456 Chevy St", "800-CHEVY", "chevrolet@example.com", TipoEmpresa.Proveedor);
+
 
 	@Getter
 	private final String nombre;

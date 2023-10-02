@@ -13,6 +13,8 @@ import org.apache.isis.applib.annotation.Nature;
 
 import domainapp.modules.simple.dom.empresa.Empresa;
 import domainapp.modules.simple.dom.empresa.EmpresaRepository;
+import domainapp.modules.simple.dom.modelo.Modelo;
+import domainapp.modules.simple.dom.modelo.ModeloRepository;
 import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajoRepository;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 import domainapp.modules.simple.dom.vidrio.VidrioRepository;
@@ -33,6 +35,10 @@ public class HomePageViewModel {
         return empresas.findAll();
     }
     
+    public List<Modelo> getModelos() {
+        return modelos.findAll();
+    }
+    
     @CollectionLayout(named = "Vidrios Disponibles") 
     public List<Vidrio> getVidrios() {
         return vidrios.findAll();
@@ -47,6 +53,7 @@ public class HomePageViewModel {
     }
     
     @Inject EmpresaRepository empresas;
+    @Inject ModeloRepository modelos;
     @Inject VidrioRepository vidrios;
     @Inject OrdenDeTrabajoRepository ordenRepository;
 }

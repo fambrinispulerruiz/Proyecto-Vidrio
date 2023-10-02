@@ -5,11 +5,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.modelo.Modelo;
 
 
 public interface VidrioRepository extends JpaRepository<Vidrio, Long> {
 
-    List<Vidrio> findByEmpresa(Empresa empresa);
-    Optional<Vidrio> findByEmpresaAndNombre(Empresa empresa, String nombre);
+    List<Vidrio> findByModelo(Modelo modelo);
+    Optional<Vidrio> findByModeloAndNombre(Modelo modelo, String nombre);
 }

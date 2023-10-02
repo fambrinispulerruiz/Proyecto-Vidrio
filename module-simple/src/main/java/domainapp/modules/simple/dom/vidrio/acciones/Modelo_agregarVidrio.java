@@ -8,7 +8,7 @@ import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import domainapp.modules.simple.dom.empresa.Empresa;
+import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 import domainapp.modules.simple.dom.vidrio.VidrioRepository;
 import domainapp.modules.simple.dom.vidrio.enumeradores.Antena;
@@ -23,26 +23,25 @@ import lombok.RequiredArgsConstructor;
 )
 @ActionLayout(associateWith = "vidrios", sequence = "1")
 @RequiredArgsConstructor
-public class Empresa_agregarVidrio {
+public class Modelo_agregarVidrio {
 
-    private final Empresa empresa;
+    private final Modelo modelo;
 
-    public Empresa act(
+    public Modelo act(
             final String nombre,
             final String codigo,
-            final String modelo,
             final double precio,
             final TipoVidrio tipoVidrio,
             final Antena antena,
             final SensorLluvia sensor
             ) {
           
-        repositoryService.persist(new Vidrio(nombre, codigo, empresa, modelo, precio, tipoVidrio, antena, sensor));
-        return empresa;
+        repositoryService.persist(new Vidrio(nombre, codigo, modelo, precio, tipoVidrio, antena, sensor));
+        return modelo;
     }
     public String validate0Act(final String nombre) {
-        return vidrioRepository.findByEmpresaAndNombre(empresa, nombre).isPresent()
-                ? String.format("El Vidrio con el nombre '%s' ya existe para esta empresa.", nombre)
+        return vidrioRepository.findByModeloAndNombre(modelo, nombre).isPresent()
+                ? String.format("El Vidrio con el nombre '%s' ya existe registrado para este Modelo.", nombre)
                 : null;
     }
     public TipoVidrio default1Act() {
