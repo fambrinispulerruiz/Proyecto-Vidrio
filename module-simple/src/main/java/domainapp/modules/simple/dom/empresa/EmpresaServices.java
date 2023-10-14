@@ -1,5 +1,7 @@
 package domainapp.modules.simple.dom.empresa;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Priority;
@@ -16,11 +18,14 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.value.Blob;
 import org.apache.isis.persistence.jpa.applib.services.JpaSupportService;
 
 import domainapp.modules.simple.dom.empresa.enumeradores.TipoEmpresa;
+import domainapp.modules.simple.dom.reportes.Reportes;
 import domainapp.modules.simple.types.Nombre;
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.JRException;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -91,6 +96,14 @@ public class EmpresaServices {
                 q.getResultList();
             });
     }
-
+    
+  //REPORTE EMPRESA
+    @Programmatic
+    public Blob generarReporteEmpresa() throws JRException, IOException {
+        List<Empresa> empresas = new ArrayList<Empresa>();
+        Reportes reportes = new Reportes();
+        empresas = repositoryService.allInstances(Empresa.class);
+        return reportes.ListadoEmpresasPDF(empresas);
+    }
 
 }
