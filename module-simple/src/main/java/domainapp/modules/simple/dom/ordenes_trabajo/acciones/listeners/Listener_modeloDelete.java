@@ -1,9 +1,10 @@
-package domainapp.modules.simple.dom.ordenes_trabajo.acciones;
+package domainapp.modules.simple.dom.ordenes_trabajo.acciones.listeners;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.modelo.acciones.Modelo_delete;
 import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajo;
 import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajoRepository;
+import domainapp.modules.simple.dom.ordenes_trabajo.enumeradores.Estado;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 import domainapp.modules.simple.dom.vidrio.VidrioRepository;
 
@@ -23,15 +25,20 @@ public class Listener_modeloDelete {
 		switch (ev.getEventPhase()) {
 		case DISABLE:
 			Modelo modelo = ev.getSubject();
-				List<Vidrio> vidrios = vidrioRepository.findByModelo(modelo);
-				for (Vidrio vidrio : vidrios) {
-					List<OrdenDeTrabajo> ordenes = ordenRepository.findByVidrioOrderByFechaDesc(vidrio);
-					int numVisits = ordenes.size();
-					if (numVisits > 0) {
-						ev.disable(String.format("%s tiene %d orden%s de trabajo", titleService.titleOf(vidrio),
-								numVisits, numVisits != 1 ? "es" : ""));
-					}
+			List<Vidrio> vidrios = vidrioRepository.findByModelo(modelo);
+
+			for (Vidrio vidrio : vidrios) {
+				List<OrdenDeTrabajo> ordenes = ordenRepository.findByVidrioOrderByFechaDesc(vidrio);
+
+				// Verifica si hay alguna orden con estado diferente de "Finalizado"
+				boolean tieneOrdenesPendientes = ordenes.stream()
+						.anyMatch(orden -> orden.getEstado() != Estado.Finalizado_y_Entregado);
+
+				if (tieneOrdenesPendientes) {
+					ev.disable(String.format("%s tiene órdenes de trabajo pendientes", titleService.titleOf(vidrio)));
+					break; // No es necesario continuar verificando las demás órdenes
 				}
+			}
 			break;
 		}
 	}
@@ -42,4 +49,6 @@ public class Listener_modeloDelete {
 	OrdenDeTrabajoRepository ordenRepository;
 	@Inject
 	VidrioRepository vidrioRepository;
+	@Inject
+	RepositoryService repositoryService;
 }

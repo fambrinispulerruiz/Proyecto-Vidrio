@@ -16,4 +16,5 @@ public interface ModeloRepository extends JpaRepository<Modelo, Long> {
 	List<Modelo> findByEmpresa(Empresa empresa);
 
 	Optional<Modelo> findByEmpresaAndNombre(Empresa empresa, String nombre);
+	
 }

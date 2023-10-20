@@ -90,12 +90,14 @@ public class Modelo implements Comparable<Modelo> {
     public Modelo(String nombre, Empresa empresa) {
     	 this.nombre = nombre;
          this.empresa = empresa;
+         this.activo = true;
     }
 
     public static Modelo withName(String nombre, Empresa empresa) {
         val modelo = new Modelo();
         modelo.setNombre(nombre);
         modelo.setEmpresa(empresa);
+        modelo.setActivo(true);
         return modelo;
     }
 
@@ -120,11 +122,16 @@ public class Modelo implements Comparable<Modelo> {
     @Getter @Setter
     private Empresa empresa;
     
+    @Column(name = "activo", nullable = false)
+    @Getter @Setter
+    private boolean activo;
+
+    
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
     @ActionLayout(associateWith = "nombre")
     public Modelo updateName(
             		final String nombre) {
-        setNombre(nombre);;
+        setNombre(nombre);
        
         return this;
     }

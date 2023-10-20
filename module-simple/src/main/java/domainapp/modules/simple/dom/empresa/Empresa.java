@@ -96,6 +96,7 @@ public class Empresa implements Comparable<Empresa> {
         empresa.setTelefono(telefono);
         empresa.setCorreo(correo);
         empresa.setTipoEmpresa(tipoEmpresa);
+        empresa.setActivo(true);
         return empresa;
     }
 
@@ -141,6 +142,9 @@ public class Empresa implements Comparable<Empresa> {
     @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
     private TipoEmpresa tipoEmpresa;
 
+    @Column(name = "activo", nullable = false)
+    @Getter @Setter
+    private boolean activo;
 
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
     @ActionLayout(associateWith = "name")
@@ -155,6 +159,7 @@ public class Empresa implements Comparable<Empresa> {
         setTelefono(telefono);
         setCorreo(correo);
         setTipoEmpresa(tipoEmpresa);
+        setActivo(true);
         return this;
     }
     public String default0UpdateName() {

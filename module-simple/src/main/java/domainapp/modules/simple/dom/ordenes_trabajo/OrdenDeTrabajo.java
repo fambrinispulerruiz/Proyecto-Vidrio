@@ -15,17 +15,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.Publishing;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.jaxb.PersistentEntityAdapter;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.persistence.jpa.applib.integration.IsisEntityListener;
@@ -41,6 +46,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.val;
 
 @Entity
 @Table(
@@ -50,6 +56,14 @@ import lombok.ToString;
         @UniqueConstraint(name = "OrdenDeTrabajo__vidrio_fecha__UNQ", columnNames = {"modelo_id", "nombre"})
     }
 )
+@NamedQueries({
+    @NamedQuery(
+            name = OrdenDeTrabajo.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE,
+            query = "SELECT so " +
+                    "FROM OrdenDeTrabajo so " +
+                    "WHERE so.nombreAsegurado LIKE :nombreAsegurado"
+    )
+})
 @EntityListeners(IsisEntityListener.class)
 @DomainObject(logicalTypeName = "simple.OrdenDeTrabajo", entityChangePublishing = Publishing.ENABLED)
 @DomainObjectLayout()
@@ -58,6 +72,8 @@ import lombok.ToString;
 @ToString(onlyExplicitlyIncluded = true)
 public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
 
+	 static final String NAMED_QUERY__FIND_BY_LAST_NAME_LIKE = "OrdenDeTrabajo.findByLastNameLike";
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -71,6 +87,27 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
     @Getter @Setter
     private long version;
 
+    public static OrdenDeTrabajo withName(Vidrio vidrio) {
+        return withName(vidrio);
+    }
+    
+    public static OrdenDeTrabajo withName(Vidrio vidrio, LocalDateTime fecha, String nombreAsegurado, String telefonoAsegurado, Aseguradora aseguradora, int nroSiniestro, TraeOrden orden, String patente, Propio propio, String observaciones, Estado estado) {
+        val ordenDeTrabajo = new OrdenDeTrabajo();
+        ordenDeTrabajo.setVidrio(vidrio);
+        ordenDeTrabajo.setFecha(fecha);
+        ordenDeTrabajo.setNombreAsegurado(nombreAsegurado);
+        ordenDeTrabajo.setTelefonoAsegurado(telefonoAsegurado);
+        ordenDeTrabajo.setAseguradora(aseguradora);
+        ordenDeTrabajo.setNroSiniestro(nroSiniestro);
+        ordenDeTrabajo.setOrden(orden);
+        ordenDeTrabajo.setPatente(patente);
+        ordenDeTrabajo.setPropio(propio);
+        ordenDeTrabajo.setObservaciones(observaciones);
+        ordenDeTrabajo.setEstado(estado);
+        ordenDeTrabajo.setActivo(true);
+        return ordenDeTrabajo;
+    }
+    
 
     public OrdenDeTrabajo(Vidrio vidrio, LocalDateTime fecha, String nombreAsegurado, String telefonoAsegurado, Aseguradora aseguradora, int nroSiniestro, TraeOrden orden, String patente, Propio propio, String observaciones, Estado estado) {
         this.vidrio = vidrio;
@@ -84,6 +121,7 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
         this.propio = propio;
         this.observaciones = observaciones;
         this.estado = estado;
+        this.activo = true;
     }
 
 
@@ -152,7 +190,24 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
     @Getter @Setter
     @PropertyLayout(fieldSetId = "details", sequence = "6")
     private Estado estado;
+    
+    @Column(name = "activo", nullable = false)
+    @Getter @Setter
+    private boolean activo;
 
+    @Action(semantics = SemanticsOf.IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+	@ActionLayout(associateWith = "details")
+	public OrdenDeTrabajo cambiarEstadoDeLaOrden(
+
+			final Estado estado) {
+		setEstado(estado);
+		return this;
+	}
+
+	public Estado default0CambiarEstadoDeLaOrden() {
+		return getEstado();
+	}
+    
     private final static Comparator<OrdenDeTrabajo> comparator =
             Comparator.comparing(OrdenDeTrabajo::getVidrio).thenComparing(OrdenDeTrabajo::getFecha);
 
