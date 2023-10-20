@@ -14,6 +14,10 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import domainapp.modules.simple.dom.empresa.Empresa;
 import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.modelo.ModeloRepository;
+import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajo;
+import domainapp.modules.simple.dom.ordenes_trabajo.OrdenDeTrabajoRepository;
+import domainapp.modules.simple.dom.vidrio.Vidrio;
+import domainapp.modules.simple.dom.vidrio.VidrioRepository;
 import lombok.RequiredArgsConstructor;
 
 
@@ -29,8 +33,26 @@ public class Empresa_eliminarModelo {
     private final Empresa empresa;
 
     public Empresa act(final String nombre) {
-    	modeloRepository.findByEmpresaAndNombre(empresa, nombre)
-                .ifPresent(modelo -> repositoryService.remove(modelo));
+        Modelo modelo = modeloRepository.findByNombre(nombre);
+            // Marcar el modelo como inactivo
+            modelo.setActivo(false);
+            repositoryService.persist(modelo);
+
+            // Buscar vidrios dentro del modelo
+            List<Vidrio> vidrios = vidrioRepository.findByModelo(modelo);
+            for (Vidrio vidrio : vidrios) {
+                // Marcar el vidrio como inactivo
+                vidrio.setActivo(false);
+                repositoryService.persist(vidrio);
+
+                // Buscar órdenes de trabajo dentro del vidrio
+                List<OrdenDeTrabajo> ordenesDeTrabajo = ordenesRepository.findByVidrioOrderByFechaDesc(vidrio);
+                for (OrdenDeTrabajo ordenDeTrabajo : ordenesDeTrabajo) {
+                    // Marcar la orden de trabajo como inactiva
+                    ordenDeTrabajo.setActivo(false);
+                    repositoryService.persist(ordenDeTrabajo);
+                }
+            }
         return empresa;
     }
     public String disableAct() {
@@ -48,5 +70,7 @@ public class Empresa_eliminarModelo {
     }
 
     @Inject ModeloRepository modeloRepository;
+    @Inject VidrioRepository vidrioRepository;
+    @Inject OrdenDeTrabajoRepository ordenesRepository;
     @Inject RepositoryService repositoryService;
 }

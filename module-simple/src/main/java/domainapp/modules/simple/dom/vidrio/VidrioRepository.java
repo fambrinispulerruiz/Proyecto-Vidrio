@@ -10,6 +10,10 @@ import domainapp.modules.simple.dom.modelo.Modelo;
 
 public interface VidrioRepository extends JpaRepository<Vidrio, Long> {
 
+	List<Vidrio> findByNombreContaining(final String nombre);
+
+	Vidrio findByNombre(final String nombre);
+	
     List<Vidrio> findByModelo(Modelo modelo);
     Optional<Vidrio> findByModeloAndNombre(Modelo modelo, String nombre);
 }

@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -33,6 +35,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.val;
 import domainapp.modules.simple.dom.modelo.Modelo;
 import domainapp.modules.simple.dom.vidrio.enumeradores.Antena;
 import domainapp.modules.simple.dom.vidrio.enumeradores.SensorLluvia;
@@ -49,6 +52,14 @@ import jdk.jfr.Label;
         @UniqueConstraint(name = "Modelo_nombre__UNQ", columnNames = {"modelo_id", "nombre"})
     }
 )
+@NamedQueries({
+    @NamedQuery(
+            name = Vidrio.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE,
+            query = "SELECT so " +
+                    "FROM Vidrio so " +
+                    "WHERE so.nombre LIKE :nombre"
+    )
+})
 @EntityListeners(IsisEntityListener.class)
 @DomainObject(logicalTypeName = "vidrios.Vidrio", entityChangePublishing = Publishing.ENABLED)
 @DomainObjectLayout()
@@ -57,6 +68,8 @@ import jdk.jfr.Label;
 @ToString(onlyExplicitlyIncluded = true)
 public class Vidrio implements Comparable<Vidrio> {
 
+	 static final String NAMED_QUERY__FIND_BY_LAST_NAME_LIKE = "Vidrio.findByLastNameLike";
+	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -70,6 +83,10 @@ public class Vidrio implements Comparable<Vidrio> {
     @Getter @Setter
     private long version;
 
+    public static Vidrio withName(String nombre) {
+        return withName(nombre);
+    }
+    
 
     public Vidrio(String nombre, String codigo, Modelo modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
         this.nombre = nombre;
@@ -79,8 +96,21 @@ public class Vidrio implements Comparable<Vidrio> {
         this.tipoVidrio = tipoVidrio;
         this.antena = antena;
         this.sensor = sensor;
+        this.activo = true;
     }
 
+    public static Vidrio withName(String nombre, String codigo, Modelo modelo, double precio, TipoVidrio tipoVidrio, Antena antena, SensorLluvia sensor) {
+        val vidrio = new Vidrio();
+        vidrio.setNombre(nombre);
+        vidrio.setCodigo(codigo);
+        vidrio.setModelo(modelo);
+        vidrio.setPrecio(precio);
+        vidrio.setTipoVidrio(tipoVidrio);
+        vidrio.setAntena(antena);
+        vidrio.setSensor(sensor);
+        vidrio.setActivo(true);
+        return vidrio;
+    }
 
     public String title() {
         return getNombre() + " (" + getModelo().getNombre() + ")";
@@ -129,6 +159,10 @@ public class Vidrio implements Comparable<Vidrio> {
     @Label("¿Posee Sensor de Lluvia?")
     private SensorLluvia sensor;
     
+    @Column(name = "activo", nullable = false)
+    @Getter @Setter
+    private boolean activo;
+    
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
     @ActionLayout(associateWith = "nombre")
     public Vidrio updateName(
@@ -144,6 +178,7 @@ public class Vidrio implements Comparable<Vidrio> {
         setTipoVidrio(tipoVidrio);
         setAntena(antena);
         setSensor(sensor);
+        setActivo(true);
        
         return this;
     }
