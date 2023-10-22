@@ -28,8 +28,10 @@
 		<mb3:menu>
 	        <mb3:named>Reportes</mb3:named>
 	        <mb3:section>
-	            <mb3:serviceAction id="generarReporteEmpresa" objectType="simple.Reportes"/>
+	            <mb3:serviceAction id="generarReporteEmpresas" objectType="simple.Reportes"/>
 	            <mb3:serviceAction id="generarReporteModelos" objectType="simple.Reportes"/>
+	            <mb3:serviceAction id="generarReporteOrdenesDeTrabajo" objectType="simple.Reportes"/>
+	            <mb3:serviceAction id="generarReporteVidrios" objectType="simple.Reportes"/>
 	        </mb3:section>
 	    </mb3:menu>
 		<mb3:menu>

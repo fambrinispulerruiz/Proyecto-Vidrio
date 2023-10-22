@@ -1,5 +1,7 @@
 package domainapp.modules.simple.dom.vidrio;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Priority;
@@ -16,10 +18,14 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.value.Blob;
 import org.apache.isis.persistence.jpa.applib.services.JpaSupportService;
 
+import domainapp.modules.simple.dom.modelo.Modelo;
+import domainapp.modules.simple.dom.reportes.Reportes;
 import domainapp.modules.simple.types.Nombre;
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.JRException;
 
 
 @DomainService(
@@ -87,6 +93,14 @@ public class VidrioServices {
                 q.getResultList();
             });
     }
-
+    
+  //REPORTE VIDRIO
+    @Programmatic
+    public Blob generarReporteVidrio() throws JRException, IOException {
+        List<Vidrio> vidrios = new ArrayList<Vidrio>();
+        Reportes reportes = new Reportes();
+        vidrios = repositoryService.allInstances(Vidrio.class);
+        return reportes.ListadoVidriosPDF(vidrios);
+    }
 
 }

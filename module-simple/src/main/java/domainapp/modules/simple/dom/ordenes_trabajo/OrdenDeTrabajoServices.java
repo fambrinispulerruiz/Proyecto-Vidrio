@@ -1,5 +1,7 @@
 package domainapp.modules.simple.dom.ordenes_trabajo;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Priority;
@@ -16,11 +18,15 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.value.Blob;
 import org.apache.isis.persistence.jpa.applib.services.JpaSupportService;
 
+import domainapp.modules.simple.dom.modelo.Modelo;
+import domainapp.modules.simple.dom.reportes.Reportes;
 import domainapp.modules.simple.dom.vidrio.Vidrio;
 import domainapp.modules.simple.types.Nombre;
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.JRException;
 
 
 
@@ -89,6 +95,14 @@ public class OrdenDeTrabajoServices {
                 q.getResultList();
             });
     }
-
+    
+  //REPORTE ORDEN DE TRABAJO
+    @Programmatic
+    public Blob generarReporteOrdenDeTrabajo() throws JRException, IOException {
+        List<OrdenDeTrabajo> ordenesdetrabajo = new ArrayList<OrdenDeTrabajo>();
+        Reportes reportes = new Reportes();
+        ordenesdetrabajo = repositoryService.allInstances(OrdenDeTrabajo.class);
+        return reportes.ListadoOrdenesDeTrabajoPDF(ordenesdetrabajo);
+    }
 
 }
