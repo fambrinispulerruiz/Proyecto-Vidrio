@@ -1,5 +1,7 @@
 package domainapp.modules.simple.dom.modelo;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Priority;
@@ -16,10 +18,13 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.value.Blob;
 import org.apache.isis.persistence.jpa.applib.services.JpaSupportService;
 
+import domainapp.modules.simple.dom.reportes.Reportes;
 import domainapp.modules.simple.types.Nombre;
 import lombok.RequiredArgsConstructor;
+import net.sf.jasperreports.engine.JRException;
 
 
 @DomainService(
@@ -87,6 +92,14 @@ public class ModeloServices {
                 q.getResultList();
             });
     }
-
+    
+  //REPORTE MODELO
+    @Programmatic
+    public Blob generarReporteModelo() throws JRException, IOException {
+        List<Modelo> modelos = new ArrayList<Modelo>();
+        Reportes reportes = new Reportes();
+        modelos = repositoryService.allInstances(Modelo.class);
+        return reportes.ListadoModelosPDF(modelos);
+    }
 
 }

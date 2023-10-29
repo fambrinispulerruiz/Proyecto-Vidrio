@@ -38,11 +38,6 @@ public class Reportes {
 	        JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(repoEmpresas);
 	        return GenerarArchivoPDF("ReporteEmpresa.jrxml", "ListadoEmpresas.pdf", ds);
 	    }
-
-	public Blob ListadoEmpresasPDF() throws JRException, IOException {
-
-        return GenerarArchivoPDF("ReporteEmpresa.jrxml", "ListadoEmpresas.pdf", null);
-    }
 	
 	public Blob ListadoModelosPDF(List<Modelo> modelos) throws JRException, IOException {
 		
@@ -57,18 +52,13 @@ public class Reportes {
 	        JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(repoModelos);
 	        return GenerarArchivoPDF("ReporteModelo.jrxml", "ListadoModelos.pdf", ds);
 	    }
-
-	public Blob ListadoModelosPDF() throws JRException, IOException {
-
-        return GenerarArchivoPDF("ReporteModelo.jrxml", "ListadoModelos.pdf", null);
-    }
 	
-	public Blob ListadoOrdenesDeTrabajoPDF(List<OrdenDeTrabajo> OrdenesDeTrabajo) throws JRException, IOException {
+	public Blob ListadoOrdenesDeTrabajoPDF(List<OrdenDeTrabajo> ordenesdetrabajo) throws JRException, IOException {
 		
 		List<RepoOrdenes_Trabajo> repoOrdenesDeTrabajo = new ArrayList<RepoOrdenes_Trabajo>();
 		repoOrdenesDeTrabajo.add(new RepoOrdenes_Trabajo());
 
-	        for (OrdenDeTrabajo ordendetrabajo: OrdenesDeTrabajo) {
+	        for (OrdenDeTrabajo ordendetrabajo: ordenesdetrabajo) {
 	        	RepoOrdenes_Trabajo repoOrdenDeTrabajo = new RepoOrdenes_Trabajo(ordendetrabajo.getVidrio(),ordendetrabajo.getFecha(),ordendetrabajo.getNombreAsegurado(),ordendetrabajo.getTelefonoAsegurado(),ordendetrabajo.getAseguradora(),ordendetrabajo.getNroSiniestro(),ordendetrabajo.getPatente(),ordendetrabajo.getOrden(),ordendetrabajo.getPropio(),ordendetrabajo.getObservaciones(),ordendetrabajo.getEstado());
 	        	repoOrdenesDeTrabajo.add(repoOrdenDeTrabajo);
 	        }
@@ -76,11 +66,6 @@ public class Reportes {
 	        JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(repoOrdenesDeTrabajo);
 	        return GenerarArchivoPDF("ReporteOrdenes_Trabajo.jrxml", "ListadoOrdenesDeTrabajo.pdf", ds);
 	    }
-
-	public Blob ListadoOrdenesDeTrabajoPDF() throws JRException, IOException {
-
-        return GenerarArchivoPDF("ReporteOrdenes_Trabajo.jrxml", "ListadoOrdenesDeTrabajo.pdf", null);
-    }
 	
 	public Blob ListadoVidriosPDF(List<Vidrio> vidrios) throws JRException, IOException {
 		
@@ -95,11 +80,6 @@ public class Reportes {
 	        JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(repoVidrios);
 	        return GenerarArchivoPDF("ReporteVidrio.jrxml", "ListadoVidrios.pdf", ds);
 	    }
-
-	public Blob ListadoVidriosPDF() throws JRException, IOException {
-
-        return GenerarArchivoPDF("ReporteVidrio.jrxml", "ListadoVidrios.pdf", null);
-    }
 	
 	private Blob GenerarArchivoPDF(String archivoDesing, String nombreSalida, JRBeanCollectionDataSource ds) throws JRException, IOException{
 
