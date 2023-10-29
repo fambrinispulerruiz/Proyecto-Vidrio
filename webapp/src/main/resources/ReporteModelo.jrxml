@@ -37,7 +37,7 @@
 		<field name="empresa" class="java.lang.String"/>
 	</subDataset>
 	<parameter name="logoEmpresa" class="java.io.InputStream"/>
-	<parameter name="ds" class="net.sf.jasperreports.engine.data.JRBeanArrayDataSource"/>
+	<parameter name="ds" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -45,32 +45,58 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="81" splitType="Stretch">
+		<band height="96" splitType="Stretch">
 			<image onErrorType="Blank">
-				<reportElement x="10" y="8" width="60" height="56" uuid="30242ccf-a9d0-4baa-9b0c-7fbf84896bbe"/>
+				<reportElement x="10" y="8" width="60" height="56" uuid="4d435629-c636-467b-b308-e4388d5236bc"/>
 				<imageExpression><![CDATA[$P{logoEmpresa}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="90" y="8" width="80" height="20" uuid="e4e08a47-8eab-4a91-a148-304648f2759f"/>
-				<textElement textAlignment="Left" rotation="None">
-					<font size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<text><![CDATA[Nombre:]]></text>
+				<reportElement x="90" y="40" width="100" height="19" uuid="0ae674f0-a0a6-4741-bdcc-481e08703eb8"/>
+				<text><![CDATA[DOMICILIO XXXXX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="90" y="40" width="80" height="20" uuid="964db76c-383f-49f1-ad9d-4d1e0c760941"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Empresa:]]></text>
+				<reportElement x="90" y="60" width="100" height="16" uuid="49027714-e201-4722-bacf-10bf79ee10cd"/>
+				<text><![CDATA[TELEFONO XXXXX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="190" y="8" width="80" height="20" uuid="3b4358d3-7524-4c66-a359-9509ee221d3b"/>
-				<text><![CDATA[Static Text]]></text>
+				<reportElement x="90" y="20" width="100" height="19" uuid="34409f05-02f5-4c85-aa5c-fc90cc39f146"/>
+				<text><![CDATA[EMPRESA XXXXX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="190" y="40" width="80" height="20" uuid="4da79624-32ae-48d1-b18a-6d31e860e055"/>
-				<text><![CDATA[Static Text]]></text>
+				<reportElement x="350" y="46" width="30" height="15" uuid="95f2db44-ee34-40df-9c03-1853cebfbc9f"/>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="40" width="100" height="19" uuid="77280077-b78d-41ab-b1d6-7cdb54dcfe94"/>
+				<text><![CDATA[DOMICILIO XXXXX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="60" width="100" height="16" uuid="d5ceb628-431b-45f6-b3b7-a8be2c33c072"/>
+				<text><![CDATA[TELEFONO XXXXX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="20" width="100" height="19" uuid="77dbe4a5-e14f-4362-9b92-845489c22d05"/>
+				<text><![CDATA[EMPRESA XXXXX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="0" width="30" height="30" uuid="f192a692-6ef8-469e-89d3-ec5c9f781037"/>
+				<text><![CDATA[PAG]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="520" y="0" width="35" height="30" uuid="15c73bc0-f1a3-4064-a4f1-62fc58e963dd"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="390" y="29" width="79" height="14" uuid="568aaf4c-a548-4564-a089-4cf388504443"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="390" y="46" width="30" height="30" uuid="e60659ce-79d0-4cf3-9fae-a7b22f6a4b8f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="29" width="40" height="15" uuid="1c7e42bd-6951-48b9-9f59-83c819a37f29"/>
+				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -104,11 +130,11 @@
 					<datasetRun subDataset="dsReporteModelo" uuid="548f7707-cea4-42f5-b1df-e1c431c8cc2a">
 						<dataSourceExpression><![CDATA[$P{ds}]]></dataSourceExpression>
 					</datasetRun>
-					<jr:column width="280" uuid="592e760e-8e45-4d4f-b22a-dfe0295bcac5">
+					<jr:column width="555" uuid="592e760e-8e45-4d4f-b22a-dfe0295bcac5">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="280" height="30" uuid="68cfb792-42f9-4662-a172-be3ca10228c8"/>
+								<reportElement x="0" y="0" width="555" height="30" uuid="68cfb792-42f9-4662-a172-be3ca10228c8"/>
 								<textElement textAlignment="Center">
 									<font isBold="true"/>
 								</textElement>
@@ -117,28 +143,9 @@
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="280" height="30" uuid="a628fc63-925e-43fa-8d2a-150942fe8172"/>
+								<reportElement x="0" y="0" width="555" height="30" uuid="a628fc63-925e-43fa-8d2a-150942fe8172"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
 								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="275" uuid="3914238c-0e9c-4a54-847f-46a98d2fb7b0">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="275" height="30" uuid="6c8ed1de-89fd-468e-aea2-2a4945af7fd4"/>
-								<textElement textAlignment="Center">
-									<font isBold="true"/>
-								</textElement>
-								<text><![CDATA[Empresa]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="275" height="30" uuid="1cf48bbd-df4d-4ba2-8bc0-a69c23edc057"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -149,9 +156,9 @@
 	<pageFooter>
 		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="4" width="554" height="26" uuid="588bda5e-3714-4be0-9f98-b5f0ce4fd110"/>
+				<reportElement x="0" y="0" width="554" height="26" uuid="4f3db4dc-1f45-4454-979b-827cfda667f1"/>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Sitio web o pagina oficial]]></text>
+				<text><![CDATA[Sitio web o pagina oficial www.XXXXX.com.ar]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
