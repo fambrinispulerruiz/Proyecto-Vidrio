@@ -15,6 +15,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.PriorityPrecedence;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.PromptStyle;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -41,7 +42,8 @@ public class EmpresaServices {
 
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public Empresa create(
+    @ActionLayout(promptStyle = PromptStyle.DIALOG_SIDEBAR, cssClassFa = "fa-plus")
+    public Empresa CrearEmpresa(
             @Nombre final String nombre,
             final String domicilio,
             final String telefono,
@@ -50,19 +52,19 @@ public class EmpresaServices {
         return repositoryService.persist(Empresa.withName(nombre, domicilio, telefono, correo, tipoEmpresa));
     }
 
-
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public List<Empresa> findByNombreLike(
-            @Nombre final String nombre) {
-        return repositoryService.allMatches(
-                Query.named(Empresa.class, Empresa.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
-                     .withParameter("nombre", "%" + nombre + "%"));
-    }
+    //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public List<Empresa> findByNombreLike(
+//            @Nombre final String nombre) {
+//        return repositoryService.allMatches(
+//                Query.named(Empresa.class, Empresa.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
+//                     .withParameter("nombre", "%" + nombre + "%"));
+//    }
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Empresa> findByNombre(
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-search")
+    public List<Empresa> buscarNombreDeLaEmpresa(
             @Nombre final String nombre
             ) {
         return empresaRepository.findByNombreContaining(nombre);
@@ -77,8 +79,8 @@ public class EmpresaServices {
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Empresa> listAll() {
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-list")
+    public List<Empresa> VerEmpresas() {
         return empresaRepository.findAll();
     }
 

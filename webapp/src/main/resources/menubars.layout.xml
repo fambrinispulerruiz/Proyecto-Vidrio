@@ -9,9 +9,9 @@
 			<mb3:named>Empresas</mb3:named>
 			<mb3:section>
 				<mb3:serviceAction objectType="simple.Empresas"
-					id="create" />
+					id="CrearEmpresa" />
 				<mb3:serviceAction objectType="simple.Empresas"
-					id="listAll" />
+					id="VerEmpresas" />
 			</mb3:section>
 		</mb3:menu>
 		<mb3:menu unreferencedActions="true">

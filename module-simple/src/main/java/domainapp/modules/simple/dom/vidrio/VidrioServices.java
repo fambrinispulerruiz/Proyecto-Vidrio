@@ -41,25 +41,26 @@ public class VidrioServices {
     final VidrioRepository vidrioRepository;
 
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public Vidrio create(
-            final String nombre) {
-        return repositoryService.persist(Vidrio.withName(nombre));
-    }
+    //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public Vidrio create(
+//            final String nombre) {
+//        return repositoryService.persist(Vidrio.withName(nombre));
+//    }
 
-
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public List<Vidrio> findByNombreLike(
-            @Nombre final String nombre) {
-        return repositoryService.allMatches(
-                Query.named(Vidrio.class, Vidrio.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
-                     .withParameter("nombre", "%" + nombre + "%"));
-    }
+    //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public List<Vidrio> findByNombreLike(
+//            @Nombre final String nombre) {
+//        return repositoryService.allMatches(
+//                Query.named(Vidrio.class, Vidrio.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
+//                     .withParameter("nombre", "%" + nombre + "%"));
+//    }
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Vidrio> findByNombre(
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-search")
+    public List<Vidrio> buscarNombreDelVidrio(
     			final String nombre
             ) {
         return vidrioRepository.findByNombreContaining(nombre);
@@ -74,8 +75,8 @@ public class VidrioServices {
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Vidrio> listAll() {
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-list")
+    public List<Vidrio> verVidrios() {
         return vidrioRepository.findAll();
     }
 

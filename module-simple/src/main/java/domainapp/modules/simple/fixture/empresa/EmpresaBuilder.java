@@ -44,7 +44,7 @@ public class EmpresaBuilder extends BuilderScriptWithResult<Empresa> {
         
         Empresa empresa = empresas.findByNombreExact(nombre);
         if(empresa == null) {
-            empresa = wrap(empresas).create(nombre, domicilio, telefono, correo, tipoEmpresa);
+            empresa = wrap(empresas).CrearEmpresa(nombre, domicilio, telefono, correo, tipoEmpresa);
         }
         return this.object = empresa;
     }

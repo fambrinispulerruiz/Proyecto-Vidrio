@@ -15,6 +15,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.PriorityPrecedence;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.PromptStyle;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.Query;
 import org.apache.isis.applib.services.repository.RepositoryService;
@@ -39,26 +40,26 @@ public class ModeloServices {
     final JpaSupportService jpaSupportService;
     final ModeloRepository modeloRepository;
 
+     //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public Modelo create(
+//            final String nombre) {
+//        return repositoryService.persist(Modelo.withName(nombre));
+//    }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public Modelo create(
-            final String nombre) {
-        return repositoryService.persist(Modelo.withName(nombre));
-    }
-
-
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public List<Modelo> findByNombreLike(
-            @Nombre final String nombre) {
-        return repositoryService.allMatches(
-                Query.named(Modelo.class, Modelo.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
-                     .withParameter("nombre", "%" + nombre + "%"));
-    }
+     //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public List<Modelo> findByNombreLike(
+//            @Nombre final String nombre) {
+//        return repositoryService.allMatches(
+//                Query.named(Modelo.class, Modelo.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
+//                     .withParameter("nombre", "%" + nombre + "%"));
+//    }
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Modelo> findByNombre(
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-search")
+    public List<Modelo> buscarNombreDelModelo(
     			final String nombre
             ) {
         return modeloRepository.findByNombreContaining(nombre);
@@ -73,8 +74,8 @@ public class ModeloServices {
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<Modelo> listAll() {
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-list")
+    public List<Modelo> verModelos() {
         return modeloRepository.findAll();
     }
 

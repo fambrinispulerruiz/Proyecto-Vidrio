@@ -39,7 +39,7 @@ public class SampleJob implements Job {
     }
 
     List<Empresa> all() {
-        return call("sven", empresas::listAll)
+        return call("sven", empresas::VerEmpresas)
                 .orElse(Collections.<Empresa>emptyList());
     }
 

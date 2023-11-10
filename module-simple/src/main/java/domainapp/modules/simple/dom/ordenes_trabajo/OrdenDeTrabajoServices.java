@@ -42,26 +42,26 @@ public class OrdenDeTrabajoServices {
     final JpaSupportService jpaSupportService;
     final OrdenDeTrabajoRepository ordenRepository;
 
+    //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public OrdenDeTrabajo create(
+//            final Vidrio vidrio) {
+//        return repositoryService.persist(OrdenDeTrabajo.withName(vidrio));
+//    }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public OrdenDeTrabajo create(
-            final Vidrio vidrio) {
-        return repositoryService.persist(OrdenDeTrabajo.withName(vidrio));
-    }
-
-
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public List<OrdenDeTrabajo> findByNombreAseguradoLike(
-            @Nombre final String nombreAsegurado) {
-        return repositoryService.allMatches(
-                Query.named(OrdenDeTrabajo.class, OrdenDeTrabajo.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
-                     .withParameter("nombreAsegurado", "%" + nombreAsegurado + "%"));
-    }
+    //Ocultado
+//    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+//    public List<OrdenDeTrabajo> findByNombreAseguradoLike(
+//            @Nombre final String nombreAsegurado) {
+//        return repositoryService.allMatches(
+//                Query.named(OrdenDeTrabajo.class, OrdenDeTrabajo.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE)
+//                     .withParameter("nombreAsegurado", "%" + nombreAsegurado + "%"));
+//    }
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<OrdenDeTrabajo> findByNombreAsegurado(
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-search")
+    public List<OrdenDeTrabajo> buscarNombreDelAsegurado(
     			final String nombreAsegurado
             ) {
         return ordenRepository.findByNombreAseguradoContaining(nombreAsegurado);
@@ -76,8 +76,8 @@ public class OrdenDeTrabajoServices {
 
 
     @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT)
-    public List<OrdenDeTrabajo> listAll() {
+    @ActionLayout(bookmarking = BookmarkPolicy.AS_ROOT, cssClassFa = "fa-list")
+    public List<OrdenDeTrabajo> verOrdenesDeTrabajo() {
         return ordenRepository.findAll();
     }
 
