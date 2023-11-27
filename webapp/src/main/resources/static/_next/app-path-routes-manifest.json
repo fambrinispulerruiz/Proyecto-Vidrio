@@ -1,0 +1,16 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/(DashboardLayout)/page": "/",
+  "/(DashboardLayout)/icons/page": "/icons",
+  "/(DashboardLayout)/layout/footer/page": "/layout/footer",
+  "/(DashboardLayout)/ui-components/alerts/page": "/ui-components/alerts",
+  "/(DashboardLayout)/ui-components/buttons/page": "/ui-components/buttons",
+  "/(DashboardLayout)/ui-components/empresas/page": "/ui-components/empresas",
+  "/(DashboardLayout)/ui-components/forms/page": "/ui-components/forms",
+  "/(DashboardLayout)/ui-components/images/page": "/ui-components/images",
+  "/(DashboardLayout)/ui-components/modelos/page": "/ui-components/modelos",
+  "/(DashboardLayout)/ui-components/pagination/page": "/ui-components/pagination",
+  "/(DashboardLayout)/ui-components/ratings/page": "/ui-components/ratings",
+  "/(DashboardLayout)/ui-components/vidrios/page": "/ui-components/vidrios",
+  "/(DashboardLayout)/ui-components/table/page": "/ui-components/table"
+}
