@@ -377,16 +377,62 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const NuevoFormulario = ()=>{
-    const [openModal, setOpenModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [openAddModal, setOpenAddModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [openEditModal, setOpenEditModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [selectedId, setSelectedId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const [rows, setRows] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-    const handleOpenModal = ()=>{
-        setOpenModal(true);
+    // State para el formulario
+    const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        id: "",
+        nombre: "",
+        domicilio: "",
+        telefono: "",
+        correo: "",
+        tipoEmpresa: ""
+    });
+    const handleOpenAddModal = ()=>{
+        setOpenAddModal(true);
     };
-    const handleCloseModal = ()=>{
-        setOpenModal(false);
+    const handleOpenEditModal = async (row)=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/vidrios.Empresa/${row.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            if (response.ok) {
+                const empresaData = await response.json();
+                // Actualiza el estado con los datos que trae el fetch
+                setFormData({
+                    id: empresaData.id,
+                    nombre: empresaData.name,
+                    domicilio: empresaData.domicilio,
+                    telefono: empresaData.telefono,
+                    correo: empresaData.correo,
+                    tipoEmpresa: empresaData.tipoEmpresa
+                });
+                setSelectedId(row.id);
+                setOpenEditModal(true);
+            } else {
+                console.error("Error al obtener los datos de la empresa");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleCloseAddModal = ()=>{
+        setOpenAddModal(false);
+    };
+    const handleCloseEditModal = ()=>{
+        setOpenEditModal(false);
     };
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
-        // This function will be called when the component mounts
         const fetchData = async ()=>{
             try {
                 const username = "sven";
@@ -401,15 +447,72 @@ const NuevoFormulario = ()=>{
                     }
                 });
                 const data = await response.json();
-                // Set the obtained data to the 'rows' state
                 setRows(data);
             } catch (error) {
                 console.error("Error al realizar la solicitud:", error);
             }
         };
-        // Call the fetchData function
         fetchData();
     }, []);
+    //---------------------------------Formulario de carga--------------------------------
+    const handleFormChange = (event)=>{
+        if ("target" in event) {
+            const { name, value } = event.target;
+            console.log(`TextField Change - name: ${name}, value: ${value}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    [name || ""]: value
+                }));
+        } else {
+            const selectedValue = event.target?.value || "";
+            console.log(`Select Change - selectedValue: ${selectedValue}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    tipoEmpresa: selectedValue
+                }));
+        }
+    };
+    const handleFormSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch("http://localhost:8080/restful/services/simple.Empresas/actions/CrearEmpresa/invoke", {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombre: {
+                        value: formData.nombre
+                    },
+                    domicilio: {
+                        value: formData.domicilio
+                    },
+                    telefono: {
+                        value: formData.telefono
+                    },
+                    correo: {
+                        value: formData.correo
+                    },
+                    tipoEmpresa: {
+                        value: formData.tipoEmpresa
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    //------------------------------------------------------------------------------------
     const handleExportToPDF = async ()=>{
         try {
             const username = "sven";
@@ -438,19 +541,56 @@ const NuevoFormulario = ()=>{
             console.error("Error al realizar la solicitud:", error);
         }
     };
+    const handleEditSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/vidrios.Empresa/${formData.id}/actions/updateName/invoke`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombre: {
+                        value: formData.nombre
+                    },
+                    domicilio: {
+                        value: formData.domicilio
+                    },
+                    telefono: {
+                        value: formData.telefono
+                    },
+                    correo: {
+                        value: formData.correo
+                    },
+                    tipoEmpresa: {
+                        value: formData.tipoEmpresa
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
     const tipoEmpresaSelect = [
         {
-            id: "1",
+            id: "Cliente",
             nombre: "Cliente"
         },
         {
-            id: "2",
+            id: "Proveedor",
             nombre: "Proveedor"
         }
     ];
-    const handleEditClick = ()=>{
-        setOpenModal(true);
-    };
     // Asumiendo que la propiedad 'empresa' en 'row' contiene el id de la empresa asociada al modelo
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Grid, {
         container: true,
@@ -469,7 +609,7 @@ const NuevoFormulario = ()=>{
                             sx: {
                                 margin: "20px"
                             },
-                            onClick: handleOpenModal,
+                            onClick: handleOpenAddModal,
                             children: "Agregar Empresa"
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
@@ -488,8 +628,8 @@ const NuevoFormulario = ()=>{
                     ]
                 }),
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
-                    open: openModal,
-                    onClose: handleCloseModal,
+                    open: openAddModal,
+                    onClose: handleCloseAddModal,
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
                             children: "Agregar Empresa"
@@ -513,26 +653,38 @@ const NuevoFormulario = ()=>{
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "nombre",
                                                         label: "Nombre",
+                                                        name: "nombre",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.nombre,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "domicilio",
                                                         label: "Domicilio",
+                                                        name: "domicilio",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.domicilio,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "telefono",
                                                         label: "Telefono",
+                                                        name: "telefono",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.telefono,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "email",
                                                         label: "Correo",
+                                                        name: "correo",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.correo,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
                                                         fullWidth: true,
@@ -545,6 +697,9 @@ const NuevoFormulario = ()=>{
                                                                 labelId: "tipoempresa-label",
                                                                 id: "tipoempresa",
                                                                 label: "TipoEmpresa",
+                                                                name: "tipoEmpresa",
+                                                                value: formData.tipoEmpresa,
+                                                                onChange: handleFormChange,
                                                                 children: tipoEmpresaSelect.map((tipoEmpresaSelect)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                         value: tipoEmpresaSelect.id,
                                                                         children: tipoEmpresaSelect.nombre
@@ -556,6 +711,7 @@ const NuevoFormulario = ()=>{
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                onClick: handleFormSubmit,
                                                 children: "Cargar"
                                             })
                                         ]
@@ -565,7 +721,7 @@ const NuevoFormulario = ()=>{
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                onClick: handleCloseModal,
+                                onClick: handleCloseAddModal,
                                 children: "Cancelar"
                             })
                         })
@@ -622,12 +778,12 @@ const NuevoFormulario = ()=>{
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
                                                         startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
                                                         color: "primary",
-                                                        onClick: handleEditClick,
+                                                        onClick: ()=>handleOpenEditModal(row),
                                                         children: "Editar"
                                                     }),
                                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
-                                                        open: openModal,
-                                                        onClose: handleCloseModal,
+                                                        open: openEditModal,
+                                                        onClose: handleCloseEditModal,
                                                         children: [
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
                                                                 children: "Editar Empresa"
@@ -650,27 +806,30 @@ const NuevoFormulario = ()=>{
                                                                                     children: [
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                                                             id: "nombre",
+                                                                                            name: "nombre",
                                                                                             label: "Nombre",
                                                                                             variant: "outlined",
-                                                                                            fullWidth: true
-                                                                                        }),
-                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
-                                                                                            id: "domicilio",
-                                                                                            label: "Domicilio",
-                                                                                            variant: "outlined",
-                                                                                            fullWidth: true
+                                                                                            fullWidth: true,
+                                                                                            value: formData.nombre,
+                                                                                            onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                                                             id: "telefono",
+                                                                                            name: "telefono",
                                                                                             label: "Telefono",
                                                                                             variant: "outlined",
-                                                                                            fullWidth: true
+                                                                                            fullWidth: true,
+                                                                                            value: formData.telefono,
+                                                                                            onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                                                             id: "email",
+                                                                                            name: "correo",
                                                                                             label: "Correo",
                                                                                             variant: "outlined",
-                                                                                            fullWidth: true
+                                                                                            fullWidth: true,
+                                                                                            value: formData.correo,
+                                                                                            onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
                                                                                             fullWidth: true,
@@ -682,7 +841,10 @@ const NuevoFormulario = ()=>{
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                                                     labelId: "tipoempresa-label",
                                                                                                     id: "tipoempresa",
+                                                                                                    name: "tipoEmpresa",
                                                                                                     label: "TipoEmpresa",
+                                                                                                    value: formData.tipoEmpresa,
+                                                                                                    onChange: handleFormChange,
                                                                                                     children: tipoEmpresaSelect.map((tipoEmpresaSelect)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                                                             value: tipoEmpresaSelect.id,
                                                                                                             children: tipoEmpresaSelect.nombre
@@ -694,6 +856,7 @@ const NuevoFormulario = ()=>{
                                                                                 }),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                                    onClick: handleEditSubmit,
                                                                                     children: "Confirmar Edici\xf3n"
                                                                                 })
                                                                             ]
@@ -703,7 +866,7 @@ const NuevoFormulario = ()=>{
                                                             }),
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
                                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                                    onClick: handleCloseModal,
+                                                                    onClick: handleCloseEditModal,
                                                                     children: "Cancelar"
                                                                 })
                                                             })

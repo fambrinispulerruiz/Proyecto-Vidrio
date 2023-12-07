@@ -122,24 +122,25 @@ public class Empresa implements Comparable<Empresa> {
     private String nombre;
 
     @Column(name = "domicilio", nullable = true)
-    @Getter @Setter @ToString.Include
+    @Getter @Setter
+    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
     @Property(hidden = Where.EVERYWHERE)
     private String domicilio;
 
     @Column(name = "telefono", nullable = true)
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
+    @PropertyLayout(fieldSetId = "contactDetails", sequence = "2")
     @Getter @Setter
     private String telefono;
 
     @Column(name = "correo", nullable = true)
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "2")
+    @PropertyLayout(fieldSetId = "contactDetails", sequence = "3")
     @Getter @Setter
     private String correo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipoEmpresa", nullable = false)
     @Getter @Setter
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
+    @PropertyLayout(fieldSetId = "contactDetails", sequence = "4")
     private TipoEmpresa tipoEmpresa;
 
     @Column(name = "activo", nullable = false)
