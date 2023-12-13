@@ -573,7 +573,7 @@ const NuevoFormulario = ()=>{
                                                         children: [
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
                                                                 id: "modelo-label",
-                                                                children: "Antena"
+                                                                children: "\xbfPosee antena para parabrisas?"
                                                             }),
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                 labelId: "antena-label",
@@ -591,7 +591,7 @@ const NuevoFormulario = ()=>{
                                                         children: [
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
                                                                 id: "modelo-label",
-                                                                children: "Sensor"
+                                                                children: "\xbfPosee sensor de lluvia?"
                                                             }),
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                 labelId: "sensor-label",
@@ -760,7 +760,7 @@ const NuevoFormulario = ()=>{
                                                                                             children: [
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
                                                                                                     id: "modelo-label",
-                                                                                                    children: "Antena"
+                                                                                                    children: "\xbfPosee antena para parabrisas?"
                                                                                                 }),
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                                                     labelId: "antena-label",
@@ -778,7 +778,7 @@ const NuevoFormulario = ()=>{
                                                                                             children: [
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
                                                                                                     id: "modelo-label",
-                                                                                                    children: "Sensor"
+                                                                                                    children: "\xbfPosee sensor de lluvia?"
                                                                                                 }),
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                                                     labelId: "sensor-label",

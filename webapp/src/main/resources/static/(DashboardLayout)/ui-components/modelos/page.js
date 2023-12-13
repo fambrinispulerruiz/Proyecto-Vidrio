@@ -236,6 +236,28 @@ module.exports = require("url");
 
 /***/ }),
 
+/***/ 71998:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(92439);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.Z = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(64271));
+var _jsxRuntime = __webpack_require__(56786);
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.59 7.58 10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'CheckCircleOutline');
+exports.Z = _default;
+
+/***/ }),
+
 /***/ 54072:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -368,6 +390,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(82511);
 /* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48007);
 /* harmony import */ var _app_DashboardLayout_components_shared_BaseCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94138);
+/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71998);
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
@@ -376,9 +399,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const NuevoFormulario = ()=>{
-    const [openModal, setOpenModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [rows, setRows] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [empresas, setSelect] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        id: "",
+        nombre: "",
+        empresa_id: ""
+    });
+    const [openAddModal, setOpenAddModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [openEditModal, setOpenEditModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [selectedId, setSelectedId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [dialogOpen, setDialogOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [dialogMessage, setDialogMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         // This function will be called when the component mounts
         const fetchData = async ()=>{
@@ -405,11 +439,40 @@ const NuevoFormulario = ()=>{
         // Call the fetchData function
         fetchData();
     }, []);
-    const handleOpenModal = ()=>{
-        setOpenModal(true);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        // This function will be called when the component mounts
+        const fetchData = async ()=>{
+            try {
+                const username = "sven";
+                const password = "pass";
+                const authHeader = "Basic " + btoa(username + ":" + password);
+                const response = await fetch("http://localhost:8080/restful/services/simple.Empresas/actions/VerEmpresas/invoke", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                        "Authorization": authHeader,
+                        "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                    }
+                });
+                const data = await response.json();
+                console.log(data);
+                // Set the obtained data to the 'rows' state
+                setSelect(data);
+            } catch (error) {
+                console.error("Error al realizar la solicitud:", error);
+            }
+        };
+        // Call the fetchData function
+        fetchData();
+    }, []);
+    const handleOpenAddModal = ()=>{
+        setOpenAddModal(true);
     };
-    const handleCloseModal = ()=>{
-        setOpenModal(false);
+    const handleCloseAddModal = ()=>{
+        setOpenAddModal(false);
+    };
+    const handleCloseEditModal = ()=>{
+        setOpenEditModal(false);
     };
     const handleExportToPDF = ()=>{
     // Implementa la lógica de exportación a PDF
@@ -417,23 +480,139 @@ const NuevoFormulario = ()=>{
     // Ejemplo de apertura de la URL en una nueva ventana/tab
     // window.open(pdfExportURL, '_blank');
     };
-    const handleEditClick = ()=>{
-        setOpenModal(true);
-    };
-    const empresas = [
-        {
-            id: "1",
-            nombre: "Toyota"
-        },
-        {
-            id: "2",
-            nombre: "Honda"
-        },
-        {
-            id: "3",
-            nombre: "BMW"
+    const handleFormChange = (event)=>{
+        if ("target" in event) {
+            const { name, value } = event.target;
+            console.log(`TextField Change - name: ${name}, value: ${value}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    [name || ""]: value
+                }));
+        } else {
+            const selectedValue = event.target?.value || "";
+            console.log(`Select Change - selectedValue: ${selectedValue}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    tipoEmpresa: selectedValue
+                }));
         }
-    ];
+    };
+    const handleFormSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/vidrios.Empresa/${formData.empresa_id}/actions/agregarModelo/invoke`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombre: {
+                        value: formData.nombre
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleOpenEditModal = async (row)=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/modelos.Modelo/${row.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            if (response.ok) {
+                const modeloData = await response.json();
+                const empresaId = modeloData.empresa.href.split("/").pop();
+                // Actualiza el estado con los datos que trae el fetch
+                setFormData({
+                    id: modeloData.id,
+                    nombre: modeloData.nombre,
+                    empresa_id: empresaId
+                });
+                setSelectedId(row.id);
+                setOpenEditModal(true);
+            } else {
+                console.error("Error al obtener los datos de la empresa");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleEditSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/modelos.Modelo/${formData.id}/actions/updateName/invoke`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombre: {
+                        value: formData.nombre
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleToggleActive = async (id, isActive)=>{
+        try {
+            const actionName = isActive ? "delete" : "activar";
+            const actionURL = `http://localhost:8080/restful/objects/modelos.Modelo/${id}/actions/${actionName}/invoke`;
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(actionURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            if (response.ok) {
+                // Actualizar el estado local si es necesario
+                // Mostrar el diálogo con el mensaje
+                setDialogMessage(`Acción "${isActive ? "Desactivar" : "Activar"}" completada con éxito`);
+                setDialogOpen(true);
+            } else {
+                setDialogMessage(`Error al realizar la acción: ${response.statusText}`);
+                setDialogOpen(true);
+            }
+        } catch (error) {
+            setDialogMessage("Error al realizar la solicitud");
+            setDialogOpen(true);
+        }
+    };
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Grid, {
         container: true,
         spacing: 0,
@@ -451,7 +630,7 @@ const NuevoFormulario = ()=>{
                             sx: {
                                 margin: "20px"
                             },
-                            onClick: handleOpenModal,
+                            onClick: handleOpenAddModal,
                             children: "Agregar Modelo"
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
@@ -470,8 +649,8 @@ const NuevoFormulario = ()=>{
                     ]
                 }),
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
-                    open: openModal,
-                    onClose: handleCloseModal,
+                    open: openAddModal,
+                    onClose: handleCloseAddModal,
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
                             children: "Agregar Modelo"
@@ -502,24 +681,34 @@ const NuevoFormulario = ()=>{
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                 labelId: "empresa-label",
                                                                 id: "empresa",
+                                                                name: "empresa_id",
                                                                 label: "Empresa",
+                                                                value: formData.empresa_id,
+                                                                onChange: (event)=>setFormData({
+                                                                        ...formData,
+                                                                        empresa_id: event.target.value
+                                                                    }),
                                                                 children: empresas.map((empresa)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                         value: empresa.id,
-                                                                        children: empresa.nombre
+                                                                        children: empresa.name
                                                                     }, empresa.id))
                                                             })
                                                         ]
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "nombre",
+                                                        name: "nombre",
                                                         label: "Nombre",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.nombre,
+                                                        onChange: handleFormChange
                                                     })
                                                 ]
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                onClick: handleFormSubmit,
                                                 children: "Cargar"
                                             })
                                         ]
@@ -529,7 +718,7 @@ const NuevoFormulario = ()=>{
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                onClick: handleCloseModal,
+                                onClick: handleCloseAddModal,
                                 children: "Cancelar"
                             })
                         })
@@ -552,6 +741,9 @@ const NuevoFormulario = ()=>{
                                             children: "Empresa"
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            children: "Activo"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                             children: "Acciones"
                                         })
                                     ]
@@ -569,18 +761,21 @@ const NuevoFormulario = ()=>{
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                                 children: row.empresa.title
                                             }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                                children: row.activo ? "S\xed" : "No"
+                                            }),
                                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                                 children: [
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
                                                         startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
                                                         color: "primary",
-                                                        onClick: handleEditClick,
+                                                        onClick: ()=>handleOpenEditModal(row),
                                                         children: "Editar"
                                                     }),
                                                     " ",
                                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
-                                                        open: openModal,
-                                                        onClose: handleCloseModal,
+                                                        open: openEditModal,
+                                                        onClose: handleCloseEditModal,
                                                         children: [
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
                                                                 children: "Editar Modelo"
@@ -598,37 +793,21 @@ const NuevoFormulario = ()=>{
                                                                         title: "Editar Modelo",
                                                                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                                                                             children: [
-                                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Stack, {
+                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Stack, {
                                                                                     spacing: 3,
-                                                                                    children: [
-                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
-                                                                                            fullWidth: true,
-                                                                                            children: [
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
-                                                                                                    id: "empresa-label",
-                                                                                                    children: "Empresa"
-                                                                                                }),
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
-                                                                                                    labelId: "empresa-label",
-                                                                                                    id: "empresa",
-                                                                                                    label: "Empresa",
-                                                                                                    children: empresas.map((empresa)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
-                                                                                                            value: empresa.id,
-                                                                                                            children: empresa.nombre
-                                                                                                        }, empresa.id))
-                                                                                                })
-                                                                                            ]
-                                                                                        }),
-                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
-                                                                                            id: "nombre",
-                                                                                            label: "Nombre",
-                                                                                            variant: "outlined",
-                                                                                            fullWidth: true
-                                                                                        })
-                                                                                    ]
+                                                                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                                                        id: "nombre",
+                                                                                        name: "nombre",
+                                                                                        label: "Nombre",
+                                                                                        variant: "outlined",
+                                                                                        fullWidth: true,
+                                                                                        value: formData.nombre,
+                                                                                        onChange: handleFormChange
+                                                                                    })
                                                                                 }),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                                    onClick: handleEditSubmit,
                                                                                     children: "Confirmar Edici\xf3n"
                                                                                 })
                                                                             ]
@@ -638,16 +817,30 @@ const NuevoFormulario = ()=>{
                                                             }),
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
                                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                                    onClick: handleCloseModal,
+                                                                    onClick: handleCloseEditModal,
                                                                     children: "Cancelar"
                                                                 })
                                                             })
                                                         ]
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                        startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
-                                                        color: "secondary",
-                                                        children: "Desactivar"
+                                                        startIcon: row.activo ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
+                                                        color: row.activo ? "secondary" : "success",
+                                                        onClick: ()=>handleToggleActive(row.id, row.activo),
+                                                        children: row.activo ? "Desactivar" : "Activar"
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
+                                                        open: dialogOpen,
+                                                        onClose: ()=>setDialogOpen(false),
+                                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogContent, {
+                                                            children: [
+                                                                dialogMessage,
+                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                    onClick: ()=>window.location.reload(),
+                                                                    children: "Aceptar"
+                                                                })
+                                                            ]
+                                                        })
                                                     })
                                                 ]
                                             })

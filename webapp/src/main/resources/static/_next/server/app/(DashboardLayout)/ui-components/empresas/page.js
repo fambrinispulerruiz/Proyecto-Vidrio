@@ -236,6 +236,28 @@ module.exports = require("url");
 
 /***/ }),
 
+/***/ 71998:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(92439);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.Z = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(64271));
+var _jsxRuntime = __webpack_require__(56786);
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.59 7.58 10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'CheckCircleOutline');
+exports.Z = _default;
+
+/***/ }),
+
 /***/ 92340:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -368,7 +390,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(82511);
 /* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48007);
 /* harmony import */ var _app_DashboardLayout_components_shared_BaseCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94138);
+/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71998);
 /* __next_internal_client_entry_do_not_use__ default auto */ 
+
 
 
 
@@ -380,6 +404,8 @@ const NuevoFormulario = ()=>{
     const [openAddModal, setOpenAddModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [openEditModal, setOpenEditModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [selectedId, setSelectedId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [dialogOpen, setDialogOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [dialogMessage, setDialogMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     const [rows, setRows] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
     // State para el formulario
     const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
@@ -441,9 +467,9 @@ const NuevoFormulario = ()=>{
                 const response = await fetch("http://localhost:8080/restful/services/simple.Empresas/actions/VerEmpresas/invoke", {
                     method: "GET",
                     headers: {
-                        "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                        "Content-Type": 'application/json;profile="urn:org.apache.isis/v2"',
                         "Authorization": authHeader,
-                        "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                        "accept": "application/json;profile=urn:org.apache.isis/v2"
                     }
                 });
                 const data = await response.json();
@@ -579,6 +605,35 @@ const NuevoFormulario = ()=>{
             }
         } catch (error) {
             console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleToggleActive = async (id, isActive)=>{
+        try {
+            const actionName = isActive ? "delete" : "activar";
+            const actionURL = `http://localhost:8080/restful/objects/vidrios.Empresa/${id}/actions/${actionName}/invoke`;
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(actionURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            if (response.ok) {
+                // Actualizar el estado local si es necesario
+                // Mostrar el diálogo con el mensaje
+                setDialogMessage(`Acción "${isActive ? "Desactivar" : "Activar"}" completada con éxito`);
+                setDialogOpen(true);
+            } else {
+                setDialogMessage(`Error al realizar la acción: ${response.statusText}`);
+                setDialogOpen(true);
+            }
+        } catch (error) {
+            setDialogMessage("Error al realizar la solicitud");
+            setDialogOpen(true);
         }
     };
     const tipoEmpresaSelect = [
@@ -750,6 +805,12 @@ const NuevoFormulario = ()=>{
                                             children: "Correo"
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            children: "Domicilio"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            children: "Activo"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                             children: "Acciones"
                                         })
                                     ]
@@ -772,6 +833,12 @@ const NuevoFormulario = ()=>{
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                                 children: row.correo
+                                            }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                                children: row.domicilio
+                                            }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                                children: row.activo ? "S\xed" : "No"
                                             }),
                                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                                 children: [
@@ -811,6 +878,15 @@ const NuevoFormulario = ()=>{
                                                                                             variant: "outlined",
                                                                                             fullWidth: true,
                                                                                             value: formData.nombre,
+                                                                                            onChange: handleFormChange
+                                                                                        }),
+                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                                                            id: "domicilio",
+                                                                                            name: "domicilio",
+                                                                                            label: "Domicilio",
+                                                                                            variant: "outlined",
+                                                                                            fullWidth: true,
+                                                                                            value: formData.domicilio,
                                                                                             onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
@@ -873,9 +949,23 @@ const NuevoFormulario = ()=>{
                                                         ]
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                        startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
-                                                        color: "secondary",
-                                                        children: "Desactivar"
+                                                        startIcon: row.activo ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
+                                                        color: row.activo ? "secondary" : "success",
+                                                        onClick: ()=>handleToggleActive(row.id, row.activo),
+                                                        children: row.activo ? "Desactivar" : "Activar"
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
+                                                        open: dialogOpen,
+                                                        onClose: ()=>setDialogOpen(false),
+                                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogContent, {
+                                                            children: [
+                                                                dialogMessage,
+                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                    onClick: ()=>window.location.reload(),
+                                                                    children: "Aceptar"
+                                                                })
+                                                            ]
+                                                        })
                                                     })
                                                 ]
                                             })

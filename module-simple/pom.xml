@@ -63,7 +63,7 @@
     		<artifactId>jasperreports</artifactId>
     		<version>6.20.6</version>
 		</dependency>
-		<dependency>
+			<dependency>
     		<groupId>net.sf.jasperreports</groupId>
     		<artifactId>jasperreports-fonts</artifactId>
     		<version>6.20.6</version>

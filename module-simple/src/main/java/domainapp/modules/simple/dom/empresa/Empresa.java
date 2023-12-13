@@ -19,7 +19,6 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
@@ -45,23 +44,11 @@ import lombok.val;
 import domainapp.modules.simple.dom.empresa.enumeradores.TipoEmpresa;
 import domainapp.modules.simple.types.Nombre;
 
-
 @Entity
-@Table(
-    schema="simple",
-    name = "Empresa",
-    uniqueConstraints = {
-        @UniqueConstraint(name = "Empresa__nombre__UNQ", columnNames = {"nombre"})
-    }
-)
-@NamedQueries({
-        @NamedQuery(
-                name = Empresa.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE,
-                query = "SELECT so " +
-                        "FROM Empresa so " +
-                        "WHERE so.nombre LIKE :nombre"
-        )
-})
+@Table(schema = "simple", name = "Empresa", uniqueConstraints = {
+		@UniqueConstraint(name = "Empresa__nombre__UNQ", columnNames = { "nombre" }) })
+@NamedQueries({ @NamedQuery(name = Empresa.NAMED_QUERY__FIND_BY_LAST_NAME_LIKE, query = "SELECT so "
+		+ "FROM Empresa so " + "WHERE so.nombre LIKE :nombre") })
 @EntityListeners(IsisEntityListener.class)
 @DomainObject(logicalTypeName = "vidrios.Empresa", entityChangePublishing = Publishing.ENABLED)
 @DomainObjectLayout()
@@ -70,123 +57,154 @@ import domainapp.modules.simple.types.Nombre;
 @ToString(onlyExplicitlyIncluded = true)
 public class Empresa implements Comparable<Empresa> {
 
-    static final String NAMED_QUERY__FIND_BY_LAST_NAME_LIKE = "Empresa.findByLastNameLike";
+	static final String NAMED_QUERY__FIND_BY_LAST_NAME_LIKE = "Empresa.findByLastNameLike";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    @Getter @Setter
-    @PropertyLayout(fieldSetId = "metadata", sequence = "1")
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", nullable = false)
+	@Getter
+	@Setter
+	@PropertyLayout(fieldSetId = "metadata", sequence = "1")
+	private Long id;
 
-    @Version
-    @Column(name = "version", nullable = false)
-    @PropertyLayout(fieldSetId = "metadata", sequence = "999")
-    @Getter @Setter
-    private long version;
+	@Version
+	@Column(name = "version", nullable = false)
+	@PropertyLayout(fieldSetId = "metadata", sequence = "999")
+	@Getter
+	@Setter
+	private long version;
 
-    public static Empresa withName(String nombre) {
-        return withName(nombre, null, null, null, null);
-    }
+	public static Empresa withName(String nombre) {
+		return withName(nombre, null, null, null, null);
+	}
 
-    public static Empresa withName(String nombre, String domicilio, String telefono, String correo, TipoEmpresa tipoEmpresa) {
-        val empresa = new Empresa();
-        empresa.setNombre(nombre);
-        empresa.setDomicilio(domicilio);
-        empresa.setTelefono(telefono);
-        empresa.setCorreo(correo);
-        empresa.setTipoEmpresa(tipoEmpresa);
-        empresa.setActivo(true);
-        return empresa;
-    }
+	public static Empresa withName(String nombre, String domicilio, String telefono, String correo,
+			TipoEmpresa tipoEmpresa) {
+		val empresa = new Empresa();
+		empresa.setNombre(nombre);
+		empresa.setDomicilio(domicilio);
+		empresa.setTelefono(telefono);
+		empresa.setCorreo(correo);
+		empresa.setTipoEmpresa(tipoEmpresa);
+		empresa.setActivo(true);
+		return empresa;
+	}
 
-    @Inject @Transient RepositoryService repositoryService;
-    @Inject @Transient TitleService titleService;
-    @Inject @Transient MessageService messageService;
+	@Inject
+	@Transient
+	RepositoryService repositoryService;
+	@Inject
+	@Transient
+	TitleService titleService;
+	@Inject
+	@Transient
+	MessageService messageService;
 
+	public String title() {
+		return getNombre();
+	}
 
-    public String title() {
-        return getNombre();
-    }
+	@Transient
+	@PropertyLayout(fieldSetId = "nombre", sequence = "1")
+	public String getName() {
+		return getNombre();
+	}
 
-    @Transient
-    @PropertyLayout(fieldSetId = "nombre", sequence = "1")
-    public String getName() {
-        return getNombre();
-    }
+	@Nombre
+	@Column(name = "nombre", length = Nombre.MAX_LEN, nullable = false)
+	@Getter
+	@Setter
+	@ToString.Include
+	@Property(hidden = Where.EVERYWHERE)
+	private String nombre;
 
-    @Nombre
-    @Column(name = "nombre", length = Nombre.MAX_LEN, nullable = false)
-    @Getter @Setter @ToString.Include
-    @Property(hidden = Where.EVERYWHERE)
-    private String nombre;
+	@Column(name = "domicilio", nullable = true)
+	@Getter
+	@Setter
+	@PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
+	private String domicilio;
 
-    @Column(name = "domicilio", nullable = true)
-    @Getter @Setter
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "1")
-    @Property(hidden = Where.EVERYWHERE)
-    private String domicilio;
+	@Column(name = "telefono", nullable = true)
+	@PropertyLayout(fieldSetId = "contactDetails", sequence = "2")
+	@Getter
+	@Setter
+	private String telefono;
 
-    @Column(name = "telefono", nullable = true)
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "2")
-    @Getter @Setter
-    private String telefono;
+	@Column(name = "correo", nullable = true)
+	@PropertyLayout(fieldSetId = "contactDetails", sequence = "3")
+	@Getter
+	@Setter
+	private String correo;
 
-    @Column(name = "correo", nullable = true)
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "3")
-    @Getter @Setter
-    private String correo;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipoEmpresa", nullable = false)
+	@Getter
+	@Setter
+	@PropertyLayout(fieldSetId = "contactDetails", sequence = "4")
+	private TipoEmpresa tipoEmpresa;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipoEmpresa", nullable = false)
-    @Getter @Setter
-    @PropertyLayout(fieldSetId = "contactDetails", sequence = "4")
-    private TipoEmpresa tipoEmpresa;
+	@Column(name = "activo", nullable = false)
+	@Getter
+	@Setter
+	private boolean activo;
 
-    @Column(name = "activo", nullable = false)
-    @Getter @Setter
-    private boolean activo;
+	@Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+	@ActionLayout(associateWith = "name")
+	public Empresa updateName(@Nombre final String nombre, final String domicilio, final String telefono,
+			final String correo, final TipoEmpresa tipoEmpresa) {
+		setNombre(nombre);
+		setDomicilio(domicilio);
+		setTelefono(telefono);
+		setCorreo(correo);
+		setTipoEmpresa(tipoEmpresa);
+		setActivo(true);
+		return this;
+	}
 
-    @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
-    @ActionLayout(associateWith = "name")
-    public Empresa updateName(
-            @Nombre final String nombre,
-            		final String domicilio,
-            		final String telefono,
-            		final String correo,
-            		final TipoEmpresa tipoEmpresa) {
-        setNombre(nombre);
-        setDomicilio(domicilio);
-        setTelefono(telefono);
-        setCorreo(correo);
-        setTipoEmpresa(tipoEmpresa);
-        setActivo(true);
-        return this;
-    }
-    public String default0UpdateName() {
-        return getNombre();
-    }
-    public String default1UpdateName() {
-        return getDomicilio();
-    }
-    public String default2UpdateName() {
-        return getTelefono();
-    }
-    public String default3UpdateName() {
-        return getCorreo();
-    }
-    public TipoEmpresa default4UpdateName() {
-        return getTipoEmpresa();
-    }
+	public String default0UpdateName() {
+		return getNombre();
+	}
 
+	public String default1UpdateName() {
+		return getDomicilio();
+	}
 
+	public String default2UpdateName() {
+		return getTelefono();
+	}
 
-    private final static Comparator<Empresa> comparator =
-            Comparator.comparing(Empresa::getNombre);
+	public String default3UpdateName() {
+		return getCorreo();
+	}
 
-    @Override
-    public int compareTo(final Empresa other) {
-        return comparator.compare(this, other);
-    }
+	public TipoEmpresa default4UpdateName() {
+		return getTipoEmpresa();
+	}
+
+	@Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+	@ActionLayout(associateWith = "contactDetails")
+	public Empresa activar() {
+		setActivo(true);
+		return this;
+	}
+
+	@Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+	@ActionLayout(associateWith = "contactDetails")
+	public Empresa desactivar(
+			final boolean activo) {
+		setActivo(false);
+		return this;
+	}
+
+	public boolean default0Desactivar() {
+		return !isActivo();
+	}
+
+	private final static Comparator<Empresa> comparator = Comparator.comparing(Empresa::getNombre);
+
+	@Override
+	public int compareTo(final Empresa other) {
+		return comparator.compare(this, other);
+	}
 
 }

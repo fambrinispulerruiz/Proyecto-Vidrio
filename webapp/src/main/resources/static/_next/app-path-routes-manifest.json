@@ -7,10 +7,10 @@
   "/(DashboardLayout)/ui-components/buttons/page": "/ui-components/buttons",
   "/(DashboardLayout)/ui-components/empresas/page": "/ui-components/empresas",
   "/(DashboardLayout)/ui-components/forms/page": "/ui-components/forms",
-  "/(DashboardLayout)/ui-components/modelos/page": "/ui-components/modelos",
-  "/(DashboardLayout)/ui-components/table/page": "/ui-components/table",
   "/(DashboardLayout)/ui-components/images/page": "/ui-components/images",
-  "/(DashboardLayout)/ui-components/ratings/page": "/ui-components/ratings",
   "/(DashboardLayout)/ui-components/pagination/page": "/ui-components/pagination",
+  "/(DashboardLayout)/ui-components/ratings/page": "/ui-components/ratings",
+  "/(DashboardLayout)/ui-components/table/page": "/ui-components/table",
+  "/(DashboardLayout)/ui-components/modelos/page": "/ui-components/modelos",
   "/(DashboardLayout)/ui-components/vidrios/page": "/ui-components/vidrios"
 }

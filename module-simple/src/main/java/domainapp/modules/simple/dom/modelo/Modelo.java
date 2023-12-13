@@ -126,6 +126,12 @@ public class Modelo implements Comparable<Modelo> {
     @Getter @Setter
     private boolean activo;
 
+	@Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+	@ActionLayout(associateWith = "nombre")
+	public Modelo activar() {
+		setActivo(true);
+		return this;
+	}
     
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
     @ActionLayout(associateWith = "nombre")

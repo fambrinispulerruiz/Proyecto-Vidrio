@@ -164,6 +164,13 @@ public class Vidrio implements Comparable<Vidrio> {
     private boolean activo;
     
     @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
+	@ActionLayout(associateWith = "details")
+	public Vidrio activar() {
+		setActivo(true);
+		return this;
+	}
+    
+    @Action(semantics = IDEMPOTENT, commandPublishing = Publishing.ENABLED, executionPublishing = Publishing.ENABLED)
     @ActionLayout(associateWith = "nombre")
     public Vidrio updateName(
             		final String nombre,
