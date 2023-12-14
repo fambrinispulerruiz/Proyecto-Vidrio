@@ -368,6 +368,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(82511);
 /* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48007);
 /* harmony import */ var _app_DashboardLayout_components_shared_BaseCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94138);
+/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71998);
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
@@ -376,9 +377,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const NuevoFormulario = ()=>{
-    const [openModal, setOpenModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [rows, setRows] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [modelos, setSelect] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        id: "",
+        nombre: "",
+        antena: "",
+        codigo: "",
+        precio: "",
+        sensor: "",
+        tipovidrio: "",
+        modelo_id: "",
+        activo: ""
+    });
+    const [openAddModal, setOpenAddModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [openEditModal, setOpenEditModal] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [selectedId, setSelectedId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [dialogOpen, setDialogOpen] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [dialogMessage, setDialogMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("");
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
         // This function will be called when the component mounts
         const fetchData = async ()=>{
@@ -405,14 +423,40 @@ const NuevoFormulario = ()=>{
         // Call the fetchData function
         fetchData();
     }, []);
-    const handleEditClick = ()=>{
-        setOpenModal(true);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        // This function will be called when the component mounts
+        const fetchData = async ()=>{
+            try {
+                const username = "sven";
+                const password = "pass";
+                const authHeader = "Basic " + btoa(username + ":" + password);
+                const response = await fetch("http://localhost:8080/restful/services/simple.Modelos/actions/verModelos/invoke", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                        "Authorization": authHeader,
+                        "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                    }
+                });
+                const data = await response.json();
+                console.log(data);
+                // Set the obtained data to the 'rows' state
+                setSelect(data);
+            } catch (error) {
+                console.error("Error al realizar la solicitud:", error);
+            }
+        };
+        // Call the fetchData function
+        fetchData();
+    }, []);
+    const handleOpenAddModal = ()=>{
+        setOpenAddModal(true);
     };
-    const handleOpenModal = ()=>{
-        setOpenModal(true);
+    const handleCloseAddModal = ()=>{
+        setOpenAddModal(false);
     };
-    const handleCloseModal = ()=>{
-        setOpenModal(false);
+    const handleCloseEditModal = ()=>{
+        setOpenEditModal(false);
     };
     const handleExportToPDF = ()=>{
     // Implementa la lógica de exportación a PDF
@@ -420,57 +464,261 @@ const NuevoFormulario = ()=>{
     // Ejemplo de apertura de la URL en una nueva ventana/tab
     // window.open(pdfExportURL, '_blank');
     };
+    const handleFormChange = (event)=>{
+        if ("target" in event) {
+            const { name, value } = event.target;
+            console.log(`TextField Change - name: ${name}, value: ${value}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    [name || ""]: value
+                }));
+        } else {
+            const selectedValue = event.target?.value || "";
+            console.log(`Select Change - selectedValue: ${selectedValue}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    tipoEmpresa: selectedValue
+                }));
+        }
+    };
+    const handleFormSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/modelos.Modelo/${formData.modelo_id}/actions/agregarVidrio/invoke`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombre: {
+                        value: formData.nombre
+                    },
+                    antena: {
+                        value: formData.antena
+                    },
+                    codigo: {
+                        value: formData.codigo
+                    },
+                    precio: {
+                        value: formData.precio
+                    },
+                    sensor: {
+                        value: formData.sensor
+                    },
+                    tipoVidrio: {
+                        value: formData.tipovidrio
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleOpenEditModal = async (row)=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(`http://localhost:8080/restful/objects/vidrios.Vidrio/${row.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            if (response.ok) {
+                const vidrioData = await response.json();
+                const modeloID = vidrioData.modelo.href.split("/").pop();
+                // Actualiza el estado con los datos que trae el fetch
+                setFormData({
+                    id: vidrioData.id,
+                    nombre: vidrioData.nombre,
+                    modelo_id: modeloID,
+                    antena: vidrioData.antena,
+                    codigo: vidrioData.codigo,
+                    precio: vidrioData.precio,
+                    sensor: vidrioData.sensor,
+                    tipovidrio: vidrioData.tipoVidrio,
+                    activo: vidrioData.activo
+                });
+                setSelectedId(row.id);
+                setOpenEditModal(true);
+            } else {
+                console.error("Error al obtener los datos de la empresa");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleEditSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            // Usar tipoVidrioSeleccionado para enviar la solicitud PUT
+            const response = await fetch(`http://localhost:8080/restful/objects/vidrios.Vidrio/${formData.id}/actions/updateName/invoke`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombre: {
+                        value: formData.nombre
+                    },
+                    antena: {
+                        value: formData.antena
+                    },
+                    codigo: {
+                        value: formData.codigo
+                    },
+                    precio: {
+                        value: formData.precio
+                    },
+                    sensor: {
+                        value: formData.sensor
+                    },
+                    tipoVidrio: {
+                        value: tipoVidrio.find((vidrio)=>vidrio.id.replace(/_/g, " ") === formData.tipovidrio)?.id
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    const handleToggleActive = async (id, isActive)=>{
+        try {
+            const actionName = isActive ? "delete" : "activar";
+            const actionURL = `http://localhost:8080/restful/objects/vidrios.Vidrio/${id}/actions/${actionName}/invoke`;
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch(actionURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            if (response.ok) {
+                // Actualizar el estado local si es necesario
+                // Mostrar el diálogo con el mensaje
+                setDialogMessage(`Acción "${isActive ? "Desactivar" : "Activar"}" completada con éxito`);
+                setDialogOpen(true);
+            } else {
+                setDialogMessage(`Error al realizar la acción: ${response.statusText}`);
+                setDialogOpen(true);
+            }
+        } catch (error) {
+            setDialogMessage("Error al realizar la solicitud");
+            setDialogOpen(true);
+        }
+    };
     const tipoVidrio = [
         {
-            id: "1",
+            id: "Parabrisa",
             nombre: "Parabrisa"
         },
         {
-            id: "2",
+            id: "Luneta",
             nombre: "Luneta"
         },
         {
-            id: "3",
+            id: "Puerta_Delantera_D",
             nombre: "Puerta Delantera D"
         },
         {
-            id: "4",
+            id: "Puerta_Delantera_I",
             nombre: "Puerta Delantera I"
         },
         {
-            id: "5",
+            id: "Puerta_Trasera_D",
             nombre: "Puerta Trasera D"
         },
         {
-            id: "6",
+            id: "Puerta_Trasera_I",
             nombre: "Puerta Trasera I"
         },
         {
-            id: "7",
+            id: "Espejo_Lateral_D",
             nombre: "Espejo Lateral D"
         },
         {
-            id: "8",
+            id: "Espejo_Lateral_I",
+            nombre: "Espejo Lateral I"
+        }
+    ];
+    const tipoVidrioEdit = [
+        {
+            id: "Parabrisa",
+            nombre: "Parabrisa"
+        },
+        {
+            id: "Luneta",
+            nombre: "Luneta"
+        },
+        {
+            id: "Puerta Delantera D",
+            nombre: "Puerta Delantera D"
+        },
+        {
+            id: "Puerta Delantera I",
+            nombre: "Puerta Delantera I"
+        },
+        {
+            id: "Puerta Trasera D",
+            nombre: "Puerta Trasera D"
+        },
+        {
+            id: "Puerta Trasera I",
+            nombre: "Puerta Trasera I"
+        },
+        {
+            id: "Espejo Lateral D",
+            nombre: "Espejo Lateral D"
+        },
+        {
+            id: "Espejo Lateral I",
             nombre: "Espejo Lateral I"
         }
     ];
     const antena = [
         {
-            id: "1",
+            id: "Si",
             nombre: "Si"
         },
         {
-            id: "2",
+            id: "No",
             nombre: "No"
         }
     ];
     const sensor = [
         {
-            id: "1",
+            id: "Si",
             nombre: "Si"
         },
         {
-            id: "2",
+            id: "No",
             nombre: "No"
         }
     ];
@@ -491,7 +739,7 @@ const NuevoFormulario = ()=>{
                             sx: {
                                 margin: "20px"
                             },
-                            onClick: handleOpenModal,
+                            onClick: handleOpenAddModal,
                             children: "Agregar Vidrio"
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
@@ -510,8 +758,8 @@ const NuevoFormulario = ()=>{
                     ]
                 }),
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
-                    open: openModal,
-                    onClose: handleCloseModal,
+                    open: openAddModal,
+                    onClose: handleCloseAddModal,
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
                             children: "Agregar Vidrio"
@@ -532,23 +780,61 @@ const NuevoFormulario = ()=>{
                                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Stack, {
                                                 spacing: 3,
                                                 children: [
+                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                        fullWidth: true,
+                                                        children: [
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                                id: "modelo-label",
+                                                                children: "Modelo"
+                                                            }),
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                                labelId: "modelo-label",
+                                                                id: "modelo",
+                                                                name: "modelo_id",
+                                                                label: "Modelo",
+                                                                value: formData.modelo_id,
+                                                                onChange: (event)=>setFormData({
+                                                                        ...formData,
+                                                                        modelo_id: event.target.value
+                                                                    }),
+                                                                children: modelos.map((modelo)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                        value: modelo.id,
+                                                                        children: modelo.nombre + " (" + modelo.empresa.title + ")"
+                                                                    }, modelo.id))
+                                                            })
+                                                        ]
+                                                    }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "nombre",
+                                                        name: "nombre",
                                                         label: "Nombre",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.nombre,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "codigo",
+                                                        name: "codigo",
                                                         label: "Codigo",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        value: formData.codigo,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                         id: "precio",
+                                                        name: "precio",
                                                         label: "Precio",
                                                         variant: "outlined",
-                                                        fullWidth: true
+                                                        fullWidth: true,
+                                                        type: "number",
+                                                        inputProps: {
+                                                            min: 0,
+                                                            step: "any"
+                                                        },
+                                                        value: formData.precio,
+                                                        onChange: handleFormChange
                                                     }),
                                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
                                                         fullWidth: true,
@@ -560,7 +846,13 @@ const NuevoFormulario = ()=>{
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                 labelId: "tipovidrio-label",
                                                                 id: "tipovidrio",
+                                                                name: "tipovidrio",
                                                                 label: "TipoVidrio",
+                                                                value: formData.tipovidrio,
+                                                                onChange: (event)=>setFormData({
+                                                                        ...formData,
+                                                                        tipovidrio: event.target.value
+                                                                    }),
                                                                 children: tipoVidrio.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                         value: tipoVidrio.id,
                                                                         children: tipoVidrio.nombre
@@ -578,7 +870,13 @@ const NuevoFormulario = ()=>{
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                 labelId: "antena-label",
                                                                 id: "antena",
+                                                                name: "antena",
                                                                 label: "Antena",
+                                                                value: formData.antena,
+                                                                onChange: (event)=>setFormData({
+                                                                        ...formData,
+                                                                        antena: event.target.value
+                                                                    }),
                                                                 children: antena.map((antena)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                         value: antena.id,
                                                                         children: antena.nombre
@@ -596,7 +894,13 @@ const NuevoFormulario = ()=>{
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                 labelId: "sensor-label",
                                                                 id: "sensor",
+                                                                name: "sensor",
                                                                 label: "Sensor",
+                                                                value: formData.sensor,
+                                                                onChange: (event)=>setFormData({
+                                                                        ...formData,
+                                                                        sensor: event.target.value
+                                                                    }),
                                                                 children: sensor.map((sensor)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                         value: sensor.id,
                                                                         children: sensor.nombre
@@ -608,6 +912,7 @@ const NuevoFormulario = ()=>{
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                onClick: handleFormSubmit,
                                                 children: "Cargar"
                                             })
                                         ]
@@ -617,7 +922,7 @@ const NuevoFormulario = ()=>{
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                onClick: handleCloseModal,
+                                onClick: handleCloseAddModal,
                                 children: "Cancelar"
                             })
                         })
@@ -655,6 +960,9 @@ const NuevoFormulario = ()=>{
                                             children: "Sensor"
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            children: "Activo"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                             children: "Acciones"
                                         })
                                     ]
@@ -687,18 +995,20 @@ const NuevoFormulario = ()=>{
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                                 children: row.sensor
                                             }),
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                                children: row.activo ? "S\xed" : "No"
+                                            }),
                                             /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
                                                 children: [
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
                                                         startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
                                                         color: "primary",
-                                                        onClick: handleEditClick,
+                                                        onClick: ()=>handleOpenEditModal(row),
                                                         children: "Editar"
                                                     }),
-                                                    " ",
                                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
-                                                        open: openModal,
-                                                        onClose: handleCloseModal,
+                                                        open: openEditModal,
+                                                        onClose: handleCloseEditModal,
                                                         children: [
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
                                                                 children: "Editar Vidrio"
@@ -721,21 +1031,35 @@ const NuevoFormulario = ()=>{
                                                                                     children: [
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                                                             id: "nombre",
+                                                                                            name: "nombre",
                                                                                             label: "Nombre",
                                                                                             variant: "outlined",
-                                                                                            fullWidth: true
+                                                                                            fullWidth: true,
+                                                                                            value: formData.nombre,
+                                                                                            onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                                                             id: "codigo",
+                                                                                            name: "codigo",
                                                                                             label: "Codigo",
                                                                                             variant: "outlined",
-                                                                                            fullWidth: true
+                                                                                            fullWidth: true,
+                                                                                            value: formData.codigo,
+                                                                                            onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
                                                                                             id: "precio",
+                                                                                            name: "precio",
                                                                                             label: "Precio",
                                                                                             variant: "outlined",
-                                                                                            fullWidth: true
+                                                                                            fullWidth: true,
+                                                                                            type: "number",
+                                                                                            inputProps: {
+                                                                                                min: 0,
+                                                                                                step: "any"
+                                                                                            },
+                                                                                            value: formData.precio,
+                                                                                            onChange: handleFormChange
                                                                                         }),
                                                                                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
                                                                                             fullWidth: true,
@@ -747,8 +1071,14 @@ const NuevoFormulario = ()=>{
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                                                     labelId: "tipovidrio-label",
                                                                                                     id: "tipovidrio",
+                                                                                                    name: "tipovidrio",
                                                                                                     label: "TipoVidrio",
-                                                                                                    children: tipoVidrio.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                                                    value: formData.tipovidrio,
+                                                                                                    onChange: (event)=>setFormData({
+                                                                                                            ...formData,
+                                                                                                            tipovidrio: event.target.value
+                                                                                                        }),
+                                                                                                    children: tipoVidrioEdit.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                                                             value: tipoVidrio.id,
                                                                                                             children: tipoVidrio.nombre
                                                                                                         }, tipoVidrio.id))
@@ -765,7 +1095,13 @@ const NuevoFormulario = ()=>{
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                                                     labelId: "antena-label",
                                                                                                     id: "antena",
+                                                                                                    name: "antena",
                                                                                                     label: "Antena",
+                                                                                                    value: formData.antena,
+                                                                                                    onChange: (event)=>setFormData({
+                                                                                                            ...formData,
+                                                                                                            antena: event.target.value
+                                                                                                        }),
                                                                                                     children: antena.map((antena)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                                                             value: antena.id,
                                                                                                             children: antena.nombre
@@ -783,7 +1119,13 @@ const NuevoFormulario = ()=>{
                                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
                                                                                                     labelId: "sensor-label",
                                                                                                     id: "sensor",
+                                                                                                    name: "sensor",
                                                                                                     label: "Sensor",
+                                                                                                    value: formData.sensor,
+                                                                                                    onChange: (event)=>setFormData({
+                                                                                                            ...formData,
+                                                                                                            sensor: event.target.value
+                                                                                                        }),
                                                                                                     children: sensor.map((sensor)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
                                                                                                             value: sensor.id,
                                                                                                             children: sensor.nombre
@@ -795,6 +1137,7 @@ const NuevoFormulario = ()=>{
                                                                                 }),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                                    onClick: handleEditSubmit,
                                                                                     children: "Confirmar Edici\xf3n"
                                                                                 })
                                                                             ]
@@ -804,16 +1147,30 @@ const NuevoFormulario = ()=>{
                                                             }),
                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
                                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                                    onClick: handleCloseModal,
+                                                                    onClick: handleCloseEditModal,
                                                                     children: "Cancelar"
                                                                 })
                                                             })
                                                         ]
                                                     }),
                                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                        startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
-                                                        color: "secondary",
-                                                        children: "Desactivar"
+                                                        startIcon: row.activo ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
+                                                        color: row.activo ? "secondary" : "success",
+                                                        onClick: ()=>handleToggleActive(row.id, row.activo),
+                                                        children: row.activo ? "Desactivar" : "Activar"
+                                                    }),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
+                                                        open: dialogOpen,
+                                                        onClose: ()=>setDialogOpen(false),
+                                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogContent, {
+                                                            children: [
+                                                                dialogMessage,
+                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                    onClick: ()=>window.location.reload(),
+                                                                    children: "Aceptar"
+                                                                })
+                                                            ]
+                                                        })
                                                     })
                                                 ]
                                             })
@@ -865,7 +1222,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,974,511,715,766,138], () => (__webpack_exec__(1284)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,974,115,847,766,138], () => (__webpack_exec__(1284)));
 module.exports = __webpack_exports__;
 
 })();

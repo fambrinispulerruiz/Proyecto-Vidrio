@@ -713,296 +713,296 @@ const Dashboard = ()=>{
                 container: true,
                 spacing: 3,
                 children: [
-                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Grid, {
-                        item: true,
-                        xs: 12,
-                        lg: 12,
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Box, {
-                                display: "flex",
-                                justifyContent: "space-between",
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                        variant: "contained",
-                                        sx: {
-                                            margin: "20px"
-                                        },
-                                        onClick: handleOpenModal,
-                                        children: "Agregar Orden"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                        variant: "contained",
-                                        sx: {
-                                            margin: "20px",
-                                            backgroundColor: colors.red[500],
-                                            "&:hover": {
-                                                backgroundColor: colors.red[700]
-                                            }
-                                        },
-                                        startIcon: /*#__PURE__*/ jsx_runtime_.jsx(PictureAsPdf/* default */.Z, {}),
-                                        onClick: handleExportToPDF,
-                                        children: "Exportar a PDF"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Dialog, {
-                                open: openModal,
-                                onClose: handleCloseModal,
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx(node.DialogTitle, {
-                                        children: "Agregar Orden"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx(node.DialogContent, {
-                                        sx: {
-                                            width: "600px",
-                                            textAlign: "center"
-                                        },
-                                        children: /*#__PURE__*/ jsx_runtime_.jsx(node.Grid, {
-                                            item: true,
-                                            xs: 12,
-                                            lg: 12,
-                                            children: /*#__PURE__*/ jsx_runtime_.jsx(BaseCard/* default */.Z, {
-                                                title: "Complete el Formulario de la Orden",
-                                                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
-                                                    children: [
-                                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Stack, {
-                                                            spacing: 3,
-                                                            children: [
-                                                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
-                                                                    fullWidth: true,
-                                                                    children: [
-                                                                        /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
-                                                                            id: "modelo-label",
-                                                                            children: "Modelo"
-                                                                        }),
-                                                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                            labelId: "modelo-label",
-                                                                            id: "modelo",
-                                                                            label: "Modelo",
-                                                                            children: [
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "hilux",
-                                                                                    children: "Hilux (Toyota)"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "accord",
-                                                                                    children: "Accord (Honda)"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "3-series",
-                                                                                    children: "3 Series (BMW)"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "camry",
-                                                                                    children: "Camry (Toyota)"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "civic",
-                                                                                    children: "Civic (Honda)"
-                                                                                })
-                                                                            ]
-                                                                        })
-                                                                    ]
-                                                                }),
-                                                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
-                                                                    fullWidth: true,
-                                                                    children: [
-                                                                        /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
-                                                                            id: "vidrio-label",
-                                                                            children: "Vidrio"
-                                                                        }),
-                                                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                            labelId: "vidrio-label",
-                                                                            id: "vidrio",
-                                                                            label: "Vidrio",
-                                                                            children: [
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "parabrisas",
-                                                                                    children: "Parabrisas"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "luneta",
-                                                                                    children: "Luneta"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "ventana_delantera",
-                                                                                    children: "Ventana Delantera"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "ventana_trasera",
-                                                                                    children: "Ventana Trasera"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "ventana_lateral",
-                                                                                    children: "Ventana Lateral"
-                                                                                })
-                                                                            ]
-                                                                        })
-                                                                    ]
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                    id: "fecha",
-                                                                    label: "Fecha",
-                                                                    type: "date",
-                                                                    variant: "outlined",
-                                                                    fullWidth: true
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                    id: "nombre-asegurado",
-                                                                    label: "Nombre Asegurado",
-                                                                    variant: "outlined",
-                                                                    fullWidth: true
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                    id: "telefono-asegurado",
-                                                                    label: "Tel\xe9fono Asegurado",
-                                                                    variant: "outlined",
-                                                                    fullWidth: true
-                                                                }),
-                                                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
-                                                                    fullWidth: true,
-                                                                    children: [
-                                                                        /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
-                                                                            id: "aseguradora-label",
-                                                                            children: "Aseguradora"
-                                                                        }),
-                                                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                            labelId: "aseguradora-label",
-                                                                            id: "aseguradora",
-                                                                            label: "Aseguradora",
-                                                                            children: [
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "zurich",
-                                                                                    children: "Zurich"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "federacion_patronal",
-                                                                                    children: "Federaci\xf3n Patronal"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "la_segunda",
-                                                                                    children: "La Segunda"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "sancor",
-                                                                                    children: "Sancor"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "mapfre",
-                                                                                    children: "MAPFRE"
-                                                                                })
-                                                                            ]
-                                                                        })
-                                                                    ]
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                    id: "nro-siniestro",
-                                                                    label: "Nro Siniestro",
-                                                                    variant: "outlined",
-                                                                    fullWidth: true
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.FormControlLabel, {
-                                                                    control: /*#__PURE__*/ jsx_runtime_.jsx(node.Checkbox, {}),
-                                                                    label: "Orden"
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                    id: "patente",
-                                                                    label: "Patente",
-                                                                    variant: "outlined",
-                                                                    fullWidth: true
-                                                                }),
-                                                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
-                                                                    fullWidth: true,
-                                                                    children: [
-                                                                        /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
-                                                                            id: "propio-label",
-                                                                            children: "Propio"
-                                                                        }),
-                                                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                            labelId: "propio-label",
-                                                                            id: "propio",
-                                                                            label: "Propio",
-                                                                            children: [
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "propio",
-                                                                                    children: "Propio"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "laboral",
-                                                                                    children: "Laboral"
-                                                                                })
-                                                                            ]
-                                                                        })
-                                                                    ]
-                                                                }),
-                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                    id: "observaciones",
-                                                                    label: "Observaciones",
-                                                                    multiline: true,
-                                                                    rows: 4,
-                                                                    variant: "outlined",
-                                                                    fullWidth: true
-                                                                }),
-                                                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
-                                                                    fullWidth: true,
-                                                                    children: [
-                                                                        /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
-                                                                            id: "estado-label",
-                                                                            children: "Estado"
-                                                                        }),
-                                                                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                            labelId: "estado-label",
-                                                                            id: "estado",
-                                                                            label: "Estado",
-                                                                            children: [
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "estado1",
-                                                                                    children: "Sin Atender"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "estado2",
-                                                                                    children: "Atendido"
-                                                                                }),
-                                                                                /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                    value: "estado2",
-                                                                                    children: "Finalizado y Entregado"
-                                                                                })
-                                                                            ]
-                                                                        })
-                                                                    ]
-                                                                })
-                                                            ]
-                                                        }),
-                                                        /*#__PURE__*/ jsx_runtime_.jsx("br", {}),
-                                                        /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                                            children: "Cargar"
-                                                        })
-                                                    ]
-                                                })
-                                            })
-                                        })
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx(node.DialogActions, {
-                                        children: /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                            onClick: handleCloseModal,
-                                            children: "Cancelar"
-                                        })
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx(dashboard_SalesOverview, {})
-                        ]
-                    }),
                     /*#__PURE__*/ jsx_runtime_.jsx(node.Grid, {
                         item: true,
                         xs: 12,
-                        lg: 4,
+                        children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Box, {
+                            display: "flex",
+                            justifyContent: "space-between",
+                            children: [
+                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                    variant: "contained",
+                                    sx: {
+                                        margin: "20px"
+                                    },
+                                    onClick: handleOpenModal,
+                                    children: "Agregar Orden"
+                                }),
+                                /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                    variant: "contained",
+                                    sx: {
+                                        margin: "20px",
+                                        backgroundColor: colors.red[500],
+                                        "&:hover": {
+                                            backgroundColor: colors.red[700]
+                                        }
+                                    },
+                                    startIcon: /*#__PURE__*/ jsx_runtime_.jsx(PictureAsPdf/* default */.Z, {}),
+                                    onClick: handleExportToPDF,
+                                    children: "Exportar a PDF"
+                                }),
+                                /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Dialog, {
+                                    open: openModal,
+                                    onClose: handleCloseModal,
+                                    children: [
+                                        /*#__PURE__*/ jsx_runtime_.jsx(node.DialogTitle, {
+                                            children: "Agregar Orden"
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(node.DialogContent, {
+                                            sx: {
+                                                width: "600px",
+                                                textAlign: "center"
+                                            },
+                                            children: /*#__PURE__*/ jsx_runtime_.jsx(node.Grid, {
+                                                item: true,
+                                                xs: 12,
+                                                lg: 12,
+                                                children: /*#__PURE__*/ jsx_runtime_.jsx(BaseCard/* default */.Z, {
+                                                    title: "Complete el Formulario de la Orden",
+                                                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
+                                                        children: [
+                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Stack, {
+                                                                spacing: 3,
+                                                                children: [
+                                                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
+                                                                        fullWidth: true,
+                                                                        children: [
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
+                                                                                id: "modelo-label",
+                                                                                children: "Modelo"
+                                                                            }),
+                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
+                                                                                labelId: "modelo-label",
+                                                                                id: "modelo",
+                                                                                label: "Modelo",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "hilux",
+                                                                                        children: "Hilux (Toyota)"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "accord",
+                                                                                        children: "Accord (Honda)"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "3-series",
+                                                                                        children: "3 Series (BMW)"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "camry",
+                                                                                        children: "Camry (Toyota)"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "civic",
+                                                                                        children: "Civic (Honda)"
+                                                                                    })
+                                                                                ]
+                                                                            })
+                                                                        ]
+                                                                    }),
+                                                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
+                                                                        fullWidth: true,
+                                                                        children: [
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
+                                                                                id: "vidrio-label",
+                                                                                children: "Vidrio"
+                                                                            }),
+                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
+                                                                                labelId: "vidrio-label",
+                                                                                id: "vidrio",
+                                                                                label: "Vidrio",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "parabrisas",
+                                                                                        children: "Parabrisas"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "luneta",
+                                                                                        children: "Luneta"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "ventana_delantera",
+                                                                                        children: "Ventana Delantera"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "ventana_trasera",
+                                                                                        children: "Ventana Trasera"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "ventana_lateral",
+                                                                                        children: "Ventana Lateral"
+                                                                                    })
+                                                                                ]
+                                                                            })
+                                                                        ]
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "fecha",
+                                                                        label: "Fecha",
+                                                                        type: "date",
+                                                                        variant: "outlined",
+                                                                        fullWidth: true
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "nombre-asegurado",
+                                                                        label: "Nombre Asegurado",
+                                                                        variant: "outlined",
+                                                                        fullWidth: true
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "telefono-asegurado",
+                                                                        label: "Tel\xe9fono Asegurado",
+                                                                        variant: "outlined",
+                                                                        fullWidth: true
+                                                                    }),
+                                                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
+                                                                        fullWidth: true,
+                                                                        children: [
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
+                                                                                id: "aseguradora-label",
+                                                                                children: "Aseguradora"
+                                                                            }),
+                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
+                                                                                labelId: "aseguradora-label",
+                                                                                id: "aseguradora",
+                                                                                label: "Aseguradora",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "zurich",
+                                                                                        children: "Zurich"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "federacion_patronal",
+                                                                                        children: "Federaci\xf3n Patronal"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "la_segunda",
+                                                                                        children: "La Segunda"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "sancor",
+                                                                                        children: "Sancor"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "mapfre",
+                                                                                        children: "MAPFRE"
+                                                                                    })
+                                                                                ]
+                                                                            })
+                                                                        ]
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "nro-siniestro",
+                                                                        label: "Nro Siniestro",
+                                                                        variant: "outlined",
+                                                                        fullWidth: true
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.FormControlLabel, {
+                                                                        control: /*#__PURE__*/ jsx_runtime_.jsx(node.Checkbox, {}),
+                                                                        label: "Orden"
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "patente",
+                                                                        label: "Patente",
+                                                                        variant: "outlined",
+                                                                        fullWidth: true
+                                                                    }),
+                                                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
+                                                                        fullWidth: true,
+                                                                        children: [
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
+                                                                                id: "propio-label",
+                                                                                children: "Propio"
+                                                                            }),
+                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
+                                                                                labelId: "propio-label",
+                                                                                id: "propio",
+                                                                                label: "Propio",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "propio",
+                                                                                        children: "Propio"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "laboral",
+                                                                                        children: "Laboral"
+                                                                                    })
+                                                                                ]
+                                                                            })
+                                                                        ]
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "observaciones",
+                                                                        label: "Observaciones",
+                                                                        multiline: true,
+                                                                        rows: 4,
+                                                                        variant: "outlined",
+                                                                        fullWidth: true
+                                                                    }),
+                                                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
+                                                                        fullWidth: true,
+                                                                        children: [
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
+                                                                                id: "estado-label",
+                                                                                children: "Estado"
+                                                                            }),
+                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
+                                                                                labelId: "estado-label",
+                                                                                id: "estado",
+                                                                                label: "Estado",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "estado1",
+                                                                                        children: "Sin Atender"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "estado2",
+                                                                                        children: "Atendido"
+                                                                                    }),
+                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: "estado2",
+                                                                                        children: "Finalizado y Entregado"
+                                                                                    })
+                                                                                ]
+                                                                            })
+                                                                        ]
+                                                                    })
+                                                                ]
+                                                            }),
+                                                            /*#__PURE__*/ jsx_runtime_.jsx("br", {}),
+                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                                                children: "Cargar"
+                                                            })
+                                                        ]
+                                                    })
+                                                })
+                                            })
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(node.DialogActions, {
+                                            children: /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
+                                                onClick: handleCloseModal,
+                                                children: "Cancelar"
+                                            })
+                                        })
+                                    ]
+                                })
+                            ]
+                        })
+                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx(node.Grid, {
+                        item: true,
+                        xs: 4,
                         children: /*#__PURE__*/ jsx_runtime_.jsx(dashboard_DailyActivity, {})
                     }),
                     /*#__PURE__*/ jsx_runtime_.jsx(node.Grid, {
                         item: true,
+                        xs: 8,
+                        children: /*#__PURE__*/ jsx_runtime_.jsx(dashboard_SalesOverview, {})
+                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx(node.Grid, {
+                        item: true,
                         xs: 12,
-                        lg: 8,
+                        lg: 12,
                         children: /*#__PURE__*/ jsx_runtime_.jsx(ProductPerformance/* default */.Z, {})
                     })
                 ]
@@ -1048,7 +1048,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,974,511,970,440,766,138,434,229], () => (__webpack_exec__(20883)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,974,115,970,440,766,138,434,229], () => (__webpack_exec__(20883)));
 module.exports = __webpack_exports__;
 
 })();

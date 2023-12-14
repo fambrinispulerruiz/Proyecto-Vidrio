@@ -157,7 +157,7 @@ public class Empresa implements Comparable<Empresa> {
 		setTelefono(telefono);
 		setCorreo(correo);
 		setTipoEmpresa(tipoEmpresa);
-		setActivo(true);
+		
 		return this;
 	}
 

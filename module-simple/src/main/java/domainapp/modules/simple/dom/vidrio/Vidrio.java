@@ -185,7 +185,6 @@ public class Vidrio implements Comparable<Vidrio> {
         setTipoVidrio(tipoVidrio);
         setAntena(antena);
         setSensor(sensor);
-        setActivo(true);
        
         return this;
     }
