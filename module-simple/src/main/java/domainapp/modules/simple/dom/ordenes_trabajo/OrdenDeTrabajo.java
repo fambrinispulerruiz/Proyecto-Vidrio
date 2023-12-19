@@ -91,7 +91,7 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
         return withName(vidrio);
     }
     
-    public static OrdenDeTrabajo withName(Vidrio vidrio, LocalDateTime fecha, String nombreAsegurado, String telefonoAsegurado, Aseguradora aseguradora, int nroSiniestro, TraeOrden orden, String patente, Propio propio, String observaciones, Estado estado) {
+    public static OrdenDeTrabajo withName(Vidrio vidrio, String fecha, String nombreAsegurado, String telefonoAsegurado, Aseguradora aseguradora, int nroSiniestro, TraeOrden orden, String patente, Propio propio, String observaciones, Estado estado) {
         val ordenDeTrabajo = new OrdenDeTrabajo();
         ordenDeTrabajo.setVidrio(vidrio);
         ordenDeTrabajo.setFecha(fecha);
@@ -109,7 +109,7 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
     }
     
 
-    public OrdenDeTrabajo(Vidrio vidrio, LocalDateTime fecha, String nombreAsegurado, String telefonoAsegurado, Aseguradora aseguradora, int nroSiniestro, TraeOrden orden, String patente, Propio propio, String observaciones, Estado estado) {
+    public OrdenDeTrabajo(Vidrio vidrio, String fecha, String nombreAsegurado, String telefonoAsegurado, Aseguradora aseguradora, int nroSiniestro, TraeOrden orden, String patente, Propio propio, String observaciones, Estado estado) {
         this.vidrio = vidrio;
         this.fecha = fecha;
         this.nombreAsegurado = nombreAsegurado;
@@ -126,7 +126,7 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
 
 
     public String title() {
-        return titleService.titleOf(getVidrio()) + " @ " + getFecha().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return titleService.titleOf(getVidrio()) + " @ " + getFecha();
     }
 
     @ManyToOne(optional = false)
@@ -138,7 +138,7 @@ public class OrdenDeTrabajo implements Comparable<OrdenDeTrabajo> {
     @Column(name = "fecha", nullable = false)
     @Getter @Setter
     @PropertyLayout(fieldSetId = "name", sequence = "2")
-    private LocalDateTime fecha;
+    private String fecha;
     
     @Column(name = "nombre_asegurado", nullable = false)
     @Getter @Setter

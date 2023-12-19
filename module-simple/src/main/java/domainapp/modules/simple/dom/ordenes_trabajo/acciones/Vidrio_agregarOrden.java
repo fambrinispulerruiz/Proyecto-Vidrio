@@ -32,7 +32,7 @@ public class Vidrio_agregarOrden {
     private final Vidrio vidrio;
 
     public OrdenDeTrabajo act(
-            LocalDateTime fecha,
+    		String fecha,
             final String nombreAsegurado,
             final String telefonoAsegurado,
             final Aseguradora aseguradora,

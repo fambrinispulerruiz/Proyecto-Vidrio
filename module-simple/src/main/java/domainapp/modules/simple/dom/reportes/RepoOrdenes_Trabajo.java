@@ -16,7 +16,7 @@ public class RepoOrdenes_Trabajo {
 	private Vidrio vidrio;
 	
 	@Getter @Setter
-	private LocalDateTime fecha;
+	private String fecha;
 	
 	@Getter @Setter
 	private String nombreAsegurado;
@@ -45,7 +45,7 @@ public class RepoOrdenes_Trabajo {
 	@Getter @Setter
 	private Estado estado;
 
-	public RepoOrdenes_Trabajo(Vidrio vidrio, LocalDateTime fecha, String nombreAsegurado, String telefonoAsegurado,
+	public RepoOrdenes_Trabajo(Vidrio vidrio, String fecha, String nombreAsegurado, String telefonoAsegurado,
 			Aseguradora aseguradora, int nroSiniestro, String patente, TraeOrden orden, Propio propio,
 			String observaciones, Estado estado) {
 		this.vidrio = vidrio;

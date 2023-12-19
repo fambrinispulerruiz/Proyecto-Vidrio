@@ -43,7 +43,7 @@ public class OrdenPlusEmpresa {
     OrdenPlusEmpresa(OrdenDeTrabajo ordenT) {this.ordenT = ordenT;}
 
     public Vidrio getVidrio() {return ordenT.getVidrio();}
-    public LocalDateTime getFecha() {return ordenT.getFecha();}
+    public String getFecha() {return ordenT.getFecha();}
     public String getNombreAsegurado() {return ordenT.getNombreAsegurado();}
     public String getTelefonoAsegurado() {return ordenT.getTelefonoAsegurado();}
     public Aseguradora getAseguradora() {return ordenT.getAseguradora();}

@@ -675,11 +675,129 @@ var colors = __webpack_require__(48007);
 
 const Dashboard = ()=>{
     const [openModal, setOpenModal] = (0,react_.useState)(false);
+    const [vidrios, setSelect] = (0,react_.useState)([]);
+    const [isChecked, setIsChecked] = (0,react_.useState)(false);
+    const [fecha, setFecha] = (0,react_.useState)("");
+    const [hora, setHora] = (0,react_.useState)("");
+    const [formData, setFormData] = (0,react_.useState)({
+        id: "",
+        nombreAsegurado: "",
+        patente: "",
+        estado: "",
+        propio: "",
+        nroSiniestro: "",
+        aseguradora: "",
+        fecha: "",
+        orden: "",
+        telefonoAsegurado: "",
+        vidrio_id: "",
+        observaciones: "",
+        activo: ""
+    });
     const handleOpenModal = ()=>{
         setOpenModal(true);
     };
     const handleCloseModal = ()=>{
         setOpenModal(false);
+    };
+    (0,react_.useEffect)(()=>{
+        // This function will be called when the component mounts
+        const fetchData = async ()=>{
+            try {
+                const username = "sven";
+                const password = "pass";
+                const authHeader = "Basic " + btoa(username + ":" + password);
+                const response = await fetch("http://localhost:8080/restful/services/simple.Vidrios/actions/verVidrios/invoke", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                        "Authorization": authHeader,
+                        "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                    }
+                });
+                const data = await response.json();
+                console.log(data);
+                // Set the obtained data to the 'rows' state
+                setSelect(data);
+            } catch (error) {
+                console.error("Error al realizar la solicitud:", error);
+            }
+        };
+        // Call the fetchData function
+        fetchData();
+    }, []);
+    const handleFormChange = (event)=>{
+        if ("target" in event) {
+            const { name, value } = event.target;
+            console.log(`TextField Change - name: ${name}, value: ${value}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    [name || ""]: value
+                }));
+        } else {
+            const selectedValue = event.target?.value || "";
+            console.log(`Select Change - selectedValue: ${selectedValue}`);
+            setFormData((prevData)=>({
+                    ...prevData,
+                    tipoEmpresa: selectedValue
+                }));
+        }
+    };
+    const handleFormSubmit = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const fechaHora = `${fecha} ${hora}:00`;
+            const response = await fetch(`http://localhost:8080/restful/objects/vidrios.Vidrio/${formData.vidrio_id}/actions/agregarOrden/invoke`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                },
+                body: JSON.stringify({
+                    nombreAsegurado: {
+                        value: formData.nombreAsegurado
+                    },
+                    patente: {
+                        value: formData.patente
+                    },
+                    estado: {
+                        value: formData.estado
+                    },
+                    propio: {
+                        value: formData.propio
+                    },
+                    nroSiniestro: {
+                        value: formData.nroSiniestro
+                    },
+                    aseguradora: {
+                        value: formData.aseguradora
+                    },
+                    fecha: {
+                        value: fechaHora
+                    },
+                    orden: {
+                        value: isChecked ? "Si" : "No"
+                    },
+                    telefonoAsegurado: {
+                        value: formData.telefonoAsegurado
+                    },
+                    observaciones: {
+                        value: formData.observaciones
+                    }
+                })
+            });
+            // Recarga la página después de enviar los datos
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error("Error al enviar datos a la base de datos.");
+            }
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
     };
     const handleExportToPDF = ()=>{
         // Agrega la URL específica para exportar a PDF
@@ -703,6 +821,61 @@ const Dashboard = ()=>{
             console.error("Error:", error.message);
         // Maneja los errores según tus necesidades
         });
+    };
+    const aseguradorasOptions = [
+        {
+            id: "NO_POSEE",
+            nombre: "No posee"
+        },
+        {
+            id: "ALLIANZ",
+            nombre: "Allianz"
+        },
+        {
+            id: "SANCOR_SEGUROS",
+            nombre: "Sancor Seguros"
+        },
+        {
+            id: "LA_CAJA_SEGUROS",
+            nombre: "La Caja Seguros"
+        },
+        {
+            id: "MAPFRE",
+            nombre: "Mapfre"
+        },
+        {
+            id: "ZURICH",
+            nombre: "Zurich"
+        },
+        {
+            id: "PROVINCIA_SEGUROS",
+            nombre: "Provincia Seguros"
+        },
+        {
+            id: "QBE_SEGUROS_LA_BUENOS_AIRES",
+            nombre: "QBE Seguros La Buenos Aires"
+        },
+        {
+            id: "RIO_URUGUAY_SEGUROS",
+            nombre: "R\xedo Uruguay Seguros"
+        },
+        {
+            id: "FEDERACION_PATRONAL",
+            nombre: "Federaci\xf3n Patronal"
+        },
+        {
+            id: "SAN_CRISTOBAL_SEGUROS",
+            nombre: "San Crist\xf3bal Seguros"
+        }
+    ];
+    const handleCheckboxChange = (event)=>{
+        setIsChecked(event.target.checked);
+    };
+    const handleFechaChange = (event)=>{
+        setFecha(event.target.value);
+    };
+    const handleHoraChange = (event)=>{
+        setHora(event.target.value);
     };
     return /*#__PURE__*/ jsx_runtime_.jsx(PageContainer/* default */.Z, {
         title: "Dashboard",
@@ -758,7 +931,7 @@ const Dashboard = ()=>{
                                                 xs: 12,
                                                 lg: 12,
                                                 children: /*#__PURE__*/ jsx_runtime_.jsx(BaseCard/* default */.Z, {
-                                                    title: "Complete el Formulario de la Orden",
+                                                    title: "Complete los Datos de la Orden",
                                                     children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(jsx_runtime_.Fragment, {
                                                         children: [
                                                             /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Stack, {
@@ -768,92 +941,62 @@ const Dashboard = ()=>{
                                                                         fullWidth: true,
                                                                         children: [
                                                                             /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
-                                                                                id: "modelo-label",
-                                                                                children: "Modelo"
-                                                                            }),
-                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                                labelId: "modelo-label",
-                                                                                id: "modelo",
-                                                                                label: "Modelo",
-                                                                                children: [
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "hilux",
-                                                                                        children: "Hilux (Toyota)"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "accord",
-                                                                                        children: "Accord (Honda)"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "3-series",
-                                                                                        children: "3 Series (BMW)"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "camry",
-                                                                                        children: "Camry (Toyota)"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "civic",
-                                                                                        children: "Civic (Honda)"
-                                                                                    })
-                                                                                ]
-                                                                            })
-                                                                        ]
-                                                                    }),
-                                                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
-                                                                        fullWidth: true,
-                                                                        children: [
-                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
                                                                                 id: "vidrio-label",
-                                                                                children: "Vidrio"
+                                                                                children: "Vidrio a colocar"
                                                                             }),
-                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.Select, {
                                                                                 labelId: "vidrio-label",
                                                                                 id: "vidrio",
+                                                                                name: "vidrio_id",
                                                                                 label: "Vidrio",
-                                                                                children: [
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "parabrisas",
-                                                                                        children: "Parabrisas"
+                                                                                value: formData.vidrio_id,
+                                                                                onChange: (event)=>setFormData({
+                                                                                        ...formData,
+                                                                                        vidrio_id: event.target.value
                                                                                     }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "luneta",
-                                                                                        children: "Luneta"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "ventana_delantera",
-                                                                                        children: "Ventana Delantera"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "ventana_trasera",
-                                                                                        children: "Ventana Trasera"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "ventana_lateral",
-                                                                                        children: "Ventana Lateral"
-                                                                                    })
-                                                                                ]
+                                                                                children: vidrios.map((vidrio)=>/*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: vidrio.id,
+                                                                                        children: vidrio.nombre + " (" + vidrio.modelo.title + ")"
+                                                                                    }, vidrio.id))
                                                                             })
                                                                         ]
                                                                     }),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
                                                                         id: "fecha",
-                                                                        label: "Fecha",
+                                                                        label: "Fecha de realizaci\xf3n",
                                                                         type: "date",
+                                                                        name: "fecha",
                                                                         variant: "outlined",
-                                                                        fullWidth: true
+                                                                        fullWidth: true,
+                                                                        value: fecha,
+                                                                        onChange: handleFechaChange
                                                                     }),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                        id: "nombre-asegurado",
-                                                                        label: "Nombre Asegurado",
+                                                                        id: "hora",
+                                                                        label: "Hora",
+                                                                        type: "time",
                                                                         variant: "outlined",
-                                                                        fullWidth: true
+                                                                        fullWidth: true,
+                                                                        value: hora,
+                                                                        onChange: handleHoraChange
                                                                     }),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                        id: "telefono-asegurado",
-                                                                        label: "Tel\xe9fono Asegurado",
+                                                                        id: "nombreAsegurado",
+                                                                        label: "Nombre del Asegurado",
+                                                                        name: "nombreAsegurado",
                                                                         variant: "outlined",
-                                                                        fullWidth: true
+                                                                        fullWidth: true,
+                                                                        value: formData.nombreAsegurado,
+                                                                        onChange: handleFormChange
+                                                                    }),
+                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
+                                                                        id: "telefonoAsegurado",
+                                                                        label: "Tel\xe9fono del Asegurado",
+                                                                        name: "telefonoAsegurado",
+                                                                        variant: "outlined",
+                                                                        fullWidth: true,
+                                                                        value: formData.telefonoAsegurado,
+                                                                        onChange: handleFormChange
                                                                     }),
                                                                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
                                                                         fullWidth: true,
@@ -862,69 +1005,76 @@ const Dashboard = ()=>{
                                                                                 id: "aseguradora-label",
                                                                                 children: "Aseguradora"
                                                                             }),
-                                                                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
-                                                                                labelId: "aseguradora-label",
+                                                                            /*#__PURE__*/ jsx_runtime_.jsx(node.Select, {
+                                                                                labelId: "aseguradora",
                                                                                 id: "aseguradora",
                                                                                 label: "Aseguradora",
-                                                                                children: [
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "zurich",
-                                                                                        children: "Zurich"
+                                                                                name: "aseguradora",
+                                                                                value: formData.aseguradora,
+                                                                                onChange: (event)=>setFormData({
+                                                                                        ...formData,
+                                                                                        aseguradora: event.target.value
                                                                                     }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "federacion_patronal",
-                                                                                        children: "Federaci\xf3n Patronal"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "la_segunda",
-                                                                                        children: "La Segunda"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "sancor",
-                                                                                        children: "Sancor"
-                                                                                    }),
-                                                                                    /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "mapfre",
-                                                                                        children: "MAPFRE"
-                                                                                    })
-                                                                                ]
+                                                                                children: aseguradorasOptions.map((option)=>/*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
+                                                                                        value: option.id,
+                                                                                        children: option.nombre
+                                                                                    }, option.id))
                                                                             })
                                                                         ]
                                                                     }),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
-                                                                        id: "nro-siniestro",
+                                                                        id: "nroSiniestro",
                                                                         label: "Nro Siniestro",
+                                                                        name: "nroSiniestro",
                                                                         variant: "outlined",
-                                                                        fullWidth: true
+                                                                        type: "number",
+                                                                        inputProps: {
+                                                                            min: 0,
+                                                                            step: "any"
+                                                                        },
+                                                                        fullWidth: true,
+                                                                        value: formData.nroSiniestro,
+                                                                        onChange: handleFormChange
                                                                     }),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.FormControlLabel, {
-                                                                        control: /*#__PURE__*/ jsx_runtime_.jsx(node.Checkbox, {}),
-                                                                        label: "Orden"
+                                                                        control: /*#__PURE__*/ jsx_runtime_.jsx(node.Checkbox, {
+                                                                            checked: isChecked,
+                                                                            onChange: handleCheckboxChange
+                                                                        }),
+                                                                        label: "\xbfTrae orden del seguro?"
                                                                     }),
                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.TextField, {
                                                                         id: "patente",
                                                                         label: "Patente",
+                                                                        name: "patente",
                                                                         variant: "outlined",
-                                                                        fullWidth: true
+                                                                        fullWidth: true,
+                                                                        value: formData.patente,
+                                                                        onChange: handleFormChange
                                                                     }),
                                                                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
                                                                         fullWidth: true,
                                                                         children: [
                                                                             /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
                                                                                 id: "propio-label",
-                                                                                children: "Propio"
+                                                                                children: "Vehiculo"
                                                                             }),
                                                                             /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
                                                                                 labelId: "propio-label",
                                                                                 id: "propio",
                                                                                 label: "Propio",
+                                                                                name: "propio",
+                                                                                variant: "outlined",
+                                                                                fullWidth: true,
+                                                                                value: formData.propio,
+                                                                                onChange: handleFormChange,
                                                                                 children: [
                                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "propio",
+                                                                                        value: "Propio",
                                                                                         children: "Propio"
                                                                                     }),
                                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "laboral",
+                                                                                        value: "Laboral",
                                                                                         children: "Laboral"
                                                                                     })
                                                                                 ]
@@ -937,30 +1087,36 @@ const Dashboard = ()=>{
                                                                         multiline: true,
                                                                         rows: 4,
                                                                         variant: "outlined",
-                                                                        fullWidth: true
+                                                                        name: "observaciones",
+                                                                        fullWidth: true,
+                                                                        value: formData.observaciones,
+                                                                        onChange: handleFormChange
                                                                     }),
                                                                     /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.FormControl, {
                                                                         fullWidth: true,
                                                                         children: [
                                                                             /*#__PURE__*/ jsx_runtime_.jsx(node.InputLabel, {
                                                                                 id: "estado-label",
-                                                                                children: "Estado"
+                                                                                children: "Estado de la Orden"
                                                                             }),
                                                                             /*#__PURE__*/ (0,jsx_runtime_.jsxs)(node.Select, {
                                                                                 labelId: "estado-label",
                                                                                 id: "estado",
                                                                                 label: "Estado",
+                                                                                name: "estado",
+                                                                                value: formData.estado,
+                                                                                onChange: handleFormChange,
                                                                                 children: [
                                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "estado1",
+                                                                                        value: "Sin_Atender",
                                                                                         children: "Sin Atender"
                                                                                     }),
                                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "estado2",
+                                                                                        value: "Atendido",
                                                                                         children: "Atendido"
                                                                                     }),
                                                                                     /*#__PURE__*/ jsx_runtime_.jsx(node.MenuItem, {
-                                                                                        value: "estado2",
+                                                                                        value: "Finalizado_y_Entregado",
                                                                                         children: "Finalizado y Entregado"
                                                                                     })
                                                                                 ]
@@ -971,7 +1127,8 @@ const Dashboard = ()=>{
                                                             }),
                                                             /*#__PURE__*/ jsx_runtime_.jsx("br", {}),
                                                             /*#__PURE__*/ jsx_runtime_.jsx(node.Button, {
-                                                                children: "Cargar"
+                                                                onClick: handleFormSubmit,
+                                                                children: "Cargar Orden"
                                                             })
                                                         ]
                                                     })

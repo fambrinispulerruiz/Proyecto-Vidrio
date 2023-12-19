@@ -32,7 +32,7 @@ public class HomePageViewModel_orden {
     public Object act(
     		Modelo modelo,
     		Vidrio vidrio,
-    		LocalDateTime fecha,
+    		String fecha,
             String nombreAsegurado,
             String telefonoAsegurado,
             Aseguradora aseguradora,
