@@ -389,15 +389,14 @@ Header.propTypes = {
 // EXTERNAL MODULE: ./node_modules/next/link.js
 var next_link = __webpack_require__(11440);
 var link_default = /*#__PURE__*/__webpack_require__.n(next_link);
-// EXTERNAL MODULE: ./node_modules/next/image.js
-var next_image = __webpack_require__(52451);
-var image_default = /*#__PURE__*/__webpack_require__.n(next_image);
 // EXTERNAL MODULE: ./node_modules/@mui/material/node/Grid/index.js
 var Grid = __webpack_require__(21971);
 var Grid_default = /*#__PURE__*/__webpack_require__.n(Grid);
 // EXTERNAL MODULE: ./node_modules/@mui/material/node/Typography/index.js
 var Typography = __webpack_require__(33987);
 var Typography_default = /*#__PURE__*/__webpack_require__.n(Typography);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/DriveEta.js
+var DriveEta = __webpack_require__(45465);
 ;// CONCATENATED MODULE: ./src/app/(DashboardLayout)/layout/shared/logo/Logo.tsx
 
 
@@ -425,15 +424,11 @@ const Logo = ()=>{
             children: [
                 /*#__PURE__*/ jsx_runtime_.jsx((Grid_default()), {
                     item: true,
-                    children: /*#__PURE__*/ jsx_runtime_.jsx((image_default()), {
-                        src: "/images/logos/_c4e1344c-c7b9-447f-b00a-a68d4073685a.jpeg",
-                        alt: "logo",
+                    children: /*#__PURE__*/ jsx_runtime_.jsx(DriveEta/* default */.Z, {
+                        fontSize: "large",
                         style: {
-                            marginTop: "-5px"
-                        },
-                        height: 50,
-                        width: 50,
-                        priority: true
+                            marginRight: "10px"
+                        }
                     })
                 }),
                 /*#__PURE__*/ jsx_runtime_.jsx((Grid_default()), {

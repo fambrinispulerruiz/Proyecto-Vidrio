@@ -76,14 +76,6 @@ module.exports = require("next/dist/shared/lib/app-router-context");
 
 /***/ }),
 
-/***/ 1830:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/get-img-props");
-
-/***/ }),
-
 /***/ 20199:
 /***/ ((module) => {
 
@@ -92,35 +84,11 @@ module.exports = require("next/dist/shared/lib/hash");
 
 /***/ }),
 
-/***/ 66864:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/head");
-
-/***/ }),
-
 /***/ 39569:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("next/dist/shared/lib/hooks-client-context");
-
-/***/ }),
-
-/***/ 52210:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/image-config");
-
-/***/ }),
-
-/***/ 35359:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/image-config-context");
 
 /***/ }),
 
@@ -212,11 +180,43 @@ module.exports = require("next/dist/shared/lib/utils");
 
 /***/ }),
 
-/***/ 98658:
+/***/ 14300:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("next/dist/shared/lib/utils/warn-once");
+module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 6113:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ 57147:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ 13685:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http");
+
+/***/ }),
+
+/***/ 95687:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("https");
 
 /***/ }),
 
@@ -228,11 +228,35 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ 85477:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("punycode");
+
+/***/ }),
+
+/***/ 12781:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream");
+
+/***/ }),
+
 /***/ 57310:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("url");
+
+/***/ }),
+
+/***/ 59796:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("zlib");
 
 /***/ }),
 
@@ -361,15 +385,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(18038);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17421);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_mui_material__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(15922);
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(30237);
-/* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(82511);
-/* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48007);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(17421);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_mui_material__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(15922);
+/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(30237);
+/* harmony import */ var _mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(82511);
+/* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(48007);
 /* harmony import */ var _app_DashboardLayout_components_shared_BaseCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(94138);
-/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71998);
+/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(71998);
+/* harmony import */ var _react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63409);
+/* harmony import */ var _react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(79067);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_4__);
 /* __next_internal_client_entry_do_not_use__ default auto */ 
+
+
 
 
 
@@ -456,12 +486,6 @@ const NuevoFormulario = ()=>{
     };
     const handleCloseEditModal = ()=>{
         setOpenEditModal(false);
-    };
-    const handleExportToPDF = ()=>{
-    // Implementa la lógica de exportación a PDF
-    // ...
-    // Ejemplo de apertura de la URL en una nueva ventana/tab
-    // window.open(pdfExportURL, '_blank');
     };
     const handleFormChange = (event)=>{
         if ("target" in event) {
@@ -721,19 +745,345 @@ const NuevoFormulario = ()=>{
             nombre: "No"
         }
     ];
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+    //------------------------------------------------------------------------------------
+    const styles = _react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.StyleSheet.create({
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        },
+        page: {
+            flexDirection: "column",
+            backgroundColor: "#E4E4E4",
+            padding: 20
+        },
+        header: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 20
+        },
+        headerLeft: {
+            flexDirection: "column",
+            width: "40%"
+        },
+        headerRight: {
+            flexDirection: "column",
+            width: "40%",
+            textAlign: "right"
+        },
+        title: {
+            fontSize: 18,
+            fontWeight: "bold",
+            marginBottom: 10
+        },
+        table: {
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            marginBottom: 20
+        },
+        rowH: {
+            flexDirection: "row",
+            borderBottomWidth: 1,
+            alignItems: "center",
+            height: 30,
+            backgroundColor: "#2249839e"
+        },
+        rowC: {
+            flexDirection: "row",
+            borderBottomWidth: 1,
+            alignItems: "center",
+            height: 30
+        },
+        headerCell: {
+            color: "#ffffff"
+        },
+        cell: {
+            margin: "auto",
+            fontSize: 10,
+            padding: 5,
+            textAlign: "center"
+        },
+        date: {
+            fontSize: 12,
+            color: "#555"
+        }
+    });
+    const MyDocument = ({ data })=>{
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+        return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Document, {
+            children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Page, {
+                size: "A4",
+                style: styles.page,
+                children: [
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.View, {
+                        style: styles.header,
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.View, {
+                                style: styles.headerLeft,
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: {
+                                            fontSize: 14,
+                                            marginBottom: 5
+                                        },
+                                        children: "El Emporio de el Vidrio"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: {
+                                            fontSize: 10,
+                                            color: "#555"
+                                        },
+                                        children: "Direcci\xf3n: Pasaje Sayi 665"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.View, {
+                                style: styles.headerRight,
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: {
+                                            fontSize: 16,
+                                            fontWeight: "bold",
+                                            marginBottom: 10
+                                        },
+                                        children: "Registro de Vidrios Disponibles"
+                                    }),
+                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: {
+                                            fontSize: 12,
+                                            color: "#555"
+                                        },
+                                        children: [
+                                            "Fecha: ",
+                                            formattedDate
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                        style: styles.title,
+                        children: "Registro de Vidrios Disponibles"
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.View, {
+                        style: styles.table,
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.View, {
+                                style: styles.rowH,
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "15%"
+                                            }
+                                        ],
+                                        children: "ID"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Nombre"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "30%"
+                                            }
+                                        ],
+                                        children: "Modelo"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Codigo"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Precio"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Tipo Vidrio"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Atena"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Sensor"
+                                    })
+                                ]
+                            }),
+                            data.map((item)=>{
+                                return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.View, {
+                                    style: styles.rowC,
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: item.id
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.nombre
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: item.modelo.title
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.codigo
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.precio
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.tipoVidrio
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.antena
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.sensor
+                                        })
+                                    ]
+                                }, item.id);
+                            })
+                        ]
+                    })
+                ]
+            })
+        });
+    };
+    const generatePDF = async (data)=>{
+        // Renderiza el componente React a un Blob
+        const pdfBlob = await (0,_react_pdf_renderer__WEBPACK_IMPORTED_MODULE_3__.pdf)(/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(MyDocument, {
+            data: data
+        }));
+        // Obtiene el Blob del objeto pdfBlob
+        const blob = await pdfBlob.toBlob();
+        // Ahora, puedes usar saveAs con el Blob
+        (0,file_saver__WEBPACK_IMPORTED_MODULE_4__.saveAs)(blob, "Reporte de Vidrios Disponibles - El Emporio del Vidrio.pdf");
+    };
+    const handleExportToPDF = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch("http://localhost:8080/restful/services/simple.Vidrios/actions/verVidrios/invoke", {
+                method: "GET",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            const data = await response.json();
+            generatePDF(data);
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
+    };
+    //------------------------------------------------------------------------------------------------------------------------------------------------------
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Grid, {
         container: true,
         spacing: 0,
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Grid, {
             item: true,
             xs: 12,
             lg: 12,
             children: [
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Box, {
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Box, {
                     display: "flex",
                     justifyContent: "space-between",
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                             variant: "contained",
                             sx: {
                                 margin: "20px"
@@ -741,34 +1091,34 @@ const NuevoFormulario = ()=>{
                             onClick: handleOpenAddModal,
                             children: "Agregar Vidrio"
                         }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                             variant: "contained",
                             sx: {
                                 margin: "20px",
-                                backgroundColor: _mui_material_colors__WEBPACK_IMPORTED_MODULE_4__.red[500],
+                                backgroundColor: _mui_material_colors__WEBPACK_IMPORTED_MODULE_6__.red[500],
                                 "&:hover": {
-                                    backgroundColor: _mui_material_colors__WEBPACK_IMPORTED_MODULE_4__.red[700]
+                                    backgroundColor: _mui_material_colors__WEBPACK_IMPORTED_MODULE_6__.red[700]
                                 }
                             },
-                            startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {}),
+                            startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_PictureAsPdf__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
                             onClick: handleExportToPDF,
                             children: "Exportar a PDF"
                         })
                     ]
                 }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Dialog, {
                     open: openAddModal,
                     onClose: handleCloseAddModal,
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogTitle, {
                             children: "Agregar Vidrio"
                         }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogContent, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogContent, {
                             sx: {
                                 width: "600px",
                                 textAlign: "center"
                             },
-                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Grid, {
                                 item: true,
                                 xs: 12,
                                 lg: 12,
@@ -776,17 +1126,17 @@ const NuevoFormulario = ()=>{
                                     title: "Complete el Formulario de Vidrio",
                                     children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                                         children: [
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Stack, {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Stack, {
                                                 spacing: 3,
                                                 children: [
-                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                         fullWidth: true,
                                                         children: [
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                 id: "modelo-label",
                                                                 children: "Modelo"
                                                             }),
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                 labelId: "modelo-label",
                                                                 id: "modelo",
                                                                 name: "modelo_id",
@@ -796,14 +1146,14 @@ const NuevoFormulario = ()=>{
                                                                         ...formData,
                                                                         modelo_id: event.target.value
                                                                     }),
-                                                                children: modelos.map((modelo)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                children: modelos.map((modelo)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                         value: modelo.id,
                                                                         children: modelo.nombre + " (" + modelo.empresa.title + ")"
                                                                     }, modelo.id))
                                                             })
                                                         ]
                                                     }),
-                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
                                                         id: "nombre",
                                                         name: "nombre",
                                                         label: "Nombre",
@@ -812,7 +1162,7 @@ const NuevoFormulario = ()=>{
                                                         value: formData.nombre,
                                                         onChange: handleFormChange
                                                     }),
-                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
                                                         id: "codigo",
                                                         name: "codigo",
                                                         label: "Codigo",
@@ -821,7 +1171,7 @@ const NuevoFormulario = ()=>{
                                                         value: formData.codigo,
                                                         onChange: handleFormChange
                                                     }),
-                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
                                                         id: "precio",
                                                         name: "precio",
                                                         label: "Precio",
@@ -835,14 +1185,14 @@ const NuevoFormulario = ()=>{
                                                         value: formData.precio,
                                                         onChange: handleFormChange
                                                     }),
-                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                         fullWidth: true,
                                                         children: [
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                 id: "modelo-label",
                                                                 children: "Tipo de Vidrio"
                                                             }),
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                 labelId: "tipovidrio-label",
                                                                 id: "tipovidrio",
                                                                 name: "tipovidrio",
@@ -852,21 +1202,21 @@ const NuevoFormulario = ()=>{
                                                                         ...formData,
                                                                         tipovidrio: event.target.value
                                                                     }),
-                                                                children: tipoVidrio.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                children: tipoVidrio.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                         value: tipoVidrio.id,
                                                                         children: tipoVidrio.nombre
                                                                     }, tipoVidrio.id))
                                                             })
                                                         ]
                                                     }),
-                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                         fullWidth: true,
                                                         children: [
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                 id: "modelo-label",
                                                                 children: "\xbfPosee antena para parabrisas?"
                                                             }),
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                 labelId: "antena-label",
                                                                 id: "antena",
                                                                 name: "antena",
@@ -876,21 +1226,21 @@ const NuevoFormulario = ()=>{
                                                                         ...formData,
                                                                         antena: event.target.value
                                                                     }),
-                                                                children: antena.map((antena)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                children: antena.map((antena)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                         value: antena.id,
                                                                         children: antena.nombre
                                                                     }, antena.id))
                                                             })
                                                         ]
                                                     }),
-                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                         fullWidth: true,
                                                         children: [
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                 id: "modelo-label",
                                                                 children: "\xbfPosee sensor de lluvia?"
                                                             }),
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                 labelId: "sensor-label",
                                                                 id: "sensor",
                                                                 name: "sensor",
@@ -900,7 +1250,7 @@ const NuevoFormulario = ()=>{
                                                                         ...formData,
                                                                         sensor: event.target.value
                                                                     }),
-                                                                children: sensor.map((sensor)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                children: sensor.map((sensor)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                         value: sensor.id,
                                                                         children: sensor.nombre
                                                                     }, sensor.id))
@@ -910,7 +1260,7 @@ const NuevoFormulario = ()=>{
                                                 ]
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                                                 onClick: handleFormSubmit,
                                                 children: "Cargar"
                                             })
@@ -919,8 +1269,8 @@ const NuevoFormulario = ()=>{
                                 })
                             })
                         }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
-                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogActions, {
+                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                                 onClick: handleCloseAddModal,
                                 children: "Cancelar"
                             })
@@ -929,95 +1279,95 @@ const NuevoFormulario = ()=>{
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_app_DashboardLayout_components_shared_BaseCard__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z, {
                     title: "Vidrios",
-                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Table, {
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Table, {
                         children: [
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableHead, {
-                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableRow, {
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableHead, {
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableRow, {
                                     children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "ID"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Nombre"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Modelo"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Codigo"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Precio"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Tipo Vidrio"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Atena"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Sensor"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Activo"
                                         }),
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                             children: "Acciones"
                                         })
                                     ]
                                 })
                             }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableBody, {
-                                children: rows.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableRow, {
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableBody, {
+                                children: rows.map((row)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableRow, {
                                         children: [
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.id
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.nombre
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.modelo.title
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.codigo
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.precio
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.tipoVidrio
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.antena
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.sensor
                                             }),
-                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: row.activo ? "S\xed" : "No"
                                             }),
-                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TableCell, {
+                                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TableCell, {
                                                 children: [
-                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                        startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
+                                                        startIcon: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
                                                         color: "primary",
                                                         onClick: ()=>handleOpenEditModal(row),
                                                         children: "Editar"
                                                     }),
-                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
+                                                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Dialog, {
                                                         open: openEditModal,
                                                         onClose: handleCloseEditModal,
                                                         children: [
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogTitle, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogTitle, {
                                                                 children: "Editar Vidrio"
                                                             }),
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogContent, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogContent, {
                                                                 sx: {
                                                                     width: "600px",
                                                                     textAlign: "center"
                                                                 },
-                                                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Grid, {
+                                                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Grid, {
                                                                     item: true,
                                                                     xs: 12,
                                                                     lg: 12,
@@ -1025,10 +1375,10 @@ const NuevoFormulario = ()=>{
                                                                         title: "Editar Vidrio",
                                                                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                                                                             children: [
-                                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Stack, {
+                                                                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Stack, {
                                                                                     spacing: 3,
                                                                                     children: [
-                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
                                                                                             id: "nombre",
                                                                                             name: "nombre",
                                                                                             label: "Nombre",
@@ -1037,7 +1387,7 @@ const NuevoFormulario = ()=>{
                                                                                             value: formData.nombre,
                                                                                             onChange: handleFormChange
                                                                                         }),
-                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
                                                                                             id: "codigo",
                                                                                             name: "codigo",
                                                                                             label: "Codigo",
@@ -1046,7 +1396,7 @@ const NuevoFormulario = ()=>{
                                                                                             value: formData.codigo,
                                                                                             onChange: handleFormChange
                                                                                         }),
-                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.TextField, {
+                                                                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.TextField, {
                                                                                             id: "precio",
                                                                                             name: "precio",
                                                                                             label: "Precio",
@@ -1060,14 +1410,14 @@ const NuevoFormulario = ()=>{
                                                                                             value: formData.precio,
                                                                                             onChange: handleFormChange
                                                                                         }),
-                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                                                             fullWidth: true,
                                                                                             children: [
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                                                     id: "modelo-label",
                                                                                                     children: "Tipo de Vidrio"
                                                                                                 }),
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                                                     labelId: "tipovidrio-label",
                                                                                                     id: "tipovidrio",
                                                                                                     name: "tipovidrio",
@@ -1077,21 +1427,21 @@ const NuevoFormulario = ()=>{
                                                                                                             ...formData,
                                                                                                             tipovidrio: event.target.value
                                                                                                         }),
-                                                                                                    children: tipoVidrioEdit.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                                                    children: tipoVidrioEdit.map((tipoVidrio)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                                                             value: tipoVidrio.id,
                                                                                                             children: tipoVidrio.nombre
                                                                                                         }, tipoVidrio.id))
                                                                                                 })
                                                                                             ]
                                                                                         }),
-                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                                                             fullWidth: true,
                                                                                             children: [
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                                                     id: "modelo-label",
                                                                                                     children: "\xbfPosee antena para parabrisas?"
                                                                                                 }),
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                                                     labelId: "antena-label",
                                                                                                     id: "antena",
                                                                                                     name: "antena",
@@ -1101,21 +1451,21 @@ const NuevoFormulario = ()=>{
                                                                                                             ...formData,
                                                                                                             antena: event.target.value
                                                                                                         }),
-                                                                                                    children: antena.map((antena)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                                                    children: antena.map((antena)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                                                             value: antena.id,
                                                                                                             children: antena.nombre
                                                                                                         }, antena.id))
                                                                                                 })
                                                                                             ]
                                                                                         }),
-                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.FormControl, {
+                                                                                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.FormControl, {
                                                                                             fullWidth: true,
                                                                                             children: [
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.InputLabel, {
+                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.InputLabel, {
                                                                                                     id: "modelo-label",
                                                                                                     children: "\xbfPosee sensor de lluvia?"
                                                                                                 }),
-                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Select, {
+                                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Select, {
                                                                                                     labelId: "sensor-label",
                                                                                                     id: "sensor",
                                                                                                     name: "sensor",
@@ -1125,7 +1475,7 @@ const NuevoFormulario = ()=>{
                                                                                                             ...formData,
                                                                                                             sensor: event.target.value
                                                                                                         }),
-                                                                                                    children: sensor.map((sensor)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
+                                                                                                    children: sensor.map((sensor)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.MenuItem, {
                                                                                                             value: sensor.id,
                                                                                                             children: sensor.nombre
                                                                                                         }, sensor.id))
@@ -1135,7 +1485,7 @@ const NuevoFormulario = ()=>{
                                                                                     ]
                                                                                 }),
                                                                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("br", {}),
-                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                                                                                     onClick: handleEditSubmit,
                                                                                     children: "Confirmar Edici\xf3n"
                                                                                 })
@@ -1144,27 +1494,27 @@ const NuevoFormulario = ()=>{
                                                                     })
                                                                 })
                                                             }),
-                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogActions, {
-                                                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogActions, {
+                                                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                                                                     onClick: handleCloseEditModal,
                                                                     children: "Cancelar"
                                                                 })
                                                             })
                                                         ]
                                                     }),
-                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
-                                                        startIcon: row.activo ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
+                                                        startIcon: row.activo ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {}) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {}),
                                                         color: row.activo ? "secondary" : "success",
                                                         onClick: ()=>handleToggleActive(row.id, row.activo),
                                                         children: row.activo ? "Desactivar" : "Activar"
                                                     }),
-                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Dialog, {
+                                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Dialog, {
                                                         open: dialogOpen,
                                                         onClose: ()=>setDialogOpen(false),
-                                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_3__.DialogContent, {
+                                                        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_5__.DialogContent, {
                                                             children: [
                                                                 dialogMessage,
-                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_3__.Button, {
+                                                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_mui_material__WEBPACK_IMPORTED_MODULE_5__.Button, {
                                                                     onClick: ()=>window.location.reload(),
                                                                     children: "Aceptar"
                                                                 })
@@ -1221,7 +1571,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,974,115,847,766,138], () => (__webpack_exec__(1284)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,970,553,847,766,138], () => (__webpack_exec__(1284)));
 module.exports = __webpack_exports__;
 
 })();

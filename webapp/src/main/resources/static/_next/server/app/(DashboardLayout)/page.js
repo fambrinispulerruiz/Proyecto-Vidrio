@@ -76,14 +76,6 @@ module.exports = require("next/dist/shared/lib/app-router-context");
 
 /***/ }),
 
-/***/ 1830:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/get-img-props");
-
-/***/ }),
-
 /***/ 20199:
 /***/ ((module) => {
 
@@ -92,35 +84,11 @@ module.exports = require("next/dist/shared/lib/hash");
 
 /***/ }),
 
-/***/ 66864:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/head");
-
-/***/ }),
-
 /***/ 39569:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("next/dist/shared/lib/hooks-client-context");
-
-/***/ }),
-
-/***/ 52210:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/image-config");
-
-/***/ }),
-
-/***/ 35359:
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("next/dist/shared/lib/image-config-context");
 
 /***/ }),
 
@@ -212,11 +180,43 @@ module.exports = require("next/dist/shared/lib/utils");
 
 /***/ }),
 
-/***/ 98658:
+/***/ 14300:
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("next/dist/shared/lib/utils/warn-once");
+module.exports = require("buffer");
+
+/***/ }),
+
+/***/ 6113:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("crypto");
+
+/***/ }),
+
+/***/ 57147:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ 13685:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("http");
+
+/***/ }),
+
+/***/ 95687:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("https");
 
 /***/ }),
 
@@ -228,11 +228,35 @@ module.exports = require("path");
 
 /***/ }),
 
+/***/ 85477:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("punycode");
+
+/***/ }),
+
+/***/ 12781:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("stream");
+
+/***/ }),
+
 /***/ 57310:
 /***/ ((module) => {
 
 "use strict";
 module.exports = require("url");
+
+/***/ }),
+
+/***/ 59796:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("zlib");
 
 /***/ }),
 
@@ -661,12 +685,18 @@ var BaseCard = __webpack_require__(94138);
 var PictureAsPdf = __webpack_require__(82511);
 // EXTERNAL MODULE: ./node_modules/@mui/material/node/colors/index.js
 var colors = __webpack_require__(48007);
+// EXTERNAL MODULE: ./node_modules/@react-pdf/renderer/lib/react-pdf.cjs.js
+var react_pdf_cjs = __webpack_require__(63409);
+// EXTERNAL MODULE: ./node_modules/file-saver/dist/FileSaver.min.js
+var FileSaver_min = __webpack_require__(79067);
 ;// CONCATENATED MODULE: ./src/app/(DashboardLayout)/page.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
 
 
 // components
+
+
 
 
 
@@ -799,28 +829,360 @@ const Dashboard = ()=>{
             console.error("Error al realizar la solicitud:", error);
         }
     };
-    const handleExportToPDF = ()=>{
-        // Agrega la URL específica para exportar a PDF
-        const pdfExportURL = "tu_url_para_exportar_a_pdf";
-        // Realiza el fetch vacío para iniciar la exportación
-        fetch(pdfExportURL, {
-            method: "GET",
-            // Agrega cualquier encabezado o configuración necesario para tu API
-            headers: {
-                "Content-Type": "application/pdf"
-            }
-        }).then((response)=>{
-            // Verifica el estado de la respuesta
-            if (!response.ok) {
-                throw new Error("Error al exportar a PDF");
-            }
-            // Puedes manejar la respuesta aquí si es necesario
-            // Por ejemplo, abrir el PDF en una nueva ventana/tab
-            window.open(pdfExportURL, "_blank");
-        }).catch((error)=>{
-            console.error("Error:", error.message);
-        // Maneja los errores según tus necesidades
+    const styles = react_pdf_cjs.StyleSheet.create({
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        },
+        page: {
+            flexDirection: "column",
+            backgroundColor: "#E4E4E4",
+            padding: 20
+        },
+        header: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 20
+        },
+        headerLeft: {
+            flexDirection: "column",
+            width: "40%"
+        },
+        headerRight: {
+            flexDirection: "column",
+            width: "40%",
+            textAlign: "right"
+        },
+        title: {
+            fontSize: 18,
+            fontWeight: "bold",
+            marginBottom: 10
+        },
+        table: {
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            marginBottom: 20
+        },
+        rowH: {
+            flexDirection: "row",
+            borderBottomWidth: 1,
+            alignItems: "center",
+            height: 30,
+            backgroundColor: "#2249839e"
+        },
+        rowC: {
+            flexDirection: "row",
+            borderBottomWidth: 1,
+            alignItems: "center",
+            height: 30
+        },
+        headerCell: {
+            color: "#ffffff"
+        },
+        cell: {
+            margin: "auto",
+            fontSize: 10,
+            padding: 5,
+            textAlign: "center"
+        },
+        date: {
+            fontSize: 12,
+            color: "#555"
+        }
+    });
+    const MyDocument = ({ data })=>{
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+        return /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Document, {
+            children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.Page, {
+                size: "A4",
+                style: styles.page,
+                children: [
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.View, {
+                        style: styles.header,
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.View, {
+                                style: styles.headerLeft,
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: {
+                                            fontSize: 14,
+                                            marginBottom: 5
+                                        },
+                                        children: "El Emporio de el Vidrio"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: {
+                                            fontSize: 10,
+                                            color: "#555"
+                                        },
+                                        children: "Direcci\xf3n: Pasaje Sayi 665"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.View, {
+                                style: styles.headerRight,
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: {
+                                            fontSize: 16,
+                                            fontWeight: "bold",
+                                            marginBottom: 10
+                                        },
+                                        children: "Registro de Ordenes de Trabajo"
+                                    }),
+                                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.Text, {
+                                        style: {
+                                            fontSize: 12,
+                                            color: "#555"
+                                        },
+                                        children: [
+                                            "Fecha: ",
+                                            formattedDate
+                                        ]
+                                    })
+                                ]
+                            })
+                        ]
+                    }),
+                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                        style: styles.title,
+                        children: "Registro de Ordenes de Trabajo"
+                    }),
+                    /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.View, {
+                        style: styles.table,
+                        children: [
+                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.View, {
+                                style: styles.rowH,
+                                children: [
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "15%"
+                                            }
+                                        ],
+                                        children: "ID"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "15%"
+                                            }
+                                        ],
+                                        children: "Fecha"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "15%"
+                                            }
+                                        ],
+                                        children: "Hora"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Nombre"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Telefono"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Vidrio"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "15%"
+                                            }
+                                        ],
+                                        children: "Patente"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "15%"
+                                            }
+                                        ],
+                                        children: "Vehiculo"
+                                    }),
+                                    /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                        style: [
+                                            styles.cell,
+                                            styles.headerCell,
+                                            {
+                                                width: "20%"
+                                            }
+                                        ],
+                                        children: "Estado"
+                                    })
+                                ]
+                            }),
+                            data.map((item)=>{
+                                const fecha = new Date(item.fecha);
+                                // Obtiene los componentes de fecha y hora
+                                const fechaFormateada = `${fecha.getDate()}/${fecha.getMonth() + 1}/${fecha.getFullYear()}`;
+                                const horaFormateada = `${fecha.getHours()}:${fecha.getMinutes()}`;
+                                return /*#__PURE__*/ (0,jsx_runtime_.jsxs)(react_pdf_cjs.View, {
+                                    style: styles.rowC,
+                                    children: [
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: item.id
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: fechaFormateada
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: horaFormateada
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.nombreAsegurado
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.telefonoAsegurado
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.vidrio.title
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: item.patente
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "15%"
+                                                }
+                                            ],
+                                            children: item.propio
+                                        }),
+                                        /*#__PURE__*/ jsx_runtime_.jsx(react_pdf_cjs.Text, {
+                                            style: [
+                                                styles.cell,
+                                                {
+                                                    width: "20%"
+                                                }
+                                            ],
+                                            children: item.estado
+                                        })
+                                    ]
+                                }, item.id);
+                            })
+                        ]
+                    })
+                ]
+            })
         });
+    };
+    const generatePDF = async (data)=>{
+        // Renderiza el componente React a un Blob
+        const pdfBlob = await (0,react_pdf_cjs.pdf)(/*#__PURE__*/ jsx_runtime_.jsx(MyDocument, {
+            data: data
+        }));
+        // Obtiene el Blob del objeto pdfBlob
+        const blob = await pdfBlob.toBlob();
+        // Ahora, puedes usar saveAs con el Blob
+        (0,FileSaver_min.saveAs)(blob, "Reporte de Ordenes - El Emporio del Vidrio.pdf");
+    };
+    const handleExportToPDF = async ()=>{
+        try {
+            const username = "sven";
+            const password = "pass";
+            const authHeader = "Basic " + btoa(username + ":" + password);
+            const response = await fetch("http://localhost:8080/restful/services/simple.OrdenDeTrabajos/actions/verOrdenesDeTrabajo/invoke", {
+                method: "GET",
+                headers: {
+                    "Content-Type": 'application/json;profile="urn:org.apache.isis"',
+                    "Authorization": authHeader,
+                    "accept": "application/json;profile=urn:org.apache.isis/v2;suppress=all"
+                }
+            });
+            const data = await response.json();
+            const sortedData = data.sort((a, b)=>{
+                const estadoOrder = {
+                    "Sin Atender": 1,
+                    "Atendido": 2,
+                    "Finalizado Y Entregado": 3
+                };
+                return estadoOrder[a.estado] - estadoOrder[b.estado];
+            });
+            generatePDF(sortedData);
+        } catch (error) {
+            console.error("Error al realizar la solicitud:", error);
+        }
     };
     const aseguradorasOptions = [
         {
@@ -1205,7 +1567,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [697,974,115,970,440,766,138,434,229], () => (__webpack_exec__(20883)));
+var __webpack_exports__ = __webpack_require__.X(0, [697,970,553,461,440,766,138,434,229], () => (__webpack_exec__(20883)));
 module.exports = __webpack_exports__;
 
 })();

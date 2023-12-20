@@ -5,12 +5,12 @@
   "/(DashboardLayout)/layout/footer/page": "app/(DashboardLayout)/layout/footer/page.js",
   "/(DashboardLayout)/ui-components/alerts/page": "app/(DashboardLayout)/ui-components/alerts/page.js",
   "/(DashboardLayout)/ui-components/buttons/page": "app/(DashboardLayout)/ui-components/buttons/page.js",
-  "/(DashboardLayout)/ui-components/forms/page": "app/(DashboardLayout)/ui-components/forms/page.js",
   "/(DashboardLayout)/ui-components/empresas/page": "app/(DashboardLayout)/ui-components/empresas/page.js",
   "/(DashboardLayout)/ui-components/images/page": "app/(DashboardLayout)/ui-components/images/page.js",
+  "/(DashboardLayout)/ui-components/forms/page": "app/(DashboardLayout)/ui-components/forms/page.js",
   "/(DashboardLayout)/ui-components/modelos/page": "app/(DashboardLayout)/ui-components/modelos/page.js",
   "/(DashboardLayout)/ui-components/pagination/page": "app/(DashboardLayout)/ui-components/pagination/page.js",
-  "/(DashboardLayout)/ui-components/table/page": "app/(DashboardLayout)/ui-components/table/page.js",
   "/(DashboardLayout)/ui-components/ratings/page": "app/(DashboardLayout)/ui-components/ratings/page.js",
+  "/(DashboardLayout)/ui-components/table/page": "app/(DashboardLayout)/ui-components/table/page.js",
   "/(DashboardLayout)/ui-components/vidrios/page": "app/(DashboardLayout)/ui-components/vidrios/page.js"
 }
